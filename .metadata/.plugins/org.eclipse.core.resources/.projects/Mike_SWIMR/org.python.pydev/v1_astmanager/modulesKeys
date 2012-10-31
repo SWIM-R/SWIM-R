@@ -1,0 +1,7 @@
+MODULES_MANAGER_V2
+Clientchat|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/Clientchat.py
+Serverchat|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/Serverchat.py
+main|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/main.py
+swim_client|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/swim_client.py
+swim_serial|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/SerialCommunication/swim_serial.py
+swim_server|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/swim_server.py

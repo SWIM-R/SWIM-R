@@ -1,0 +1,69 @@
+-- VERSION_3
+-- START DISKCACHE
+/Users/Mike/Desktop/SWIM-R_Repo/.metadata/.plugins/org.eclipse.core.resources/.projects/Mike_SWIMR/com.python.pydev.analysis/v1_indexcache
+.v1_indexcache
+Clientchat|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/Clientchat.py
+swim_client|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/swim_client.py
+swim_server|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/swim_server.py
+Serverchat|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/EthernetCommunication/Serverchat.py
+swim_serial|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/SerialCommunication/swim_serial.py
+main|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike_SWIMR/main.py
+-- END DISKCACHE
+-- START DICTIONARY
+17
+10=SwimSerial.__init__
+1=Clientchat
+7=client
+4=swim_server
+12=client.__init__
+13=MyUDPHandler
+11=CThread.__init__
+5=main
+9=CThread
+8=SwimSerial
+14=SwimSerial.write
+3=swim_client
+17=SwimSerial.setpayload
+15=SwimSerial.read
+16=SwimSerial.initialize
+2=Serverchat
+6=swim_serial
+-- END DICTIONARY
+-- START TREE 1
+14
+cli|1|client!9@
+cth|1|CThread!17@
+dat|1|data!27@
+dic|1|dict!19@
+mse|2|msend!18@msend!10@
+myu|1|MyUDPHandler!33@
+rec|1|received!27@
+s|1|s!43@
+ser|1|server!35@
+set|1|setConn!18@
+siz|2|SIZE!19@SIZE!11@
+soc|4|soc1!11@sock!27@soc!19@soc2!11@
+swi|1|SwimSerial!49@
+thr|2|thr!11@thr!19@
+-- END TREE
+-- START TREE 2
+18
+__i|3|__init__!7&10@__init__!8&50@__init__!9&18@
+bau|1|BAUDRATE!10&51@
+con|2|conn!11&19@conn!12&11@
+get|3|getstatus!8&50@getreceive!8&50@getpayload!8&50@
+han|1|handle!13&34@
+ini|1|initialize!8&50@
+ins|1|INSTRUCTION_SIZE!10&51@
+is_|4|IS_CONNECTED!14&51@IS_CONNECTED!15&51@IS_CONNECTED!16&51@IS_CONNECTED!10&51@
+mre|2|mrecv!7&10@mrecv!9&18@
+pay|2|PAYLOAD!17&51@PAYLOAD!10&51@
+rea|1|read!8&50@
+rec|2|RECEIVE!15&51@RECEIVE!10&51@
+run|2|run!9&18@run!7&10@
+sca|1|scan!8&50@
+ser|2|SERIAL!16&51@SERIAL!10&51@
+set|1|setpayload!8&50@
+sto|2|stopIt!12&11@stopIt!11&19@
+wri|1|write!8&50@
+-- END TREE

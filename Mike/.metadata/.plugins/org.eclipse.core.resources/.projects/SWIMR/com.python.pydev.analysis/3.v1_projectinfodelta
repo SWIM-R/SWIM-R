@@ -1,0 +1,16 @@
+INSTUPClientchat
+/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/Clientchat.py
+INFOS:&&3|1|2|0&&1|3|2|0&&2|4|2|3&&3|5|2|6&&3|7|2|6&&2|8|2|3&&2|9|2|3&&3|10|2|0&&3|11|2|0&&2|12|2|0&&3|13|2|0
+stopIt=7
+conn=5
+thr=13
+Clientchat=2
+client=3
+client.__init__=6
+msend=12
+run=9
+__init__=4
+mrecv=8
+soc1=10
+soc2=11
+SIZE=1
