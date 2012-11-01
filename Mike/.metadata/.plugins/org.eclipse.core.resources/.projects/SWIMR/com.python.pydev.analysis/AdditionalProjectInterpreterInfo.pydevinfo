@@ -2,13 +2,83 @@
 -- START DISKCACHE
 /Users/Mike/Desktop/SWIM-R_Repo/Mike/.metadata/.plugins/org.eclipse.core.resources/.projects/SWIMR/com.python.pydev.analysis/v1_indexcache
 .v1_indexcache
+Clientchat|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/Clientchat.py
+serverexamplecode|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/serverexamplecode.py
+clientexamplecode|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/clientexamplecode.py
+Serverchat|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/Serverchat.py
+main|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py
+swim_serial|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/SerialCommunication/swim_serial.py
 -- END DISKCACHE
 -- START DICTIONARY
-0
+17
+10=SwimSerial.__init__
+3=Clientchat
+7=client
+12=client.__init__
+5=serverexamplecode
+13=MyUDPHandler
+11=CThread.__init__
+2=main
+9=CThread
+8=SwimSerial
+14=SwimSerial.write
+17=SwimSerial.setpayload
+15=SwimSerial.read
+16=SwimSerial.initialize
+1=Serverchat
+4=clientexamplecode
+6=swim_serial
 -- END DICTIONARY
 -- START TREE 1
-0
+22
+a1|1|a1!11@
+a2|1|a2!11@
+b|1|b!19@
+c1|1|c1!11@
+c2|1|c2!11@
+cli|2|client!19@client!25@
+cth|1|CThread!9@
+dat|1|data!35@
+dic|1|dict!11@
+hos|0|
+mse|2|msend!10@msend!26@
+myc|0|
+myu|1|MyUDPHandler!41@
+por|0|
+rec|1|received!35@
+s|0|
+ser|0|
+set|1|setConn!10@
+siz|2|SIZE!11@SIZE!27@
+soc|4|sock!35@soc1!27@soc!11@soc2!27@
+swi|1|SwimSerial!49@
+thr|2|thr!27@thr!11@
 -- END TREE
 -- START TREE 2
-0
+25
+!<m|0|
+SO|0|
+__i|3|__init__!7&26@__init__!8&50@__init__!9&10@
+bau|1|BAUDRATE!10&51@
+con|2|conn!11&11@conn!12&27@
+get|3|getstatus!8&50@getreceive!8&50@getpayload!8&50@
+han|1|handle!13&42@
+hos|0|
+ini|1|initialize!8&50@
+ins|1|INSTRUCTION_SIZE!10&51@
+is_|4|IS_CONNECTED!14&51@IS_CONNECTED!15&51@IS_CONNECTED!16&51@IS_CONNECTED!10&51@
+mre|2|mrecv!7&26@mrecv!9&10@
+ost|0|
+pay|2|PAYLOAD!17&51@PAYLOAD!10&51@
+por|0|
+rea|1|read!8&50@
+rec|2|RECEIVE!15&51@RECEIVE!10&51@
+run|2|run!9&10@run!7&26@
+sca|1|scan!8&50@
+sen|0|
+ser|3|server!13&43@SERIAL!16&51@SERIAL!10&51@
+set|1|setpayload!8&50@
+soc|0|
+sto|2|stopIt!12&27@stopIt!11&11@
+wri|1|write!8&50@
 -- END TREE

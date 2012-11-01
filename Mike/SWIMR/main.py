@@ -5,14 +5,17 @@ Created on Oct 17, 2012
 '''
 
 from swim_serial import SwimSerial
-
+from swim_client import SwimClient
+client = SwimClient()
 s = SwimSerial(baudrate = 9600)
 
-
-
 while True:
-    s.setpayload('bbbb')
+    client.setpayload('bbbb')
+    client.send()
+    
+    client.receive()
+    b = client.getreceived()
+    s.setpayload(b)
     s.write()
-    s.read()
-
-    print s.getreceive()
+    
+    print s.read()

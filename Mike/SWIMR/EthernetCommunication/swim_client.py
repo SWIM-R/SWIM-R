@@ -1,16 +1,58 @@
+'''
+Created on Oct 31, 2012
+
+@author: Mike
+'''
 import socket
-import sys
+#import sys
+#data = "test".join(sys.argv[1:])
 
-HOST, PORT = "153.106.113.58", 9999
-data = "test".join(sys.argv[1:])
 
-# SOCK_DGRAM is the socket type to use for UDP sockets
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+class SwimClient():
+    '''
+    classdocs
+    '''
 
-# As you can see, there is no connect() call; UDP has no connections.
-# Instead, data is directly sent to the recipient via sendto().
-sock.sendto(data + "\n", (HOST, PORT))
-received = sock.recv(1024)
 
-print "Sent:     {}".format(data)
-print "Received: {}".format(received)
+    def __init__(self, host = str(), port = int() ):
+        '''
+        Constructor
+        '''
+        
+        if host == "":
+            self.HOST = "153.106.113.58"
+        else:
+            self.HOST = host
+        
+        if port == 0:
+            self.PORT = 9999
+        else:
+            self.PORT = port
+            
+        self.PAYLOAD = "default"
+        self.RECEIVE = ''
+
+        self.initialize()
+
+    def initialize(self):
+        # SOCK_DGRAM is the socket type to use for UDP sockets
+        # AF_INET sets it to use UDP protocol
+        self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        
+    def send(self):
+        self.SOCK.sendto(self.PAYLOAD + "\n", (self.HOST, self.PORT))
+        
+    def setpayload(self, payload):
+        self.PAYLOAD = payload
+        
+    def getreceived(self):
+        return self.RECEIVE
+    def receive(self):
+        self.RECEIVE = self.SOCK.recv(1024)
+
+        
+
+
+
+
+

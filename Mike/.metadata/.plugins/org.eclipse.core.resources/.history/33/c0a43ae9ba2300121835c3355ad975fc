@@ -1,0 +1,54 @@
+'''
+Created on Oct 31, 2012
+
+@author: Mike
+'''
+import socket
+#import sys
+#data = "test".join(sys.argv[1:])
+
+
+class SwimClient():
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, host = str(), port = int() ):
+        '''
+        Constructor
+        '''
+        
+        if host == "":
+            self.Host = "153.106.58"
+        else:
+            self.HOST = host
+        
+        if port == "":
+            self.PORT = 9999
+        else:
+            self.PORT = port
+            
+        self.PAYLOAD = "default"
+        
+        self.initialize()
+    
+    
+    def initialize(self):
+        # SOCK_DGRAM is the socket type to use for UDP sockets
+        # AF_INET sets it to use UDP protocol
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+
+
+
+
+
+# As you can see, there is no connect() call; UDP has no connections.
+# Instead, data is directly sent to the recipient via sendto().
+
+sock.sendto(data + "\n", (HOST, PORT))
+received = sock.recv(1024)
+
+
+

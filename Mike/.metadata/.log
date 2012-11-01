@@ -353,3 +353,53 @@ java.lang.RuntimeException: Finished restoring information for: /usr/bin/python 
 
 !ENTRY com.aptana.shared_core 4 4 2012-10-31 16:04:15.318
 !MESSAGE Info: Rebuilding internal caches: /Users/Mike/Desktop/SWIM-R_Repo/Mike/.metadata/.plugins/org.eclipse.core.resources/.projects/SWIMR/com.python.pydev.analysis/AdditionalProjectInterpreterInfo.pydevinfo (Expected error to be provided and got no error!)
+
+!ENTRY org.eclipse.jface 2 0 2012-10-31 18:32:44.946
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-10-31 18:32:44.946
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(com.python.pydev.analysis.actions.pyGlobalsBrowserWorkbench,Python Show Global Tokens (Global),
+		Python Show Global Tokens (Global),
+		Category(org.python.pydev.ui.category.source,PyDev - Editor,PyDev editor category,true),
+		ActionDelegateHandlerProxy(null,com.python.pydev.analysis.actions.PyGlobalsBrowserWorkbench),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	com.python.pydev.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.python.pydev.editor.actions.pyShowBrowser,Python Show Global Tokens (Editor),
+		Python Show Global Tokens (Editor),
+		Category(org.python.pydev.ui.category.source,PyDev - Editor,PyDev editor category,true),
+		ActionDelegateHandlerProxy(null,org.python.pydev.editor.actions.PyShowBrowser),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.python.pydev.ui.editor.scope,,,system)
+
+!ENTRY org.eclipse.jface 2 0 2012-10-31 21:11:31.971
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2012-10-31 21:11:31.971
+!MESSAGE A conflict occurred for COMMAND+SHIFT+3:
+Binding(COMMAND+SHIFT+3,
+	ParameterizedCommand(Command(org.eclipse.wst.jsdt.debug.ui.script.opensource,Open Source,
+		Shows the JavaScript source for the selected script element,
+		Category(org.eclipse.wst.jsdt.debug.ui.category,JavaScript Debug,Tooling for debugging JavaScript,true),
+		org.eclipse.wst.jsdt.debug.internal.ui.actions.OpenSourceAction,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.debug.ui.debugging,,,system)
+Binding(COMMAND+SHIFT+3,
+	ParameterizedCommand(Command(org.python.pydev.editor.actions.uncomment,Python Uncomment,
+		Uncomments a python line (Removes # from the beggining of the line),
+		Category(org.python.pydev.ui.category.source,PyDev - Editor,PyDev editor category,true),
+		ActionDelegateHandlerProxy(null,org.python.pydev.editor.actions.PyUncomment),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.python.pydev.ui.editor.scope,,,system)
