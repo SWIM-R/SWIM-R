@@ -15,6 +15,7 @@ while True:
     
     client.receive()
     b = client.getreceived()
-
+    s.setpayload(b)
+    s.write()
     
-    print b
+    print s.read()
