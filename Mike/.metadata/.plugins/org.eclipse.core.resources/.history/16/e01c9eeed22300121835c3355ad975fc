@@ -22,7 +22,7 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
         s.setpayload(str(data))
         s.write()
         s.read()
-        newdata = s.getreceive()
+        newdata = s.getpayload
         socket.sendto(newdata, self.client_address)
 
 if __name__ == "__main__":

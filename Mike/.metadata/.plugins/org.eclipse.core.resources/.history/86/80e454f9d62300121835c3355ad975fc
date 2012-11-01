@@ -6,7 +6,6 @@ Created on Oct 31, 2012
 import SocketServer
 from swim_serial import SwimSerial
 
-s = SwimSerial(baudrate = 9600)
 
 class MyUDPHandler(SocketServer.BaseRequestHandler):
     """
@@ -17,12 +16,13 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
     """
 
     def handle(self):
+        s = SwimSerial(baudrate = 9600)
         data = self.request[0].strip()
         socket = self.request[1]
         s.setpayload(str(data))
         s.write()
         s.read()
-        newdata = s.getreceive()
+        newdata = s.getpayload
         socket.sendto(newdata, self.client_address)
 
 if __name__ == "__main__":
