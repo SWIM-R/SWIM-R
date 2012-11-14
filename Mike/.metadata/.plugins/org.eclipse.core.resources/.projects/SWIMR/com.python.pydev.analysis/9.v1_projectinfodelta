@@ -1,1 +1,9 @@
-DELSTRpimain
+INSTUPclientexamplecode
+/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/clientexamplecode.py
+INFOS:&&3|1|2|0&&3|3|2|0&&3|4|2|0&&3|5|2|0&&3|6|2|0
+sock=5
+HOST=1
+PORT=3
+data=4
+received=6
+clientexamplecode=2
