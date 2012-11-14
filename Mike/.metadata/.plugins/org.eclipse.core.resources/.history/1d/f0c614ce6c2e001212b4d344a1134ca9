@@ -12,6 +12,7 @@ s = SwimSerial(baudrate = 9600)
 while True:
     
  
+    b = client.getreceived()
 
     
     print b
