@@ -8,7 +8,7 @@ Created on Oct 16, 2012
 import serial
 #from serial import SerialException
 import glob
-
+import platform
 class SwimSerial:
     '''
     class SwimSerial
@@ -70,15 +70,17 @@ METHODS:
                 self.BAUDRATE = 115200
         self.IS_CONNECTED = False
         self.SERIAL = None
-        
+        self.platform = platform.system()
         self.INSTRUCTION_SIZE = int(4)
         self.PAYLOAD = ''
         self.RECEIVE = ''
         self.initialize();
         
     def scan(self):
-        return  glob.iglob('/dev/tty.usb*') 
-        
+        if(self.platform == 'Darwin'):
+            return  glob.iglob('/dev/tty.usb*') 
+        else:
+            return glob.iglob('/dev/serial/by-id/*')
             
     def getstatus(self):
         return self.IS_CONNECTED
