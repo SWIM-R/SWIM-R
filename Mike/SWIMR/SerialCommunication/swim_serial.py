@@ -97,11 +97,12 @@ METHODS:
     def initialize(self):
             
 
-        while self.IS_CONNECTED is False:
+        if self.IS_CONNECTED is False:
             self.SERIAL = None
             ports = self.scan()
 
             while self.IS_CONNECTED is False:
+              
                 try:
                     self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE)    
                 except:
@@ -122,14 +123,12 @@ METHODS:
             self.RECEIVE = self.SERIAL.read(self.INSTRUCTION_SIZE)
         except:
             self.IS_CONNECTED = False
-            self.initialize()
     def write(self):
             try:
                 self.SERIAL.write(self.PAYLOAD)
             except:
                 self.IS_CONNECTED = False
-                self.initialize()
-        
+                 
     
             
         
