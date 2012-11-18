@@ -19,7 +19,7 @@ class SwimSerial:
             
         BAUDRATE: communication data rate.  can be set, default if 115200 baud
         
-        IS_CONNECTED: is True if serial connection has been successfully eastblished
+        IS_CONNECTED: is True if serial connection has been successfully estblished
         
         INSTRUCTION_SIZE: number of bytes in one instruction
         

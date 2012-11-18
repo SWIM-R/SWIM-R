@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="46" version="2.0">
+<workbench progressCount="45" version="2.0">
 <workbenchAdvisor/>
-<window height="1018" width="1438" x="155" y="23">
+<window height="742" maximized="true" width="1280" x="3" y="67">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -34,22 +34,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.python.pydev.editor.PythonEditor" name="swim_serial.py" partName="swim_serial" path="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/SerialCommunication/swim_serial.py" title="swim_serial" tooltip="SWIMR/SerialCommunication/swim_serial.py" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SWIMR/SerialCommunication/swim_serial.py"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="796"/>
+<editor activePart="true" focus="true" id="org.python.pydev.editor.PythonEditor" name="main.py" partName="main" path="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py" title="main" tooltip="SWIMR/main.py" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SWIMR/main.py"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="84" selectionTopPixel="0"/>
 </editor>
 <editor id="org.python.pydev.editor.PythonEditor" name="swim_client.py" partName="swim_client" path="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_client.py" title="swim_client" tooltip="SWIMR/EthernetCommunication/swim_client.py" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SWIMR/EthernetCommunication/swim_client.py"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="247"/>
-</editor>
-<editor activePart="true" focus="true" id="org.python.pydev.editor.PythonEditor" name="main.py" partName="main" path="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py" title="main" tooltip="SWIMR/main.py" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SWIMR/main.py"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="137" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="386"/>
 </editor>
 </editors>
 <views>
@@ -106,9 +101,9 @@
 <view id="org.python.pydev.navigator.view" partName="PyDev Package Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0">
 <expanded IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR"/>
+<expanded IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/Ethernet_Example_Code"/>
 <expanded IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication"/>
-<expanded IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/SerialCommunication"/>
-<selected IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py"/>
+<selected IMemento.internal.id="/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR"/>
 </viewState>
 </view>
 </views>
@@ -281,7 +276,7 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25984251" ratioLeft="264" ratioRight="752" relationship="2" relative="topLeft"/>
-<info folder="true" part="bottom" ratio="0.55053765" ratioLeft="512" ratioRight="418" relationship="4" relative="org.eclipse.ui.editorss">
+<info folder="true" part="bottom" ratio="0.55198777" ratioLeft="361" ratioRight="293" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
@@ -382,7 +377,7 @@
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.6537634" ratioLeft="608" ratioRight="322" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.79425836" ratioLeft="664" ratioRight="172" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.cdt.debug.ui.executablesView" label="Executables"/>
@@ -399,7 +394,7 @@
 </presentation>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.55041325" ratioLeft="333" ratioRight="272" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
+<info part="org.eclipse.ui.editorss" ratio="0.28441754" ratioLeft="188" ratioRight="473" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
 <info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.74965036" ratioLeft="1072" ratioRight="358" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view" label="LabelNotFound"/>
@@ -426,172 +421,163 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/SerialCommunication/swim_serial.py"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/Ethernet_Example_Code/clientexamplecode.py"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/main.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/serverexamplecode.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/Serverchat.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/pimain.py"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/Ethernet_Example_Code/chat_client.py"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/swim_client.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/SerialCommunication/swim_serial.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/main.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/Clientchat.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/clientexamplecode.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/Serverchat.py"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/swim_server.py"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/Ethernet_Example_Code/chat_server.py"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/pimain.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/SerialCommunication/swim_serial.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/serverexamplecode.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/EthernetCommunication/swim_client.py"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" path="/SWIMR/main.py"/>
 </editors>
-<item historyLabel="main" index="1">
-<position info="not_deleted" x="256" y="0"/>
-</item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="862" y="0"/>
-</item>
-<item historyLabel="Serverchat" index="3">
+<item historyLabel="clientexamplecode" index="0">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="serverexamplecode" index="2">
-<position info="not_deleted" x="43" y="699"/>
+<item historyLabel="chat_client" index="2">
+<position/>
 </item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="862" y="0"/>
+<item historyLabel="chat_server" index="5">
+<position/>
 </item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="72" y="0"/>
+<item historyLabel="chat_client" index="2">
+<position/>
 </item>
-<item historyLabel="main" index="1">
-<position info="not_deleted" x="256" y="0"/>
+<item historyLabel="clientexamplecode" index="0">
+<position info="not_deleted" x="269" y="0"/>
 </item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="72" y="0"/>
-</item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="651" y="0"/>
-</item>
-<item historyLabel="swim_serial" index="0">
-<position info="not_deleted" x="1834" y="0"/>
-</item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="651" y="0"/>
+<item historyLabel="swim_client" index="3">
+<position/>
 </item>
 <item historyLabel="main" index="1">
-<position info="not_deleted" x="256" y="0"/>
+<position/>
 </item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="591" y="0"/>
+<item historyLabel="pimain" index="6">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="main" index="1">
-<position info="not_deleted" x="256" y="0"/>
-</item>
-<item historyLabel="pimain" index="4">
-<position info="not_deleted" x="457" y="0"/>
-</item>
-<item historyLabel="swim_serial" index="0">
-<position info="not_deleted" x="1834" y="0"/>
-</item>
-<item historyLabel="swim_client" index="5">
-<position info="not_deleted" x="550" y="0"/>
-</item>
-<item historyLabel="swim_serial" index="6">
-<position info="not_deleted" x="3144" y="0"/>
-</item>
-<item historyLabel="main" index="7">
 <position/>
 </item>
-<item historyLabel="Clientchat" index="8">
+<item historyLabel="swim_client" index="3">
 <position/>
 </item>
-<item historyLabel="clientexamplecode" index="9">
+<item historyLabel="main" index="1">
 <position/>
 </item>
-<item historyLabel="Serverchat" index="10">
+<item historyLabel="clientexamplecode" index="0">
+<position info="not_deleted" x="302" y="0"/>
+</item>
+<item historyLabel="chat_client" index="2">
 <position/>
 </item>
-<item historyLabel="pimain" index="11">
-<position info="not_deleted" x="583" y="0"/>
-</item>
-<item historyLabel="main" index="7">
+<item historyLabel="chat_server" index="5">
 <position/>
 </item>
-<item historyLabel="swim_serial" index="12">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="main" index="7">
+<item historyLabel="chat_client" index="2">
 <position/>
 </item>
-<item historyLabel="pimain" index="11">
-<position info="not_deleted" x="583" y="0"/>
-</item>
-<item historyLabel="Serverchat" index="10">
+<item historyLabel="chat_server" index="5">
 <position/>
 </item>
-<item historyLabel="Clientchat" index="8">
+<item historyLabel="chat_client" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="chat_server" index="5">
 <position/>
 </item>
-<item historyLabel="clientexamplecode" index="9">
-<position/>
-</item>
-<item historyLabel="Clientchat" index="8">
-<position/>
-</item>
-<item historyLabel="clientexamplecode" index="9">
-<position/>
-</item>
-<item historyLabel="Serverchat" index="10">
-<position/>
-</item>
-<item historyLabel="clientexamplecode" index="9">
-<position/>
-</item>
-<item historyLabel="Serverchat" index="10">
-<position/>
-</item>
-<item historyLabel="Clientchat" index="8">
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="clientexamplecode" index="9">
+<item historyLabel="main" index="1">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Serverchat" index="10">
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="serverexamplecode" index="13">
+<item historyLabel="swim_server" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Serverchat" index="10">
+<item historyLabel="swim_client" index="3">
+<position info="not_deleted" x="955" y="0"/>
+</item>
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="235" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
+<position info="not_deleted" x="955" y="0"/>
+</item>
+<item historyLabel="swim_server" index="4">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="serverexamplecode" index="13">
+<item historyLabel="swim_client" index="3">
+<position info="not_deleted" x="955" y="0"/>
+</item>
+<item historyLabel="chat_server" index="5">
+<position info="not_deleted" x="223" y="0"/>
+</item>
+<item historyLabel="main" index="1">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="clientexamplecode" index="9">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="189" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Clientchat" index="8">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="187" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="swim_client" index="14">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="187" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main" index="7">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="187" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="swim_serial" index="12">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="187" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="swim_client" index="14">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="288" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="swim_serial" index="12">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="288" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="swim_client" index="14">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="288" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="main" index="15">
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="288" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
 <position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main" index="1">
+<position info="not_deleted" x="240" y="0"/>
+</item>
+<item historyLabel="swim_client" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="main" index="1">
+<position info="not_deleted" x="240" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -603,6 +589,7 @@
 <trimItem IMemento.internal.id="topLeft"/>
 </trimArea>
 <trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="org.eclipse.ui.editorss"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.ViewStack@461c38fe"/>
 </trimArea>
 <trimArea IMemento.internal.id="128">
@@ -618,14 +605,38 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="main.py" tooltip="SWIMR/main.py">
-<persistable path="/SWIMR/main.py"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="swim_client.py" tooltip="SWIMR/EthernetCommunication/swim_client.py">
 <persistable path="/SWIMR/EthernetCommunication/swim_client.py"/>
 </file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="main.py" tooltip="SWIMR/main.py">
+<persistable path="/SWIMR/main.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="chat_server.py" tooltip="SWIMR/Ethernet_Example_Code/chat_server.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/chat_server.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="swim_server.py" tooltip="SWIMR/EthernetCommunication/swim_server.py">
+<persistable path="/SWIMR/EthernetCommunication/swim_server.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="chat_client.py" tooltip="SWIMR/Ethernet_Example_Code/chat_client.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/chat_client.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="pimain.py" tooltip="SWIMR/pimain.py">
+<persistable path="/SWIMR/pimain.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="clientexamplecode.py" tooltip="SWIMR/Ethernet_Example_Code/clientexamplecode.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/clientexamplecode.py"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="swim_serial.py" tooltip="SWIMR/SerialCommunication/swim_serial.py">
 <persistable path="/SWIMR/SerialCommunication/swim_serial.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="serverexamplecode.py" tooltip="SWIMR/Ethernet_Example_Code/serverexamplecode.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/serverexamplecode.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="Clientchat.py" tooltip="SWIMR/Ethernet_Example_Code/Clientchat.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/Clientchat.py"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="Serverchat.py" tooltip="SWIMR/Ethernet_Example_Code/Serverchat.py">
+<persistable path="/SWIMR/Ethernet_Example_Code/Serverchat.py"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="serverexamplecode.py" tooltip="SWIMR/EthernetCommunication/serverexamplecode.py">
 <persistable path="/SWIMR/EthernetCommunication/serverexamplecode.py"/>
@@ -638,9 +649,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="Clientchat.py" tooltip="SWIMR/EthernetCommunication/Clientchat.py">
 <persistable path="/SWIMR/EthernetCommunication/Clientchat.py"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.python.pydev.editor.PythonEditor" name="pimain.py" tooltip="SWIMR/pimain.py">
-<persistable path="/SWIMR/pimain.py"/>
 </file>
 </mruList>
 </workbench>

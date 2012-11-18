@@ -1,0 +1,17 @@
+'''
+Created on Oct 17, 2012
+
+@author: Mike
+'''
+
+from swim_serial import SwimSerial
+
+message = 'bbbb'
+s = SwimSerial(baudrate = 9600)
+
+while True:
+    s.setpayload(message)
+    s.write()
+    s.read()
+    b = s.getreceive
+    print b

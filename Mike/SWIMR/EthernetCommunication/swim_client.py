@@ -12,8 +12,6 @@ class SwimClient():
     '''
     classdocs
     '''
-
-
     def __init__(self, host = str(), port = int() ):
         '''
         Constructor
@@ -24,7 +22,7 @@ class SwimClient():
         else:
             self.HOST = host
         
-        if port == 0:
+        if port is None:
             self.PORT = 9999
         else:
             self.PORT = port
@@ -45,10 +43,11 @@ class SwimClient():
     def setpayload(self, payload):
         self.PAYLOAD = payload
         
-    def getreceived(self):
+    def getreceive(self):
         return self.RECEIVE
-    def receive(self):
-        self.RECEIVE = self.SOCK.recv(1024)
+    
+    def receive(self, size = int()):
+        self.RECEIVE = self.SOCK.recv(size)
 
         
 

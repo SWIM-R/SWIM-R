@@ -3,14 +3,16 @@
 /Users/Mike/Desktop/SWIM-R_Repo/Mike/.metadata/.plugins/org.eclipse.core.resources/.projects/SWIMR/com.python.pydev.analysis/v1_indexcache
 .v1_indexcache
 swim_client|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_client.py
-main|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py
+swim_server|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_server.py
 swim_serial|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/SerialCommunication/swim_serial.py
 pimain|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/pimain.py
+main|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py
 -- END DISKCACHE
 -- START DICTIONARY
 16
 7=SwimSerial.__init__
 14=SwimClient.setpayload
+2=swim_server
 8=MyUDPHandler
 1=main
 9=SwimClient.__init__
@@ -23,51 +25,34 @@ pimain|0|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/pimain.py
 11=SwimSerial.read
 15=SwimClient.receive
 12=SwimSerial.initialize
-2=pimain
 3=swim_serial
 -- END DICTIONARY
 -- START TREE 1
-17
-b|1|b!11@
-cli|0|
-cth|0|
-dat|0|
-dic|0|
-hos|0|
-mse|0|
+4
+C|1|C!11@
+d|1|d!11@
 myu|1|MyUDPHandler!17@
-por|0|
-rec|0|
-s|2|s!19@s!11@
-ser|0|
-set|0|
-siz|0|
-soc|0|
 swi|2|SwimSerial!25@SwimClient!33@
-thr|0|
 -- END TREE
 -- START TREE 2
-22
+19
 __i|2|__init__!5&26@__init__!6&34@
 bau|1|BAUDRATE!7&27@
-con|0|
-get|4|getstatus!5&26@getreceived!6&34@getreceive!5&26@getpayload!5&26@
+get|4|getstatus!5&26@getreceive!5&26@getreceive!6&34@getpayload!5&26@
 han|1|handle!8&18@
 hos|1|HOST!9&35@
 ini|2|initialize!6&34@initialize!5&26@
 ins|1|INSTRUCTION_SIZE!7&27@
 is_|4|IS_CONNECTED!10&27@IS_CONNECTED!11&27@IS_CONNECTED!12&27@IS_CONNECTED!7&27@
-mre|0|
 pay|4|PAYLOAD!13&27@PAYLOAD!7&27@PAYLOAD!14&35@PAYLOAD!9&35@
+pla|1|platform!7&27@
 por|1|PORT!9&35@
 rea|1|read!5&26@
 rec|5|receive!6&34@RECEIVE!15&35@RECEIVE!9&35@RECEIVE!11&27@RECEIVE!7&27@
-run|0|
 sca|1|scan!5&26@
 sen|1|send!6&34@
-ser|3|SERIAL!12&27@SERIAL!7&27@server!8&19@
+ser|3|server!8&19@SERIAL!12&27@SERIAL!7&27@
 set|2|setpayload!6&34@setpayload!5&26@
 soc|1|SOCK!16&35@
-sto|0|
 wri|1|write!5&26@
 -- END TREE

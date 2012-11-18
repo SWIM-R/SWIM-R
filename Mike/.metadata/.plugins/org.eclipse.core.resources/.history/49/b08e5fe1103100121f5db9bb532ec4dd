@@ -1,0 +1,22 @@
+import socket
+#import sys
+
+HOST, PORT = "153.106.88.103", 9998
+#HOST, PORT = "153.106.113.58", 9999
+#data = "test".join(sys.argv[1:])
+data = "test"
+
+# SOCK_DGRAM is the socket type to use for UDP sockets
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+print sock.connect((HOST,PORT))
+# As you can see, there is no connect() call; UDP has no connections.
+# Instead, data is directly sent to the recipient via sendto().
+
+while True:
+    #sock.sendto(data + "\n", (HOST, PORT))
+    if(sock.connect is not None):
+        received = sock.recv(8192)
+        print "Received: {}".format(received)
+    else:
+        sock.connect((HOST,PORT))
+        print 'not connected'

@@ -1,12 +1,5 @@
-'''
-Created on Oct 31, 2012
-
-@author: Mike
-'''
+# Echo server program
 import SocketServer
-from swim_serial import SwimSerial
-
-s = SwimSerial(baudrate = 9600)
 
 class MyUDPHandler(SocketServer.BaseRequestHandler):
     """
@@ -19,11 +12,9 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         data = self.request[0].strip()
         socket = self.request[1]
-        s.setpayload(str(data))
-        s.write()
-        s.read()
-        newdata = s.getreceive()
-        socket.sendto(newdata, self.client_address)
+        print "{} wrote:".format(self.client_address[0])
+        print data
+        socket.sendto(data.upper(), self.client_address)
 
 if __name__ == "__main__":
     HOST, PORT = "153.106.113.58", 9999
