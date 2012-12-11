@@ -30,7 +30,7 @@ while True:
     while True:
         print broken
         print '1'
-        C.send()
+        
         C.receive(MAXPACKETSIZE)
         print '2'
         rec_str = C.getreceive()
