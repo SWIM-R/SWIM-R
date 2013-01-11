@@ -9,13 +9,16 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
     there is no connection the client address must be given explicitly
     when sending data back via sendto().
     """
-
     def handle(self):
         data = self.request[0].strip()
-	socket = self.request[1]
+        socket = self.request[1]
         print "{} wrote:".format(self.client_address[0])
         print data
         socket.sendto(data.upper(), self.client_address)
+        self.DATA = data
+    
+        
+        
 
 if __name__ == "__main__":
     HOST = sys.argv[1]
@@ -25,4 +28,7 @@ if __name__ == "__main__":
         exit(1)
     # HOST, PORT = "153.106.113.107", 9999
     server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
-    server.serve_forever()
+    #server.serve_forever()
+    server.handle_request()
+    print server.RequestHandlerClass.DATA
+    
