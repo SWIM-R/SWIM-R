@@ -12,14 +12,14 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
         data = self.request[0].strip()
-        socket = self.request[1]
+	socket = self.request[1]
         print "{} wrote:".format(self.client_address[0])
         print data
         socket.sendto(data.upper(), self.client_address)
 
 if __name__ == "__main__":
     HOST = sys.argv[1]
-    PORT = sys.argv[2]
+    PORT = int(sys.argv[2])
     if HOST is None or PORT is None:
         print "try again stupid: python swim_server.py 153.106.75.171 9999"
         exit(1)
