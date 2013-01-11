@@ -1,6 +1,5 @@
 # Echo server program
 import SocketServer
-import sys
 
 class MyUDPHandler(SocketServer.BaseRequestHandler):
     """
@@ -18,11 +17,6 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
         socket.sendto(data.upper(), self.client_address)
 
 if __name__ == "__main__":
-    HOST = sys.argv[1]
-    PORT = sys.argv[2]
-    if HOST is None or PORT is None:
-        print "try again stupid: python swim_server.py 153.106.75.171 9999"
-        exit(1)
-    # HOST, PORT = "153.106.113.107", 9999
+    HOST, PORT = "153.106.113.107", 9999
     server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
     server.serve_forever()

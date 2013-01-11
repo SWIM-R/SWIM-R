@@ -22,7 +22,7 @@ if __name__ == "__main__":
     PORT = sys.argv[2]
     if HOST is None or PORT is None:
         print "try again stupid: python swim_server.py 153.106.75.171 9999"
-        exit(1)
+        
     # HOST, PORT = "153.106.113.107", 9999
     server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
     server.serve_forever()

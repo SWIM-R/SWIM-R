@@ -1,12 +1,1 @@
-INSTUPVideoStreaming.video_stream_server
-/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video_stream_server.py
-INFOS:&&2|1|2|0&&2|3|2|0&&1|4|2|0&&2|5|2|4&&3|6|2|0&&3|7|2|0&&3|8|2|0&&3|9|2|0
-HOST=6
-PORT=7
-handle=5
-camcapture=9
-get_frame=3
-server=8
-recursive_send=1
-VideoStreaming.video_stream_server=2
-MyUDPHandler=4
+DELSTRswim_server
