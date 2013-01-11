@@ -1,1 +1,10 @@
-DELSTRswim_server
+INSTUPswim_server
+/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_server.py
+INFOS:&&1|1|2|0&&3|3|2|1&&2|4|2|1&&3|5|2|1&&3|6|2|1&&3|7|2|1
+HOST=5
+PORT=6
+handle=4
+swim_server=2
+server=7
+MyUDPHandler=1
+thing=3
