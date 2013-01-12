@@ -74,4 +74,8 @@ if __name__ == '__main__':
     print "main"
     print 'serving'
     c = SwimServer(9999)
+    while 1:
+        c.receive(1024)
+        c.setpayload(c.getreceive())
+        c.send()
     

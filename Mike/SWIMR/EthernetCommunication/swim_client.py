@@ -43,12 +43,16 @@ class SwimClient(object):
         
         #Find the server
         self.setpayload("Hello!")
-        while self.ISCONNECTED == False:
+        while 1:
             self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
-            
+
             data, addr = self.SOCK.recvfrom(1024)
-            print data.strip(),addr
-        print"I've found the server"
+            print data
+            print data.strip()
+            if data.strip() == 'hello client':
+                print"I've found the server"
+                self.ISCONNECTED == True
+                break
         
         
     def send(self):
