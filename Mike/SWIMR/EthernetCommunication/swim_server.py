@@ -33,7 +33,7 @@ class SwimServer(object):
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(1024)
                 if self.CLIENTIP is not None:
                     self.ISCONNECTED == True
-                    self.SOCK.sendto("hello client",(self.CLIENTIP,PORT))
+                    self.SOCK.sendto("hello client",self.CLIENTIP)
                     #self.SOCK.sendall("hello client",)
         print "I've found the client"
     
