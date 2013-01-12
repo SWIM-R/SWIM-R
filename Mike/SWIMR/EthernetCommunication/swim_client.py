@@ -30,7 +30,7 @@ class SwimClient(object):
         self.PAYLOAD = "default"
         self.RECEIVE = ''
         self.ISCONNECTED = False
-
+        self.HOSTPORT = (self.HOST, self.PORT)
         self.initialize()
 
     def initialize(self):
@@ -44,10 +44,11 @@ class SwimClient(object):
         #Find the server
         self.setpayload("Hello!")
         while self.ISCONNECTED == False:
-            self.SOCK.sendto(self.PAYLOAD,self.HOST)
+            self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
             
             data, addr = self.SOCK.recvfrom(1024)
             print data.strip(),addr
+        print"I've found the server"
         
         
     def send(self):
@@ -87,7 +88,11 @@ if __name__=='__main__':
     #from swim_client import SwimClient
     import sys
     
-    IP,PORT = str(sys.argv[1]),int(sys.argv[2])
+    try:
+        IP,PORT = str(sys.argv[1]),int(sys.argv[2])
+    except:
+        print" you forgot command line arguments stupid"
+        exit(1)
     c = SwimClient(IP,PORT)
 
     while 1:

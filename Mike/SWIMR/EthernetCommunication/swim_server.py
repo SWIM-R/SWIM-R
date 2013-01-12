@@ -33,7 +33,9 @@ class SwimServer(object):
                 self.CLIENTIP, self.RECEIVE = self.SOCK.recvfrom(1024)
                 if self.CLIENTIP is not None:
                     self.ISCONNECTED == True
-                    self.SOCK.sendto("hello client",self.CLIENTIP)
+                    #self.SOCK.sendto("hello client",(self.CLIENTIP,PORT))
+                    self.SOCK.sendall("hello client")
+        print "I've found the client"
     
     def getreceive(self):
         return self.RECEIVE
@@ -72,8 +74,4 @@ if __name__ == '__main__':
     print "main"
     print 'serving'
     c = SwimServer(9999)
-    while 1:
-        
     
-    
-else: print "not main"
