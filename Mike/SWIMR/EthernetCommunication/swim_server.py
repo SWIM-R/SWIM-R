@@ -30,11 +30,11 @@ class SwimServer(object):
         
         #find the client computer
         while self.ISCONNECTED == False:
-                self.CLIENTIP, self.RECEIVE = self.SOCK.recvfrom(1024)
+                self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(1024)
                 if self.CLIENTIP is not None:
                     self.ISCONNECTED == True
-                    #self.SOCK.sendto("hello client",(self.CLIENTIP,PORT))
-                    self.SOCK.sendall("hello client")
+                    self.SOCK.sendto("hello client",(self.CLIENTIP,PORT))
+                    #self.SOCK.sendall("hello client",)
         print "I've found the client"
     
     def getreceive(self):
