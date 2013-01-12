@@ -29,6 +29,7 @@ class SwimClient(object):
             
         self.PAYLOAD = "default"
         self.RECEIVE = ''
+        self.ISCONNECTED = False
 
         self.initialize()
 
@@ -39,6 +40,15 @@ class SwimClient(object):
         # SOCK_DGRAM is the socket type to use for UDP sockets
         # AF_INET sets it to use UDP protocol
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        
+        #Find the server
+        self.setpayload("Hello!")
+        while self.ISCONNECTED == False:
+            self.SOCK.sendto(self.PAYLOAD,self.HOST)
+            
+            data, addr = self.SOCK.recvfrom(1024)
+            print data.strip(),addr
+        
         
     def send(self):
         if len(self.PAYLOAD)<=8192 and len(self.PAYLOAD)>0:

@@ -24,10 +24,16 @@ class SwimServer(object):
         
     def initialize(self,PORT):
         self.SOCK = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        
         #Listen to all IPs on system
         listen_addr = ("",PORT)
         self.SOCK.bind(listen_addr)
+        
+        #find the client computer
+        while self.ISCONNECTED == False:
+                self.CLIENTIP, self.RECEIVE = self.SOCK.recvfrom(1024)
+                if self.CLIENTIP is not None:
+                    self.ISCONNECTED == True
+                    self.SOCK.sendto("hello client",self.CLIENTIP)
     
     def getreceive(self):
         return self.RECEIVE
@@ -37,18 +43,18 @@ class SwimServer(object):
         self.PAYLOAD = payload
     def send(self):
         if len(self.PAYLOAD)<=8192 and len(self.PAYLOAD)>0:
-            self.SOCK.sendto(self.PAYLOAD,(self.HOST,self.PORT))
-            self.SOCK.sendto('Done',(self.HOST,self.PORT))
+            self.SOCK.sendto(self.PAYLOAD,(self.CLIENTIP,self.PORT))
+            self.SOCK.sendto('Done',(self.CLIENTIP,self.PORT))
         else:
             self.SOCK.sendto(self.PAYLOAD[:8192], (self.HOST,self.PORT))
             self.helpersend(self.PAYLOAD[8192:])
             
     def helpersend(self,payload):
         if len(payload)<=8192 and len(payload)>0:
-            self.SOCK.sendto(payload,(self.HOST,self.PORT))
-            self.SOCK.sendto('Done',(self.HOST,self.PORT))
+            self.SOCK.sendto(payload,(self.CLIENTIP,self.PORT))
+            self.SOCK.sendto('Done',(self.CLIENTIP,self.PORT))
         else:
-            self.SOCK.sendto(payload[:8192], (self.HOST,self.PORT))
+            self.SOCK.sendto(payload[:8192], (self.CLIENTIP,self.PORT))
             self.helpersend(payload[8192:])
         
    
@@ -64,12 +70,10 @@ class SwimServer(object):
 
 if __name__ == '__main__':
     print "main"
-    
+    print 'serving'
     c = SwimServer(9999)
     while 1:
-        shit = raw_input("what?: ")
-        c.setpayload(shit)
-        c.send()
+        
     
     
 else: print "not main"
