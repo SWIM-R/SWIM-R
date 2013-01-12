@@ -62,14 +62,14 @@ class SwimServer(object):
                 break    
 
 
-if __name__ == "main":
+if __name__ == '__main__':
     print "main"
     
     c = SwimServer(9999)
     while 1:
         shit = raw_input("what?: ")
         c.setpayload(shit)
-        c.send
+        c.send()
     
     
 else: print "not main"

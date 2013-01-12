@@ -77,14 +77,14 @@ if __name__=='__main__':
     #from swim_client import SwimClient
     import sys
     
-    IP,PORT = str(sys.argv[1]),sys.argv[2]
+    IP,PORT = str(sys.argv[1]),int(sys.argv[2])
     c = SwimClient(IP,PORT)
 
     while 1:
         shit = raw_input("what?: ")
         c.setpayload(shit)
         c.send()
-        #c.receive(64)
-        #print "RPi says: " + c.getreceive()
+        c.receive(64)
+        print "RPi says: " + c.getreceive()
 
 
