@@ -57,19 +57,19 @@ class SwimClient(object):
         
     def send(self):
         if len(self.PAYLOAD)<=8192 and len(self.PAYLOAD)>0:
-            self.SOCK.sendto(self.PAYLOAD,(self.HOST,self.PORT))
+            self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
             self.SOCK.sendto('Done',(self.HOST,self.PORT))
         else:
-            self.SOCK.sendto(self.PAYLOAD[:8192], (self.HOST,self.PORT))
+            self.SOCK.sendto(self.PAYLOAD[:8192], self.HOSTPORT)
             self.helpersend(self.PAYLOAD[8192:])
             
             #self.SOCK.sendto(self.PAYLOAD + "\n", (self.HOST, self.PORT))
     def helpersend(self,payload):
         if len(payload)<=8192 and len(payload)>0:
-            self.SOCK.sendto(payload,(self.HOST,self.PORT))
-            self.SOCK.sendto('Done',(self.HOST,self.PORT))
+            self.SOCK.sendto(payload,self.HOSTPORT)
+            self.SOCK.sendto(payload, self.HOSTPORT)
         else:
-            self.SOCK.sendto(payload[:8192], (self.HOST,self.PORT))
+            self.SOCK.sendto(payload[:8192], self.HOSTPORT)
             self.helpersend(payload[8192:])
         
     def setpayload(self, payload):
@@ -81,7 +81,7 @@ class SwimClient(object):
     def receive(self, size = int()):
         self.RECEIVE = ''
         receivedstring = self.SOCK.recv(size)
-        while 1:
+        while receivedstring != "done":
             self.RECEIVE = self.RECEIVE + receivedstring
             receivedstring = self.SOCK.recv(size)
             if receivedstring == 'done':
@@ -103,7 +103,7 @@ if __name__=='__main__':
         shit = raw_input("what?: ")
         c.setpayload(shit)
         c.send()
-        c.receive(64)
+        c.receive(1024)
         print "RPi says: " + c.getreceive()
 
 

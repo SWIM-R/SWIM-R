@@ -31,6 +31,7 @@ class SwimServer(object):
         #find the client computer
         while self.ISCONNECTED == False:
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(1024)
+                print self.RECEIVE, self.CLIENTIP
                 if self.CLIENTIP is not None:
                     self.ISCONNECTED == True
                     self.SOCK.sendto("hello client",self.CLIENTIP)
@@ -45,18 +46,18 @@ class SwimServer(object):
         self.PAYLOAD = payload
     def send(self):
         if len(self.PAYLOAD)<=8192 and len(self.PAYLOAD)>0:
-            self.SOCK.sendto(self.PAYLOAD,(self.CLIENTIP,self.PORT))
-            self.SOCK.sendto('Done',(self.CLIENTIP,self.PORT))
+            self.SOCK.sendto(self.PAYLOAD,self.CLIENTIP)
+            self.SOCK.sendto('Done',self.CLIENTIP)
         else:
-            self.SOCK.sendto(self.PAYLOAD[:8192], (self.HOST,self.PORT))
+            self.SOCK.sendto(self.PAYLOAD[:8192], self.CLIENTIP)
             self.helpersend(self.PAYLOAD[8192:])
             
     def helpersend(self,payload):
         if len(payload)<=8192 and len(payload)>0:
-            self.SOCK.sendto(payload,(self.CLIENTIP,self.PORT))
-            self.SOCK.sendto('Done',(self.CLIENTIP,self.PORT))
+            self.SOCK.sendto(payload,self.CLIENTIP)
+            self.SOCK.sendto('Done',self.CLIENTIP)
         else:
-            self.SOCK.sendto(payload[:8192], (self.CLIENTIP,self.PORT))
+            self.SOCK.sendto(payload[:8192],self.CLIENTIP)
             self.helpersend(payload[8192:])
         
    
