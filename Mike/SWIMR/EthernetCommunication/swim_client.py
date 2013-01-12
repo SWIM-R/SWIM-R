@@ -8,7 +8,7 @@ import socket
 #data = "test".join(sys.argv[1:])
 
 
-class SwimClient():
+class SwimClient(object):
     '''
     classdocs
     '''
@@ -33,6 +33,9 @@ class SwimClient():
         self.initialize()
 
     def initialize(self):
+        '''
+        initializes 
+        '''
         # SOCK_DGRAM is the socket type to use for UDP sockets
         # AF_INET sets it to use UDP protocol
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -70,7 +73,18 @@ class SwimClient():
                 break
         
 
+if __name__=='__main__':
+    #from swim_client import SwimClient
+    import sys
+    
+    IP,PORT = str(sys.argv[1]),sys.argv[2]
+    c = SwimClient(IP,PORT)
 
-
+    while 1:
+        shit = raw_input("what?: ")
+        c.setpayload(shit)
+        c.send()
+        #c.receive(64)
+        #print "RPi says: " + c.getreceive()
 
 

@@ -1,14 +1,4 @@
 MODULES_MANAGER_V2
-Ethernet_Example_Code.chat_client|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/Ethernet_Example_Code/chat_client.py
-Ethernet_Example_Code.chat_server|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/Ethernet_Example_Code/chat_server.py
-Ethernet_Example_Code.clientexamplecode|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/Ethernet_Example_Code/clientexamplecode.py
-Ethernet_Example_Code.serverexamplecode|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/Ethernet_Example_Code/serverexamplecode.py
-VideoStreaming.video|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video.py
-VideoStreaming.video2|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video2.py
-VideoStreaming.video3|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video3.py
-VideoStreaming.video_multithread|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video_multithread.py
-VideoStreaming.video_stream_client|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video_stream_client.py
-VideoStreaming.video_stream_server|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/VideoStreaming/video_stream_server.py
 main|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py
 pimain|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/pimain.py
 swim_client|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_client.py
