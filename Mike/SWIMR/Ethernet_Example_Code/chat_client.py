@@ -2,7 +2,7 @@
 #client
 import socket
 import threading
-SIZE =4
+SIZE =4# 4 is the magic number
 class client(threading.Thread):
     def __init__(self,c):
         threading.Thread.__init__(self)
@@ -18,8 +18,10 @@ class client(threading.Thread):
         while not self.stopIt:
             msg = self.mrecv()
             print 'recieved-> ',msg
-
+#new instance of TCP/IP socket
 soc1 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+#connect to the server and this IP and through this port
 soc1.connect(('127.0.0.1',5432))
 soc1.send('WILL SEND') # telling server we will send data from here
 
