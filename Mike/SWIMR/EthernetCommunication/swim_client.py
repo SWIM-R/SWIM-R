@@ -5,12 +5,13 @@ Created on Oct 31, 2012
 '''
 import socket
 import threading
+import time
 from socket import error 
 #import sys
 #data = "test".join(sys.argv[1:])
 
 
-class SwimClient(object,threading.Thread):
+class SwimClient(threading.Thread):
     '''
     classdocs
     '''
@@ -18,6 +19,7 @@ class SwimClient(object,threading.Thread):
         '''
         Constructor
         '''
+        threading.Thread.__init__(self)
         
         if host == "":
             self.HOST = "153.106.75.171"
@@ -35,8 +37,8 @@ class SwimClient(object,threading.Thread):
         self.MAXPACKETSIZE = 32
         self.HOSTPORT = (self.HOST, self.PORT)
         self.initialize()
-        
-
+        self.stopreceivethread = False
+        self.daemon = True
     def initialize(self):
         '''
         initializes connection to server
@@ -47,10 +49,8 @@ class SwimClient(object,threading.Thread):
         #socket for sending
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
-        #socket for receiving
-        self.SOCKRECV = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-        # sets socket to be nonblocking, if data can;t immediately be sent or received then an exception is raised
+       
+        # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
         self.SOCK.setblocking(0)
         
         #Find the server
@@ -85,7 +85,16 @@ class SwimClient(object,threading.Thread):
             self.helpersend(payload[self.MAXPACKETSIZE:])
             
     def isconnected(self):
-        pass
+        self.SOCK.sendto("you there?",self.HOSTPORT)
+        self.SOCK.setblocking(1)
+        self.SOCK.settimeout(5.0)
+       
+        try: 
+            receivedstring = self.SOCK.recv(16)    
+            if receivedstring == "yeah bro":
+                return True
+        except:
+            return False
         
     def setpayload(self, payload):
         self.PAYLOAD = payload
@@ -98,7 +107,7 @@ class SwimClient(object,threading.Thread):
         receivedstring = str()
         while 1:
             try:
-                receivedstring = self.SOCKRECV.recv(size)
+                receivedstring = self.SOCK.recv(size)
             except error:
                 continue
             if receivedstring == 'done':
@@ -106,23 +115,43 @@ class SwimClient(object,threading.Thread):
             else:
                 self.RECEIVE = self.RECEIVE + receivedstring  
     def run(self):
-        while 1:
+        while c.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
             print "RPI says: " + self.RECEIVE
         
 
 if __name__=='__main__':
     #from swim_client import SwimClient
-    import sys
     
+    #Command Line helper
+    import sys
     try:
         IP,PORT = str(sys.argv[1]),int(sys.argv[2])
     except:
         print "try: python swim_client.py <SERVERIP> <PORT>"
         exit(1)
-        
-        
-    c = SwimClient(IP,PORT)
+    ####################
+    
+    while 1:
+        try:
+            #setup()    
+            c = SwimClient(IP,PORT)
+            c.start()
+            ############
+
+            #loop()
+            while c.ISCONNECTED:
+                c.setpayload(raw_input("What: "))
+                c.send()
+                c.ISCONNECTED = c.isconnected()
+                print c.ISCONNECTED
+            ##########   
+            c.stopreceivethread = True    
+        except KeyboardInterrupt:
+            print "bye bye"
+            exit(0)
+           
+    
 
 
 
