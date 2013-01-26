@@ -59,11 +59,13 @@ class SwimClient(threading.Thread):
 
         while not self.ISCONNECTED:
             try:
+                self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
                 data, addr = self.SOCK.recvfrom(32)
                 #print data, addr
                 if data.strip() == 'hello client':
                     print"I've found the server"
                     self.ISCONNECTED = True 
+                time.sleep(1)
             except error:
                 continue        
     def send(self):
@@ -143,10 +145,13 @@ if __name__=='__main__':
             while c.ISCONNECTED:
                 c.setpayload(raw_input("What: "))
                 c.send()
-                c.ISCONNECTED = c.isconnected()
+                
+               ###Connection Checking doesn't work yet 
+               # c.ISCONNECTED = c.isconnected()
                 print c.ISCONNECTED
             ##########   
-            c.stopreceivethread = True    
+            c.stopreceivethread = True  
+            c.SOCK.close()  
         except KeyboardInterrupt:
             print "bye bye"
             exit(0)
