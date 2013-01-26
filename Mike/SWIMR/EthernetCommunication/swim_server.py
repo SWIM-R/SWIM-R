@@ -4,21 +4,21 @@ Created on Jan 10, 2013
 @author: Mike
 '''
 import socket
+import threading
+
 from socket import error
-class SwimServer(object):
+class SwimServer(threading.Thread):
     '''
     classdocs
     '''
     def __init__(self,PORT = int()):
-        #initialize a UDP socket
-        
-        # Listen on port PORT
-        # (to all IP addresses on this system)
+        threading.Thread.__init__(self)
         self.ISCONNECTED = False
         self.RECEIVE = str()
         self.PAYLOAD = str()
         self.MAXPACKETSIZE = 32
-        
+        self.daemon = True
+        self.stopreceivethread = False
         if PORT is None:
             PORT = 9999
         
@@ -26,12 +26,16 @@ class SwimServer(object):
         
     def initialize(self,PORT):
         self.SOCK = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-       
         #no blocking!
         self.SOCK.setblocking(0)
+        
         #Listen to all IPs on system
         listen_addr = ("",PORT)
+        
+        #Bind socket to address
         self.SOCK.bind(listen_addr)
+        
+
         
         #find the client computer
         while self.ISCONNECTED == False:
@@ -44,9 +48,10 @@ class SwimServer(object):
                 self.ISCONNECTED = True
                 self.SOCK.sendto("hello client",self.CLIENTIP)
                 #self.SOCK.sendall("hello client",)
-                break
+                
             
         print "I've found the client"
+        self.RECEIVE = ''
     
     def getreceive(self):
         return self.RECEIVE
@@ -82,14 +87,46 @@ class SwimServer(object):
                 break
             else:
                 self.RECEIVE = self.RECEIVE + receivedstring
-            
+    
+    def run(self):
+        while self.stopreceivethread == False:
+            self.receive(self.MAXPACKETSIZE)
+            print "Client says: " + self.RECEIVE
+    def isconnected(self):
+        self.SOCK.setblocking(1)
+        self.SOCK.settimeout(5.0)
+        
+        try:
+            receivedstring = self.SOCK.recv(16)
+            if receivedstring == "you there?":
+                self.SOCK.sendto("yeah bro", self.CLIENTIP)
+                return True
+        except:
+            return False
+                
+        
 
 if __name__ == '__main__':
-    print "main"
-    print 'serving'
-    c = SwimServer(9999)
     while 1:
-        c.receive(1024)
-        c.setpayload(c.getreceive())
-        c.send()
+        
+        try:
+            #setup()
+            c = SwimServer(9999)
+            c.start()
+            #######
+            
+            #loop()
+            while c.ISCONNECTED:
+                c.setpayload(raw_input("What: "))
+                c.send()
+                #c.ISCONNECTED = c.isconnected()
+                print c.ISCONNECTED
+            #######
+            c.stopreceivethread = True
+            c.SOCK.close()
+        except KeyboardInterrupt:
+            print "bye bye" 
+            exit(0)
+
+
     
