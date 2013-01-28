@@ -3,13 +3,11 @@ Created on Oct 17, 2012
 
 @author: Mike
 '''
-
+import sys
+sys.path.append("../EthernetCommunication")
 MAXPACKETSIZE = 8192
 from swim_client import SwimClient
 import cv
-import sys
-
-sys.path.append("~/Desktop/SWIM-R/Mike/SWIMR/EthernetCommunication")
 
 try:
     HOST = str(sys.argv[1])
