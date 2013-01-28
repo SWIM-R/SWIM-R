@@ -59,7 +59,7 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
         
 if __name__ == "__main__":
     print 'main'
-    HOST, PORT = '153.106.78.248', 9999
+    HOST, PORT = '153.106.113.107', 9999
     server = SocketServer.UDPServer((HOST, PORT), MyUDPHandler)
     
     camcapture = cv2.VideoCapture(0)
