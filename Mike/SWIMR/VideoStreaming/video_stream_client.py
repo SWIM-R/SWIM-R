@@ -7,9 +7,19 @@ Created on Oct 17, 2012
 MAXPACKETSIZE = 8192
 from swim_client import SwimClient
 import cv
+import sys
+
+sys.path.append("~/Desktop/SWIM-R/Mike/SWIMR/EthernetCommunication")
+
+try:
+    HOST = str(sys.argv[1])
+    PORT = int(sys.argv[2])
+except:
+    print "try: python video_stream_client.py <Server IP address> <PORT>"
+    exit(1)
 
 broken = False
-C = SwimClient(host = '192.168.0.102', port = 9999)
+C = SwimClient(host = HOST, port = PORT)
 requestwhat = 'frame'
 while True:
     C.setpayload(requestwhat)
