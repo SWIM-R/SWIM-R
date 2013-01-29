@@ -31,7 +31,7 @@ METHODS:
 
 (void)   constructor:  
             Initializes with given Baud rate.  Default is 115200.  If garbage baud rate is specified, uses default. 
-            This is also where the serial port is initialized. If it cannot initialize, it will get stuck until it is. 
+            This is also where the serial port is initialized. 
     
 (void)   initialize:
              invoked in several locations.  scans for serial devices, when it finds the arduino, connects to it.  

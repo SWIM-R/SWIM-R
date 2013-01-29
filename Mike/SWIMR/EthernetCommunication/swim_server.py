@@ -111,19 +111,19 @@ if __name__ == '__main__':
         
         try:
             #setup()
-            c = SwimServer(9999)
-            c.start()
+            ethernet = SwimServer(9999)
+            ethernet.start()
             #######
             
             #loop()
-            while c.ISCONNECTED:
-                c.setpayload(raw_input("What: "))
-                c.send()
-                #c.ISCONNECTED = c.isconnected()
-                print c.ISCONNECTED
+            while ethernet.ISCONNECTED:
+                ethernet.setpayload(raw_input("What: "))
+                ethernet.send()
+                #ethernet.ISCONNECTED = ethernet.isconnected()
+                print ethernet.ISCONNECTED
             #######
-            c.stopreceivethread = True
-            c.SOCK.close()
+            ethernet.stopreceivethread = True
+            ethernet.SOCK.close()
         except KeyboardInterrupt:
             print "bye bye" 
             exit(0)

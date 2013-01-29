@@ -139,7 +139,7 @@ class SwimClient(threading.Thread):
         implementation of the inherited run() method from the Thread class.  
         This is a separate thread from the main thread that is always receiving information
         '''
-        while c.stopreceivethread == False:
+        while ethernet.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
             print "RPI says: " + self.RECEIVE
         
@@ -159,27 +159,27 @@ if __name__=='__main__':
     while 1:
         try:
             #setup()    
-            c = SwimClient(IP,PORT)
-            c.start()
+            ethernet = SwimClient(IP,PORT)
+            ethernet.start()
             ############
 
 
 
             #loop()
-            while c.ISCONNECTED:
-                c.setpayload(raw_input("What: "))
-                c.send()
+            while ethernet.ISCONNECTED:
+                ethernet.setpayload(raw_input("What: "))
+                ethernet.send()
                 
                 ###Connection Checking doesn't work yet 
-                # c.ISCONNECTED = c.isconnected()
-                print c.ISCONNECTED
+                # ethernet.ISCONNECTED = ethernet.isconnected()
+                print ethernet.ISCONNECTED
             ##########  
             
             
             #cleanup() 
             #Things in this section are called if something goes wrong in loop
-            c.stopreceivethread = True  
-            c.SOCK.close()  
+            ethernet.stopreceivethread = True  
+            ethernet.SOCK.close()  
             ######
             
             

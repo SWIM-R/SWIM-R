@@ -4,7 +4,6 @@ Created on Jan 25, 2013
 @author: Mike
 '''
 import ast
-import types
 class SwimPacket(object):
     '''
     classdocs
@@ -44,9 +43,9 @@ class SwimPacket(object):
         
         
 if __name__=='__main__':
-    c = SwimPacket()
+    ethernet = SwimPacket()
     
-    t = c.sealpacket()
+    t = ethernet.sealpacket()
     
     print t
     
