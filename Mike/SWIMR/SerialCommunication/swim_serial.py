@@ -63,7 +63,7 @@ METHODS:
         if baudrate == 0:
             self.BAUDRATE = 115200
         else:
-            GOOD_BAUD_RATES = [115200,57600,38400,28800,19200,14400,9600,4800,2400,1200,300]
+            GOOD_BAUD_RATES = [38400,115200,57600,38400,28800,19200,14400,9600,4800,2400,1200,300]
             if baudrate in GOOD_BAUD_RATES:
                 self.BAUDRATE = baudrate
             else:

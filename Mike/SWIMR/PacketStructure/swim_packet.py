@@ -43,9 +43,9 @@ class SwimPacket(object):
         
         
 if __name__=='__main__':
-    ethernet = SwimPacket()
+    packet = SwimPacket()
     
-    t = ethernet.sealpacket()
+    t = packet.sealpacket()
     
     print t
     

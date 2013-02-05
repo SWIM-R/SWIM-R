@@ -43,11 +43,11 @@ while 1:
         
         
         
-        #Setting up Serial Communication
-        print 'connecting to arduino'
-        serial = SwimSerial(115200)
-        print 'connected!'
-        ############
+            #Setting up Serial Communication
+            print 'connecting to arduino'
+            serial = SwimSerial(38400)
+            print 'connected!'
+            ############
         
         
         #########################
