@@ -53,15 +53,11 @@ while 1:
             ethernet.send()
             
             ###Connection Checking doesn't work yet 
-            # ethernet.ISCONNECTED = ethernet.isconnected()
+            ethernet.ISCONNECTED = ethernet.isconnected()
             
             
             print ethernet.ISCONNECTED
         #########################  
-        
-        
-        
-        
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
         ethernet.stopreceivethread = True  

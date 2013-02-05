@@ -7,6 +7,7 @@ import socket
 import threading
 import time
 from socket import error 
+from socket import timeout
 #import sys
 #data = "test".join(sys.argv[1:])
 
@@ -34,7 +35,7 @@ class SwimClient(threading.Thread):
         self.PAYLOAD = "default"
         self.RECEIVE = ''
         self.ISCONNECTED = False
-        self.MAXPACKETSIZE = 32
+        self.MAXPACKETSIZE = 8196
         self.HOSTPORT = (self.HOST, self.PORT)
         self.initialize()
         self.stopreceivethread = False
@@ -74,13 +75,20 @@ class SwimClient(threading.Thread):
         '''
         sends whatever is in self.PAYLOAD. calls helpersend if it is large message.  Sends 'done' at the end of a packet
         '''
-        if len(self.PAYLOAD)<=self.MAXPACKETSIZE and len(self.PAYLOAD)>0:
+        
+        if len(self.PAYLOAD) <= 0:
+            return
+        
+        
+        elif len(self.PAYLOAD)<=self.MAXPACKETSIZE:
             self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
             self.SOCK.sendto('done',(self.HOST,self.PORT))
         else:
             self.SOCK.sendto(self.PAYLOAD[:self.MAXPACKETSIZE], self.HOSTPORT)
             self.helpersend(self.PAYLOAD[self.MAXPACKETSIZE:])            
     def helpersend(self,payload):
+        time.sleep(.001)
+
         '''
         don't call helpersend directly.  sends 'done' at the end of a packet
         '''
@@ -99,11 +107,13 @@ class SwimClient(threading.Thread):
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(5.0)
        
-        try: 
+        try:
             receivedstring = self.SOCK.recv(16)    
             if receivedstring == "yeah bro":
                 return True
-        except:
+            else:
+                return False
+        except timeout:
             return False
         
     def setpayload(self, payload):
@@ -139,61 +149,9 @@ class SwimClient(threading.Thread):
         implementation of the inherited run() method from the Thread class.  
         This is a separate thread from the main thread that is always receiving information
         '''
-        while ethernet.stopreceivethread == False:
+        while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
             print "RPI says: " + self.RECEIVE
-        
-
-if __name__=='__main__':
-    #from swim_client import SwimClient
     
-    #Command Line helper
-    import sys
-    try:
-        IP,PORT = str(sys.argv[1]),int(sys.argv[2])
-    except:
-        print "try: python swim_client.py <SERVERIP> <PORT>"
-        exit(1)
-    ####################
-    
-    while 1:
-        try:
-            #setup()    
-            ethernet = SwimClient(IP,PORT)
-            ethernet.start()
-            ############
-
-
-
-            #loop()
-            while ethernet.ISCONNECTED:
-                ethernet.setpayload(raw_input("What: "))
-                ethernet.send()
-                
-                ###Connection Checking doesn't work yet 
-                # ethernet.ISCONNECTED = ethernet.isconnected()
-                print ethernet.ISCONNECTED
-            ##########  
-            
-            
-            #cleanup() 
-            #Things in this section are called if something goes wrong in loop
-            ethernet.stopreceivethread = True  
-            ethernet.SOCK.close()  
-            ######
-            
-            
-            
-            
-            
-            
-            
-            
-        except KeyboardInterrupt:
-            print "bye bye"
-            exit(0)
-           
-    
-
 
 

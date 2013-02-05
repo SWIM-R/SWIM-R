@@ -18,7 +18,7 @@ from swim_serial import SwimSerial
 
 ###############Command Line helper################
 try:
-    name  = sys.argv[0]
+    name  = str(sys.argv[0])
 except:
     print "starting {0}......".format(name)
     exit(1)
@@ -31,11 +31,10 @@ FIRSTTIME = True
 while 1:
     try:
         ########setup()#########
-        
         if FIRSTTIME:
             #Setting up Ethernet Communication
             print 'finding client....'
-            ethernet = SwimServer()
+            ethernet = SwimServer(9999)
             print 'client found......'
             print 'starting receive thread'
             ethernet.start()
@@ -44,12 +43,10 @@ while 1:
         
         
             #Setting up Serial Communication
-            print 'connecting to arduino'
-            serial = SwimSerial(38400)
+            print 'connecting arduino'
+            # serial = SwimSerial(38400)
             print 'connected!'
             ############
-        
-        
         #########################
         
         
@@ -59,12 +56,13 @@ while 1:
         
         ############loop()#######
         #main loop of the program
-        while ethernet.ISCONNECTED and serial.IS_CONNECTED:
+        #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
+        while ethernet.ISCONNECTED:
             ethernet.setpayload(raw_input("What: "))
             ethernet.send()
             
             ###Connection Checking doesn't work yet 
-            # ethernet.ISCONNECTED = ethernet.isconnected()
+            #ethernet.ISCONNECTED = ethernet.isconnected()
             
             
             print ethernet.ISCONNECTED

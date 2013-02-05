@@ -5,6 +5,7 @@ Created on Jan 10, 2013
 '''
 import socket
 import threading
+import time
 
 from socket import error
 class SwimServer(threading.Thread):
@@ -16,7 +17,7 @@ class SwimServer(threading.Thread):
         self.ISCONNECTED = False
         self.RECEIVE = str()
         self.PAYLOAD = str()
-        self.MAXPACKETSIZE = 32
+        self.MAXPACKETSIZE = 8196
         self.daemon = True
         self.stopreceivethread = False
         if PORT is None:
@@ -59,8 +60,13 @@ class SwimServer(threading.Thread):
         return self.PAYLOAD
     def setpayload(self,payload = str()):
         self.PAYLOAD = payload
+    
+    
+    
     def send(self):
-        if len(self.PAYLOAD)<=self.MAXPACKETSIZE and len(self.PAYLOAD)>0:
+        if len(self.PAYLOAD) <= 0:
+            return
+        elif len(self.PAYLOAD)<=self.MAXPACKETSIZE:
             self.SOCK.sendto(self.PAYLOAD,self.CLIENTIP)
             self.SOCK.sendto('done',self.CLIENTIP)
         else:
@@ -68,6 +74,7 @@ class SwimServer(threading.Thread):
             self.helpersend(self.PAYLOAD[self.MAXPACKETSIZE:])
             
     def helpersend(self,payload):
+        time.sleep(.001)
         if len(payload)<=self.MAXPACKETSIZE and len(payload)>0:
             self.SOCK.sendto(payload,self.CLIENTIP)
             self.SOCK.sendto('done',self.CLIENTIP)
@@ -96,13 +103,13 @@ class SwimServer(threading.Thread):
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(5.0)
         
-        try:
-            receivedstring = self.SOCK.recv(16)
-            if receivedstring == "you there?":
-                self.SOCK.sendto("yeah bro", self.CLIENTIP)
-                return True
-        except:
-            return False
+        
+        receivedstring = self.SOCK.recv(16)
+        if receivedstring == "you there?":
+            self.SOCK.sendto("yeah bro", self.CLIENTIP)
+            return True
+    
+        return False
                 
         
 
