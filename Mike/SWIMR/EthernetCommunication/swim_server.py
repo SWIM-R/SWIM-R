@@ -8,6 +8,7 @@ import threading
 import time
 
 from socket import error
+from socket import timeout
 class SwimServer(threading.Thread):
     '''
     classdocs
@@ -19,6 +20,7 @@ class SwimServer(threading.Thread):
         self.PAYLOAD = str()
         self.MAXPACKETSIZE = 8196
         self.daemon = True
+        self.TIMEOUT = 5.0
         self.stopreceivethread = False
         if PORT is None:
             PORT = 9999
@@ -27,8 +29,17 @@ class SwimServer(threading.Thread):
         
     def initialize(self,PORT):
         self.SOCK = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+        
+        
+        
         #no blocking!
-        self.SOCK.setblocking(0)
+        #self.SOCK.setblocking(0)
+        
+        #sets socket to be blocking along with a 5.0 second timeout, if can't cant be sent to received within 5 seconds then the timeout exception is raised
+        self.SOCK.setblocking(1)
+        self.SOCK.settimeout(self.TIMEOUT)
+        
+        
         
         #Listen to all IPs on system
         listen_addr = ("",PORT)
@@ -88,8 +99,8 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except:
-                continue
+            except timeout:
+                self.ISCONNECTED = False
             if receivedstring == 'done':
                 break
             else:

@@ -40,7 +40,7 @@ class SwimClient(threading.Thread):
         self.initialize()
         self.stopreceivethread = False
         self.daemon = True
-        
+        self.TIMEOUT = 5.0
         
     def initialize(self):
         '''
@@ -54,7 +54,13 @@ class SwimClient(threading.Thread):
         
        
         # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
-        self.SOCK.setblocking(0)
+        #self.SOCK.setblocking(0)
+        
+        
+        #sets socket to be blocking along with a 5.0 second timeout, if can't cant be sent to received within 5 seconds then the timeout exception is raised
+        self.SOCK.setblocking(1)
+        self.SOCK.settimeout(self.TIMEOUT)
+        
         
         #Find the server
         self.setpayload("Hello!")
@@ -132,14 +138,13 @@ class SwimClient(threading.Thread):
         '''
         receives a packet until it gets 'done'.  the packet is stored in RECEIVE
         '''
-        
         self.RECEIVE = ''
         receivedstring = str()
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except error:
-                continue
+            except timeout:
+                self.ISCONNECTED = False
             if receivedstring == 'done':
                 break
             else:
