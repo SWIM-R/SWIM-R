@@ -37,10 +37,11 @@ class SwimClient(threading.Thread):
         self.ISCONNECTED = False
         self.MAXPACKETSIZE = 8196
         self.HOSTPORT = (self.HOST, self.PORT)
-        self.initialize()
         self.stopreceivethread = False
         self.daemon = True
         self.TIMEOUT = 5.0
+        self.initialize()
+
         
     def initialize(self):
         '''
@@ -157,6 +158,11 @@ class SwimClient(threading.Thread):
         while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
             print "RPI says: " + self.RECEIVE
+    
+    def cleanup(self):
+        self.stopreceivethread = True  
+        self.SOCK.close()  
+        self.__stop()
     
 
 

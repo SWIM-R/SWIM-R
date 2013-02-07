@@ -110,11 +110,18 @@ class SwimServer(threading.Thread):
         while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
             print "Client says: " + self.RECEIVE
+            
+    def cleanup(self):
+        self.stopreceivethread = True  
+        self.SOCK.close()  
+        self.__stop()
     def isconnected(self):
+        '''
+        This doesn't work yet.  It probably wont, dont use it
+        
+        '''
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(5.0)
-        
-        
         receivedstring = self.SOCK.recv(16)
         if receivedstring == "you there?":
             self.SOCK.sendto("yeah bro", self.CLIENTIP)
@@ -124,27 +131,27 @@ class SwimServer(threading.Thread):
                 
         
 
-if __name__ == '__main__':
-    while 1:
-        
-        try:
-            #setup()
-            ethernet = SwimServer(9999)
-            ethernet.start()
-            #######
-            
-            #loop()
-            while ethernet.ISCONNECTED:
-                ethernet.setpayload(raw_input("What: "))
-                ethernet.send()
-                #ethernet.ISCONNECTED = ethernet.isconnected()
-                print ethernet.ISCONNECTED
-            #######
-            ethernet.stopreceivethread = True
-            ethernet.SOCK.close()
-        except KeyboardInterrupt:
-            print "bye bye" 
-            exit(0)
+#if __name__ == '__main__':
+#    while 1:
+#        
+#        try:
+#            #setup()
+#            ethernet = SwimServer(9999)
+#            ethernet.start()
+#            #######
+#            
+#            #loop()
+#            while ethernet.ISCONNECTED:
+#                ethernet.setpayload(raw_input("What: "))
+#                ethernet.send()
+#                #ethernet.ISCONNECTED = ethernet.isconnected()
+#                print ethernet.ISCONNECTED
+#            #######
+#            ethernet.stopreceivethread = True
+#            ethernet.SOCK.close()
+#        except KeyboardInterrupt:
+#            print "bye bye" 
+#            exit(0)
 
 
     
