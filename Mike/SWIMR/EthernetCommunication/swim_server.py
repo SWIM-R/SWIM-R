@@ -148,8 +148,7 @@ class SwimServer(threading.Thread):
         stops closes the socket and stops the receive thread
         '''
         self.stopreceivethread = True  
-        self.SOCK.close()  
-        self.__stop()
+        self.SOCK.close()
     def isconnected(self):
         '''
         This doesn't work yet.  It probably wont, dont use it
