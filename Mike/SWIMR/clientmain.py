@@ -59,7 +59,6 @@ while 1:
         #Things in this section are called if something goes wrong in loop()
         ethernet.stopreceivethread = True  
         ethernet.SOCK.close()  
-        ethernet.__stop()
         ########################
     except KeyboardInterrupt:
         print "bye bye"
