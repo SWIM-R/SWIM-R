@@ -16,12 +16,9 @@ from swim_serial import SwimSerial
 
 
 
-###############Command Line helper################
-try:
-    name  = str(sys.argv[0])
-except:
-    print "starting {0}......".format(name)
-    exit(1)
+###############Welcome################
+name  = str(sys.argv[0])
+print "starting {0}......".format(name)
 ##################################################
 
 

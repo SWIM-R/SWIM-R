@@ -32,8 +32,8 @@ class SwimClient(threading.Thread):
         else:
             self.PORT = port
             
-        self.PAYLOAD = "default"
-        self.RECEIVE = ''
+        self.PAYLOAD = str()
+        self.RECEIVE = str()
         self.ISCONNECTED = False
         self.MAXPACKETSIZE = 8196
         self.HOSTPORT = (self.HOST, self.PORT)
@@ -49,7 +49,6 @@ class SwimClient(threading.Thread):
         '''
         # SOCK_DGRAM is the socket type to use for UDP sockets
         # AF_INET sets it to use UDP protocol
-        
         #socket for sending
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
@@ -58,7 +57,7 @@ class SwimClient(threading.Thread):
         #self.SOCK.setblocking(0)
         
         
-        #sets socket to be blocking along with a 5.0 second timeout, if can't cant be sent to received within 5 seconds then the timeout exception is raised
+        #sets socket to be blocking along with a 5.0 second timeout, if can't be sent to received within 5 seconds then the timeout exception is raised
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
         
@@ -76,7 +75,7 @@ class SwimClient(threading.Thread):
                     print"I've found the server"
                     self.ISCONNECTED = True 
                 time.sleep(1)
-            except error:
+            except timeout:
                 continue        
     def send(self):
         '''
@@ -94,11 +93,10 @@ class SwimClient(threading.Thread):
             self.SOCK.sendto(self.PAYLOAD[:self.MAXPACKETSIZE], self.HOSTPORT)
             self.helpersend(self.PAYLOAD[self.MAXPACKETSIZE:])            
     def helpersend(self,payload):
-        time.sleep(.001)
-
         '''
         don't call helpersend directly.  sends 'done' at the end of a packet
         '''
+        time.sleep(.001)
         if len(payload)<=self.MAXPACKETSIZE and len(payload)>0:
             self.SOCK.sendto(payload,self.HOSTPORT)
             self.SOCK.sendto('done', self.HOSTPORT)
@@ -123,7 +121,7 @@ class SwimClient(threading.Thread):
         except timeout:
             return False
         
-    def setpayload(self, payload):
+    def setpayload(self, payload = str()):
         '''
         setter for the payload that is going to be sent 
         '''
@@ -160,6 +158,9 @@ class SwimClient(threading.Thread):
             print "RPI says: " + self.RECEIVE
     
     def cleanup(self):
+        '''
+        stops closes the socket and stops the receive thread
+        '''
         self.stopreceivethread = True  
         self.SOCK.close()  
         self.__stop()
