@@ -54,7 +54,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
         while ethernet.ISCONNECTED:
-            ethernet.setpayload(raw_input("What: "))
+            ethernet.setpayload('test')
             ethernet.send()
             if ethernet.ISCONNECTED:
                 print "still connected"

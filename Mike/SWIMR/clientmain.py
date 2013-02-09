@@ -44,7 +44,7 @@ while 1:
         ############loop()#######
         #main loop of the program
         while ethernet.ISCONNECTED:
-            ethernet.setpayload(raw_input("What: "))
+            ethernet.setpayload('test')
             ethernet.send()
         if ethernet.ISCONNECTED:
             print "still connected"
