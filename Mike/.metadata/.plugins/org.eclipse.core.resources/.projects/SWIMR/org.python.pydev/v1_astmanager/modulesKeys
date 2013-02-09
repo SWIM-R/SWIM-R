@@ -1,6 +1,0 @@
-MODULES_MANAGER_V2
-main|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/main.py
-pimain|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/pimain.py
-swim_client|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_client.py
-swim_serial|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/SerialCommunication/swim_serial.py
-swim_server|/Users/Mike/Desktop/SWIM-R_Repo/Mike/SWIMR/EthernetCommunication/swim_server.py

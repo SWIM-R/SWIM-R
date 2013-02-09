@@ -1,8 +1,0 @@
-from swim_client import SwimClient
-
-c = SwimClient('153.103.75.171',9999)
-
-while 1:
-    shit = raw_input("what?: ")
-    c.setpayload(shit)
-    c.send()

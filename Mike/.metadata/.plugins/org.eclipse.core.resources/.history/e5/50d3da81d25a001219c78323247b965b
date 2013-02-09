@@ -1,6 +1,0 @@
-from swim_client import SwimClient
-
-c = SwimClient()
-
-while 1:
-    
