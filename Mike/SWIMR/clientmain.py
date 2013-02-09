@@ -12,7 +12,7 @@ sys.path.append('../SWIMR/SerialCommunication')
 from swim_client import SwimClient
 from swim_packet import SwimPacket
 from swim_serial import SwimSerial
-
+import time
 
 
 
@@ -44,6 +44,7 @@ while 1:
         ############loop()#######
         #main loop of the program
         while ethernet.ISCONNECTED:
+            time.sleep(2)
             ethernet.setpayload('test')
             ethernet.send()
         if ethernet.ISCONNECTED:
