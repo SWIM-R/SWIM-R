@@ -124,7 +124,6 @@ class SwimServer(threading.Thread):
         '''
         receives a packet until it gets 'done'.  the packet is stored in RECEIVE
         '''
-        self.RECEIVE = ''
         receivedstring = str()
         while 1:
             try:
@@ -153,7 +152,8 @@ class SwimServer(threading.Thread):
         '''
         stops closes the socket and stops the receive thread
         '''
-        self.stopreceivethread = True  
+        self.stopreceivethread = True 
+        time.sleep(0.001) 
         self.SOCK.close()
     def isconnected(self):
         '''

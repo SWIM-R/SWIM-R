@@ -61,10 +61,7 @@ while 1:
             else:
                 print 'not connected!'
                 
-        #########################  
-        
-        
-        
+        ########################
         
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
