@@ -169,7 +169,6 @@ class SwimClient(threading.Thread):
         '''
         while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
-            print "Client says: " + self.getreceive()
    
     def cleanup(self):
         '''

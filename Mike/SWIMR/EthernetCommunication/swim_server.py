@@ -162,9 +162,7 @@ class SwimServer(threading.Thread):
         This is a separate thread from the main thread that is always receiving information
         '''
         while self.stopreceivethread == False:
-            self.receive(self.MAXPACKETSIZE)
-            print "Client says: " + self.getreceive()
-            
+            self.receive(self.MAXPACKETSIZE)            
     def cleanup(self):
         '''
         stops closes the socket and stops the receive thread
