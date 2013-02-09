@@ -138,6 +138,7 @@ class SwimClient(threading.Thread):
         receives a packet until it gets 'done'.  the packet is stored in RECEIVE
         '''
         receivedstring = str()
+        temp = str()
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
@@ -146,7 +147,8 @@ class SwimClient(threading.Thread):
             if receivedstring == 'done':
                 break
             else:
-                self.RECEIVE = self.RECEIVE + receivedstring  
+                temp = temp + receivedstring
+            self.RECEIVE = temp
     def run(self):
         '''
         implementation of the inherited run() method from the Thread class.  

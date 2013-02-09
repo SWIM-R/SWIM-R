@@ -47,10 +47,10 @@ while 1:
             time.sleep(2)
             ethernet.setpayload('test')
             ethernet.send()
-        if ethernet.ISCONNECTED:
-            print "still connected"
-        else:
-            print 'not connected!'
+            if ethernet.ISCONNECTED:
+                print "still connected"
+            else:
+                print 'not connected!'
 
         ######################### 
          
@@ -58,7 +58,9 @@ while 1:
          
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
+        print "cleaning up"
         ethernet.cleanup()
+        print 'cleaned up!'
         ########################
     except KeyboardInterrupt:
         print "bye bye"
