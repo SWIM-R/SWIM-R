@@ -61,6 +61,8 @@ while 1:
                 print "still connected"
             else:
                 print 'not connected!'
+            
+            print 'client says: ' + ethernet.getreceive()
                 
         ########################
         

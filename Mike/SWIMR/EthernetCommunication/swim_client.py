@@ -42,6 +42,7 @@ class SwimClient(threading.Thread):
         self.TIMEOUT = 3.0
         self.initialize()
         self.LASTMESSAGE = str()
+        self.NEWMESSAGE = True
         
     def initialize(self):
         '''
@@ -131,11 +132,10 @@ class SwimClient(threading.Thread):
         '''
         getter for whatever has been received
         '''
-        
-        while self.LASTMESSAGE == self.RECEIVE:
-            continue
-        
-        return self.RECEIVE
+        if self.NEWMESSAGE:    
+            return self.RECEIVE
+        else:
+            return
     
     def receive(self, size = int()):
         '''
@@ -154,6 +154,12 @@ class SwimClient(threading.Thread):
                 break
             else:
                 temp = temp + receivedstring
+            
+            if self.LASTMESSAGE != temp:
+                self.NEWMESSAGE = True
+            else:
+                self.NEWMESSAGE = False   
+                
             self.LASTMESSAGE = self.RECEIVE
             self.RECEIVE = temp
     def run(self):

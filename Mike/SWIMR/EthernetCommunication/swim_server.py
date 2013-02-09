@@ -33,6 +33,7 @@ class SwimServer(threading.Thread):
         
         self.initialize(PORT)
         self.LASTMESSAGE = str()
+        self.NEWMESSAGE = True
         
     def initialize(self,PORT):
         '''
@@ -82,9 +83,10 @@ class SwimServer(threading.Thread):
         '''
         getter for whatever has been received
         '''
-        while self.LASTMESSAGE == self.RECEIVE:
-            continue
-        return self.RECEIVE
+        if self.NEWMESSAGE:
+            return self.RECEIVE
+        else:
+            return
     def getpayload(self):
         '''
         This method is probably useless
@@ -138,12 +140,19 @@ class SwimServer(threading.Thread):
                 return
             if receivedstring == 'done':
                 break
-            if receivedstring == 'Hello!':
+            elif receivedstring == 'Hello!':
                 self.setpayload('hello client')
                 self.send()
                 return
             else:
                 temp = temp + receivedstring
+            
+            
+            if self.LASTMESSAGE != temp:
+                self.NEWMESSAGE = True
+            else:
+                self.NEWMESSAGE = False
+                
             self.LASTMESSAGE = self.RECEIVE
             self.RECEIVE = temp
     
