@@ -144,6 +144,8 @@ class SwimClient(threading.Thread):
                 receivedstring = self.SOCK.recv(size)
             except timeout:
                 self.ISCONNECTED = False
+                self.stopreceivethread = True
+                return
             if receivedstring == 'done':
                 break
             else:

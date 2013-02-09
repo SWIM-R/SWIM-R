@@ -131,12 +131,14 @@ class SwimServer(threading.Thread):
                 receivedstring = self.SOCK.recv(size)
             except timeout:
                 self.ISCONNECTED = False
+                self.stopreceivethread = True
+                return
             if receivedstring == 'done':
                 break
             if receivedstring == 'Hello!':
                 self.setpayload('hello client')
                 self.send()
-                break
+                return
             else:
                 temp = temp + receivedstring
             self.RECEIVE = temp
