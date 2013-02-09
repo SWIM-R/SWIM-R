@@ -163,8 +163,8 @@ class SwimClient(threading.Thread):
         '''
         while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
-            print "RPI says: " + self.RECEIVE
-    
+            print "Client says: " + self.getreceive()
+   
     def cleanup(self):
         '''
         stops closes the socket and stops the receive thread

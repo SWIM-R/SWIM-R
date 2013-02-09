@@ -154,7 +154,7 @@ class SwimServer(threading.Thread):
         '''
         while self.stopreceivethread == False:
             self.receive(self.MAXPACKETSIZE)
-            print "Client says: " + self.RECEIVE
+            print "Client says: " + self.getreceive()
             
     def cleanup(self):
         '''
