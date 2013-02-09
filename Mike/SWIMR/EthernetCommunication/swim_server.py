@@ -53,7 +53,6 @@ class SwimServer(threading.Thread):
         self.SOCK.settimeout(self.TIMEOUT)
         
         
-        
         #Listen to all IPs on system, there should just be one..
         listen_addr = ("",PORT)
         
@@ -133,6 +132,10 @@ class SwimServer(threading.Thread):
             except timeout:
                 self.ISCONNECTED = False
             if receivedstring == 'done':
+                break
+            if receivedstring == 'Hello!':
+                self.setpayload('hello client')
+                self.send()
                 break
             else:
                 self.RECEIVE = self.RECEIVE + receivedstring
