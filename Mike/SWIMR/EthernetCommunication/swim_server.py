@@ -26,12 +26,13 @@ class SwimServer(threading.Thread):
         self.PAYLOAD = str()
         self.MAXPACKETSIZE = 8196
         self.daemon = True
-        self.TIMEOUT = 5.0
+        self.TIMEOUT = 3.0
         self.stopreceivethread = False
         if PORT is None:
             PORT = 9999
         
         self.initialize(PORT)
+        self.LASTMESSAGE = str()
         
     def initialize(self,PORT):
         '''
@@ -81,6 +82,8 @@ class SwimServer(threading.Thread):
         '''
         getter for whatever has been received
         '''
+        while self.LASTMESSAGE == self.RECEIVE:
+            continue
         return self.RECEIVE
     def getpayload(self):
         '''
@@ -141,6 +144,7 @@ class SwimServer(threading.Thread):
                 return
             else:
                 temp = temp + receivedstring
+            self.LASTMESSAGE = self.RECEIVE
             self.RECEIVE = temp
     
     def run(self):
