@@ -141,8 +141,8 @@ class SwimServer(threading.Thread):
             if receivedstring == 'done':
                 break
             elif receivedstring == 'Hello!':
-                self.setpayload('hello client')
-                self.send()
+                self.ISCONNECTED = False
+                self.stopreceivethread = True
                 return
             else:
                 temp = temp + receivedstring

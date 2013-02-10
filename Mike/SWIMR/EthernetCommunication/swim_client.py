@@ -71,11 +71,10 @@ class SwimClient(threading.Thread):
             try:
                 self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
                 data, addr = self.SOCK.recvfrom(32)
-                #print data, addr
                 if data.strip() == 'hello client':
                     print"I've found the server"
                     self.ISCONNECTED = True 
-                time.sleep(1)
+                time.sleep(3.0)
             except timeout:
                 continue        
     def send(self):
