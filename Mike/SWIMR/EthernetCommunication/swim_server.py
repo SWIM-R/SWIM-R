@@ -148,13 +148,13 @@ class SwimServer(threading.Thread):
                 temp = temp + receivedstring
             
             
-            if self.LASTMESSAGE != temp:
-                self.NEWMESSAGE = True
-            else:
-                self.NEWMESSAGE = False
-                
-            self.LASTMESSAGE = self.RECEIVE
-            self.RECEIVE = temp
+        if self.LASTMESSAGE != temp:
+            self.NEWMESSAGE = True
+        else:
+            self.NEWMESSAGE = False
+            
+        self.LASTMESSAGE = self.RECEIVE
+        self.RECEIVE = temp
     
     def run(self):
         '''
