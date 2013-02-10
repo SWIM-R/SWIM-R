@@ -132,10 +132,8 @@ class SwimClient(threading.Thread):
         '''
         getter for whatever has been received
         '''
-        if self.NEWMESSAGE:    
-            return self.RECEIVE
-        else:
-            return
+        return self.RECEIVE
+   
     
     def receive(self, size = int()):
         '''
@@ -146,7 +144,7 @@ class SwimClient(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except timeout:
+            except :
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return

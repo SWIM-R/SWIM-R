@@ -83,10 +83,10 @@ class SwimServer(threading.Thread):
         '''
         getter for whatever has been received
         '''
-        if self.NEWMESSAGE:
-            return self.RECEIVE
-        else:
-            return
+        
+        return self.RECEIVE
+       
+    
     def getpayload(self):
         '''
         This method is probably useless
@@ -134,7 +134,7 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except timeout:
+            except :
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
