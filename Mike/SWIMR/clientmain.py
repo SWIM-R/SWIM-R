@@ -44,7 +44,7 @@ while 1:
         ############loop()#######
         #main loop of the program
         while ethernet.ISCONNECTED:
-            time.sleep(2)
+            time.sleep(0.2)
             ethernet.setpayload('test')
             ethernet.send()
             if ethernet.ISCONNECTED:
@@ -52,8 +52,10 @@ while 1:
             else:
                 print 'not connected!'
                 
-            print 'rpi says: ' + ethernet.getreceive()
-
+            if ethernet.NEWMESSAGE:
+                print "this is a new message: " + ethernet.getreceive()
+            else:
+                print 'this is not a new message: ' + ethernet.getreceive()
         ######################### 
          
          

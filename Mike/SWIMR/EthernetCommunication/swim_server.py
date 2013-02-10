@@ -134,7 +134,7 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except :
+            except:
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
@@ -183,30 +183,4 @@ class SwimServer(threading.Thread):
             return True
     
         return False
-                
-        
-
-#if __name__ == '__main__':
-#    while 1:
-#        
-#        try:
-#            #setup()
-#            ethernet = SwimServer(9999)
-#            ethernet.start()
-#            #######
-#            
-#            #loop()
-#            while ethernet.ISCONNECTED:
-#                ethernet.setpayload(raw_input("What: "))
-#                ethernet.send()
-#                #ethernet.ISCONNECTED = ethernet.isconnected()
-#                print ethernet.ISCONNECTED
-#            #######
-#            ethernet.stopreceivethread = True
-#            ethernet.SOCK.close()
-#        except KeyboardInterrupt:
-#            print "bye bye" 
-#            exit(0)
-
-
     
