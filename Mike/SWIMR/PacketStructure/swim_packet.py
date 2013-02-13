@@ -4,33 +4,31 @@ Created on Jan 25, 2013
 @author: Mike
 '''
 import ast
-class SwimPacket(object):
+class SwimPacket():
     '''
     classdocs
     '''
 
 
-    def __init__(self,STRING = str()):
+    def __init__(self,DICT = dict()):
         '''
         Edit the member values of this class directly, please.  I don't think we need getters and setters.....
         
         If you initialize it with a string that was just received:
-            1.  The string is converted to a dictionary
             2. each key of the dictionary becomes a member of the instance of SwimPacket
             3. each member is initialized with the value the key points to
         '''
         
         #if not initialized with anything, ititialize some garbage values
-        if STRING == '':
+        if DICT is None:
             self.header = "hello"
             self.format_string = "how"
             self.image_string = "are"
             self.command = "you"
         #otherwise initialize all members with the string
         else:
-            dict = ast.literal_eval(STRING)
-            for key in dict:
-                setattr(self,key,dict[key])
+            for key in DICT:
+                setattr(self,key,DICT[key])
     
     def sealpacket(self):
         '''
@@ -50,7 +48,7 @@ if __name__=='__main__':
     print t
     
     #Converting from a string to a dictionary
-    dictionary = ast.literal_eval(t)
+    dictionary = t.__dict__
     
     dictionary['new'] = 'thing'
     STRING =  str(dictionary)
