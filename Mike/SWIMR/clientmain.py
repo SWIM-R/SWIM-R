@@ -14,7 +14,7 @@ from swim_packet import SwimPacket
 from swim_serial import SwimSerial
 import time
 
-
+bigstring = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 
 ###############Command Line helper################
 try:
@@ -45,7 +45,7 @@ while 1:
         #main loop of the program
         while ethernet.ISCONNECTED:
             time.sleep(0.2)
-            ethernet.setpayload('test')
+            ethernet.setpayload(bigstring)
             ethernet.send()
             if ethernet.ISCONNECTED:
                 print "still connected"
