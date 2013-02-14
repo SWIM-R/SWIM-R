@@ -11,7 +11,6 @@ import time
 
 
 from socket import error
-from socket import timeout
 class SwimServer(threading.Thread):
     '''
     classdocs
@@ -134,7 +133,7 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except:
+            except:#timeout
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return

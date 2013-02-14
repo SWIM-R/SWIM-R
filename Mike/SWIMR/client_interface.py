@@ -3,7 +3,7 @@ Created on Feb 13, 2013
 
 @author: Mike
 '''
-
+import os
 import sys
 sys.path.append('../PacketStructure')
 sys.path.append('../EthernetCommunication')
@@ -22,8 +22,8 @@ class ClientInterface(threading.Thread):
     '''
     classdocs
     '''
-
-
+    
+    
     def __init__(self, host = str(), port = int()):
         threading.Thread.__init__(self)
         if host == "":

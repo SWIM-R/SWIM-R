@@ -30,16 +30,18 @@ class SwimPacket():
             for key in DICT:
                 setattr(self,key,DICT[key])
     
-    def sealpacket(self):
+        
+
+    
+    def __str__(self):
         '''
+        LOOK AT HOW COOL PYTHON IS
         compresses all of the class attributes into a string to be loaded into .setpayload()
         returns the string that is about to be sent.  You need to call this if you update the members
         '''
-
-        #this is the easiest way.  
         return str(self.__dict__)
-        
-        
+
+
 if __name__=='__main__':
     packet = SwimPacket()
     
