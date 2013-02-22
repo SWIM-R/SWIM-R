@@ -125,20 +125,20 @@ class ClientInterface(threading.Thread):
     
     
 if __name__ == '__main__':
-    
-    try:
+    if sys.platform != 'win32':
         try:
-            IP,PORT = str(sys.argv[1]),int(sys.argv[2])
-        except:
-            print "try: python clientmain.py <SERVERIP> <PORT>"
-            exit(1)
+            try:
+                IP,PORT = str(sys.argv[1]),int(sys.argv[2])
+            except:
+                print "try: python clientmain.py <SERVERIP> <PORT>"
+                exit(1)
+                
+            clientinterface = ClientInterface(IP,PORT)
+            clientinterface.run()
             
-        clientinterface = ClientInterface(IP,PORT)
-        clientinterface.run()
-        
-    except KeyboardInterrupt:
-        print "bye bye"
-        exit(0)
+        except KeyboardInterrupt:
+            print "bye bye"
+            exit(0)
     
     
     
