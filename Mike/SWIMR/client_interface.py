@@ -15,7 +15,6 @@ from swim_packet import SwimPacket
 from swim_serial import SwimSerial
 import threading
 import time
-import string
 
 
 class ClientInterface(threading.Thread):
