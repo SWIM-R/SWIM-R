@@ -6,16 +6,17 @@ Created on Feb 13, 2013
 import os
 import sys
 
-if sys.platform == 'darwin':
-    sys.path.append('../PacketStructure')
-    sys.path.append('../EthernetCommunication')
-    sys.path.append('../SerialCommunication')
-elif sys.platform == 'win32':
-    sys.path.append('..\PacketStructure')
-    sys.path.append('..\EthernetCommunication')
-    sys.path.append('..\SerialCommunication')
+add_to_path = sys.path.append
+path_join = os.path.join
+mydirname = os.path.dirname(__file__)
+
+if sys.platform is 'darwin' or 'win32':
+    add_to_path(path_join(mydirname,'PacketStructure'))
+    add_to_path(path_join(mydirname,'EthernetCommunication'))
+    add_to_path(path_join(mydirname,'SerialCommunication'))
+
 else:
-    print "unsupported OS!"
+    print 'unsupported os!'
     exit(1)
 
 from swim_client import SwimClient

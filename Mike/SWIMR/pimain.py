@@ -1,9 +1,18 @@
 
 
-import sys
-sys.path.append('../SWIMR/PacketStructure')
-sys.path.append('../SWIMR/EthernetCommunication')
-sys.path.append('../SWIMR/SerialCommunication')
+import sys, os
+
+
+add_to_path = sys.path.append
+path_join = os.path.join
+mydirname = os.path.dirname(__file__)
+if sys.platform is 'linux2':
+    add_to_path(path_join(mydirname,'PacketStructure'))
+    add_to_path(path_join(mydirname,'EthernetCommunication'))
+    add_to_path(path_join(mydirname,'SerialCommunication'))
+else:
+    print 'unsupported os!'
+    exit(1)
 
 
 
