@@ -143,12 +143,14 @@ class SwimClient(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-            except:
+            except:#timeout
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
             if receivedstring == 'done':
                 break
+            elif receivedstring == 'PING':
+                continue
             else:
                 temp = temp + receivedstring
             

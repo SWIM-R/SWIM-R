@@ -54,13 +54,10 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
         while ethernet.ISCONNECTED:
+            print "still connected"
             time.sleep(0.2)
             ethernet.setpayload('test')
             ethernet.send()
-            if ethernet.ISCONNECTED:
-                print "still connected"
-            else:
-                print 'not connected!'
                 
             if ethernet.NEWMESSAGE:
                 print "this is a new message: " + ethernet.getreceive()

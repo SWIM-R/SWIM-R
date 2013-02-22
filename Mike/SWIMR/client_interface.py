@@ -5,10 +5,18 @@ Created on Feb 13, 2013
 '''
 import os
 import sys
-sys.path.append('../PacketStructure')
-sys.path.append('../EthernetCommunication')
-sys.path.append('../SerialCommunication')
 
+if sys.platform == 'darwin':
+    sys.path.append('../PacketStructure')
+    sys.path.append('../EthernetCommunication')
+    sys.path.append('../SerialCommunication')
+elif sys.platform == 'win32':
+    sys.path.append('..\PacketStructure')
+    sys.path.append('..\EthernetCommunication')
+    sys.path.append('..\SerialCommunication')
+else:
+    print "unsupported OS!"
+    exit(1)
 
 from swim_client import SwimClient
 from swim_packet import SwimPacket
@@ -37,9 +45,9 @@ class ClientInterface(threading.Thread):
         else:
             self.PORT = port
         
-        
+        self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
-                        
+        self.PING = 'PING'
     def run(self):
         while 1:
             ########setup()#########
@@ -57,16 +65,18 @@ class ClientInterface(threading.Thread):
             ############loop()#######
             #main loop of the program
             while ethernet.ISCONNECTED:
+                print "still connected"
+
                 time.sleep(0.2)
-                self.updatepayload()
-                ethernet.setpayload(self.PAYLOAD)
-                ethernet.send()
-                if ethernet.ISCONNECTED:
-                    print "still connected"
+                if self.NEWMESSAGETOSEND:
+                    self.updatepayload()
+                    ethernet.setpayload(self.PAYLOAD)
+                    ethernet.send()
+                    self.NEWMESSAGETOSEND = False
                 else:
-                    print 'not connected!'
-                    break
-                    
+                    ethernet.setpayload(self.PING)
+                    ethernet.send()
+                
                 if ethernet.NEWMESSAGE:
                     print "this is a new message: " + ethernet.getreceive()
                 else:
@@ -78,6 +88,7 @@ class ClientInterface(threading.Thread):
              
             ###########cleanup()#####
             #Things in this section are called if something goes wrong in loop()
+            print 'disconnected!!'
             print "cleaning up"
             ethernet.cleanup()
             print 'cleaned up!'
@@ -89,22 +100,28 @@ class ClientInterface(threading.Thread):
         
     def setX(self,x = int()):
         self.packet.X = x
+        self.NEWMESSAGETOSEND = True
     
     def setY(self,y = int()):
         self.packet.Y = y
-    
+        self.NEWMESSAGETOSEND = True
+
     def setZ(self,z = int()):
         self.packet.Z = z
-        
+        self.NEWMESSAGETOSEND = True
+
     def setYaw(self,yaw = int()):
         self.packet.YAW = yaw
-        
+        self.NEWMESSAGETOSEND = True
+
     def setPitch(self, pitch = int()):
         self.packet.PITCH = pitch
-    
+        self.NEWMESSAGETOSEND = True
+
     def setRoll(self,roll = int()):
         self.packet.ROLL = roll
-        
+        self.NEWMESSAGETOSEND = True
+
     
     
 if __name__ == '__main__':

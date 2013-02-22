@@ -139,6 +139,8 @@ class SwimServer(threading.Thread):
                 return
             if receivedstring == 'done':
                 break
+            if receivedstring == 'PING':
+                continue
             elif receivedstring == 'Hello!':
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
