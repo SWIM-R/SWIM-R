@@ -6,7 +6,7 @@ import sys, os
 add_to_path = sys.path.append
 path_join = os.path.join
 mydirname = os.path.dirname(__file__)
-if sys.platform is 'linux2':
+if sys.platform is 'linux2' or 'darwin':
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
@@ -42,6 +42,7 @@ while 1:
             #Setting up Ethernet Communication
             print 'finding client....'
             ethernet = SwimServer(9999)
+            ethernet.TIMEOUT = 10.0
             print 'client found......'
             print 'starting receive thread'
             ethernet.start()
@@ -73,6 +74,7 @@ while 1:
                 ethernet.send()
             
             if ethernet.NEWMESSAGE:
+                print ethernet.RECEIVE
                 serial.setpayload(ethernet.getreceive())
                 serial.write()
             

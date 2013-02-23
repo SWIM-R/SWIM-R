@@ -56,6 +56,7 @@ class ClientInterface(threading.Thread):
             #Setting up Ethernet Communication
             print 'finding server....'
             ethernet = SwimClient(self.IP,self.PORT)
+            ethernet.TIMEOUT = 10.0
             print 'server found......'
             print 'starting receive thread'
             ethernet.start()
