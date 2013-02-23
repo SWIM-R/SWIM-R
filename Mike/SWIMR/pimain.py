@@ -67,10 +67,12 @@ while 1:
         while ethernet.ISCONNECTED and serial.IS_CONNECTED:
             ethernetconnected = ethernet.ISCONNECTED
             print "still connected"
-            time.sleep(0.2)
             
             if serial.NEWMESSAGE:
                 ethernet.setpayload(serial.getreceive())
+                ethernet.send()
+            else:
+                ethernet.setpayload('PING')
                 ethernet.send()
             
             if ethernet.NEWMESSAGE:

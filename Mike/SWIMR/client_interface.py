@@ -69,7 +69,6 @@ class ClientInterface(threading.Thread):
             while ethernet.ISCONNECTED:
                 print "still connected"
 
-                time.sleep(0.2)
                 if self.NEWMESSAGETOSEND:
                     self.updatepayload()
                     ethernet.setpayload(self.PAYLOAD)
@@ -80,9 +79,9 @@ class ClientInterface(threading.Thread):
                     ethernet.send()
                 
                 if ethernet.NEWMESSAGE:
-                    print "this is a new message: " + ethernet.getreceive()
+                    print "this is a new message from RPI: " + ethernet.getreceive()
                 else:
-                    print 'this is not a new message: ' + ethernet.getreceive()
+                    print 'this is not a new message from RPI: ' + ethernet.getreceive()
                     
             ######################### 
              
