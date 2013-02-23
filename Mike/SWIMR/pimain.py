@@ -65,6 +65,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
         while ethernet.ISCONNECTED and serial.IS_CONNECTED:
+            time.sleep(0.1)
             ethernetconnected = ethernet.ISCONNECTED
             print "still connected"
             

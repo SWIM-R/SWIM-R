@@ -45,7 +45,7 @@ class ClientInterface(threading.Thread):
             self.PORT = 9999
         else:
             self.PORT = port
-        
+        self.ethernet
         self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
@@ -55,33 +55,34 @@ class ClientInterface(threading.Thread):
             
             #Setting up Ethernet Communication
             print 'finding server....'
-            ethernet = SwimClient(self.IP,self.PORT)
-            ethernet.TIMEOUT = 10.0
+            self.ethernet = SwimClient(self.IP,self.PORT)
+            self.ethernet.TIMEOUT = 10.0
             print 'server found......'
             print 'starting receive thread'
-            ethernet.start()
+            self.ethernet.start()
             ############
             #########################
             
             
             ############loop()#######
             #main loop of the program
-            while ethernet.ISCONNECTED:
+            while self.ethernet.ISCONNECTED:
+                time.sleep(0.1)
                 print "still connected"
-
+                
                 if self.NEWMESSAGETOSEND:
                     self.updatepayload()
-                    ethernet.setpayload(self.PAYLOAD)
-                    ethernet.send()
+                    self.ethernet.setpayload(self.PAYLOAD)
+                    self.ethernet.send()
                     self.NEWMESSAGETOSEND = False
                 else:
-                    ethernet.setpayload(self.PING)
-                    ethernet.send()
+                    self.ethernet.setpayload(self.PING)
+                    self.ethernet.send()
                 
-                if ethernet.NEWMESSAGE:
-                    print "this is a new message from RPI: " + ethernet.getreceive()
+                if self.ethernet.NEWMESSAGE:
+                    print "this is a new message from RPI: " + self.ethernet.getreceive()
                 else:
-                    print 'this is not a new message from RPI: ' + ethernet.getreceive()
+                    print 'this is not a new message from RPI: ' + self.ethernet.getreceive()
                     
             ######################### 
              
@@ -91,7 +92,7 @@ class ClientInterface(threading.Thread):
             #Things in this section are called if something goes wrong in loop()
             print 'disconnected!!'
             print "cleaning up"
-            ethernet.cleanup()
+            self.ethernet.cleanup()
             print 'cleaned up!'
             ########################
     
@@ -99,6 +100,8 @@ class ClientInterface(threading.Thread):
     def updatepayload(self):
         self.PAYLOAD = str(self.packet.__dict__)
         
+    def getconnectionstatus(self):
+        return self.ethernet.ISCONNECTED
     def setX(self,x = int()):
         self.packet.X = x
         self.NEWMESSAGETOSEND = True
