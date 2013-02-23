@@ -31,7 +31,6 @@ class SwimServer(threading.Thread):
             PORT = 9999
         
         self.initialize(PORT)
-        self.LASTMESSAGE = str()
         self.NEWMESSAGE = True
         
     def initialize(self,PORT):
@@ -65,7 +64,7 @@ class SwimServer(threading.Thread):
         #find the client computer
         while self.ISCONNECTED == False:
             try:
-                self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(1024)
+                self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(64)
             except error:
                 continue
             print "This This is client IP and message: ",self.RECEIVE, self.CLIENTIP
@@ -82,7 +81,7 @@ class SwimServer(threading.Thread):
         '''
         getter for whatever has been received
         '''
-        
+        self.NEWMESSAGE = False
         return self.RECEIVE
        
     
@@ -140,6 +139,7 @@ class SwimServer(threading.Thread):
             if receivedstring == 'done':
                 break
             if receivedstring == 'PING':
+                self.NEWMESSAGE = False
                 continue
             elif receivedstring == 'Hello!':
                 self.ISCONNECTED = False
@@ -147,15 +147,8 @@ class SwimServer(threading.Thread):
                 return
             else:
                 temp = temp + receivedstring
-            
-            
-        if self.LASTMESSAGE != temp:
-            self.NEWMESSAGE = True
-        else:
-            self.NEWMESSAGE = False
-            
-        self.LASTMESSAGE = self.RECEIVE
         self.RECEIVE = temp
+        self.NEWMESSAGE = True
     
     def run(self):
         '''

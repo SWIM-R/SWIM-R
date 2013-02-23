@@ -32,12 +32,13 @@ print "starting {0}......".format(name)
 
 
 
-FIRSTTIME = True
+ethernetconnected = False
+serialconnected = False
 
 while 1:
     try:
         ########setup()#########
-        if FIRSTTIME:
+        if not ethernetconnected:
             #Setting up Ethernet Communication
             print 'finding client....'
             ethernet = SwimServer(9999)
@@ -46,10 +47,10 @@ while 1:
             ethernet.start()
             ###########
                     
-        
-            #Setting up Serial Communication
+        if not serialconnected:        
             print 'connecting arduino'
-            # serial = SwimSerial(38400)
+            serial = SwimSerial(38400)
+            serial.start()
             print 'connected!'
             ############
         #########################
@@ -62,22 +63,30 @@ while 1:
         ############loop()#######
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
-        while ethernet.ISCONNECTED:
+        while ethernet.ISCONNECTED and serial.IS_CONNECTED:
+            ethernetconnected = ethernet.ISCONNECTED
             print "still connected"
             time.sleep(0.2)
-            ethernet.setpayload('test')
-            ethernet.send()
-                
+            
+            if serial.NEWMESSAGE:
+                ethernet.setpayload(serial.getreceive())
+                ethernet.send()
+            
             if ethernet.NEWMESSAGE:
-                print "this is a new message: " + ethernet.getreceive()
-            else:
-                print 'this is not a new message: ' + ethernet.getreceive()
+                serial.setpayload(ethernet.getreceive())
+                serial.write()
+            
                 
         ########################
         
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
-        ethernet.cleanup()  
+        print 'not connected'
+        if not ethernet.ISCONNECTED:
+            ethernet.cleanup()  
+            ethernetconnected = ethernet.ISCONNECTED
+        if not serial.IS_CONNECTED:
+            serialconnected = serial.IS_CONNECTED
         ########################
     except KeyboardInterrupt:
         print "bye bye"

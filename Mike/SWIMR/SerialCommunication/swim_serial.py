@@ -9,7 +9,8 @@ import serial
 #from serial import SerialException
 import glob
 import platform
-class SwimSerial:
+import threading 
+class SwimSerial(threading.Thread):
     '''
     class SwimSerial
 
@@ -29,10 +30,7 @@ class SwimSerial:
     
 METHODS:
 
-(void)   constructor:  
-            Initializes with given Baud rate.  Default is 115200.  If garbage baud rate is specified, uses default. 
-            This is also where the serial port is initialized. 
-    
+
 (void)   initialize:
              invoked in several locations.  scans for serial devices, when it finds the arduino, connects to it.  
              This function is also invoked in the case of a disconnect
@@ -58,6 +56,11 @@ METHODS:
     
     '''
     def __init__(self, baudrate=int()):
+        '''
+        (void)   constructor:  
+            Initializes with given Baud rate.  Default is 115200.  If garbage baud rate is specified, uses default. 
+            This is also where the serial port is initialized. 
+    '''
        
         
         if baudrate == 0:
@@ -74,7 +77,9 @@ METHODS:
         self.INSTRUCTION_SIZE = int(4)
         self.PAYLOAD = ''
         self.RECEIVE = ''
-        self.initialize();
+        self.initialize()
+        self.daemon = True
+        self.NEWMESSAGE = False
         
     def scan(self):
         if(self.platform == 'Darwin'):
@@ -92,11 +97,15 @@ METHODS:
         self.PAYLOAD = message
         
     def getreceive(self):
+        self.NEWMESSAGE = False
         return self.RECEIVE
         
     def initialize(self):
-            
-
+        '''
+            (void)   initialize:
+             invoked in several locations.  scans for serial devices, when it finds the arduino, connects to it.  
+             This function is also invoked in the case of a disconnect
+        '''
         if self.IS_CONNECTED is False:
             self.SERIAL = None
             ports = self.scan()
@@ -111,6 +120,7 @@ METHODS:
                         ports = ports.next()
                     except StopIteration:
                         break
+                    #__TODO__ 
                 if self.SERIAL is not None:
                     self.SERIAL.flushInput()
                     self.SERIAL.flushOutput()
@@ -123,11 +133,17 @@ METHODS:
             self.RECEIVE = self.SERIAL.read(self.INSTRUCTION_SIZE)
         except:
             self.IS_CONNECTED = False
+        self.NEWMESSAGE = True
     def write(self):
             try:
                 self.SERIAL.write(self.PAYLOAD)
             except:
                 self.IS_CONNECTED = False
+    
+    def run(self):
+        while self.IS_CONNECTED:
+            self.read()
+            
                  
     
             

@@ -131,6 +131,7 @@ class SwimClient(threading.Thread):
         '''
         getter for whatever has been received
         '''
+        self.NEWMESSAGE = False
         return self.RECEIVE
    
     
@@ -150,16 +151,11 @@ class SwimClient(threading.Thread):
             if receivedstring == 'done':
                 break
             elif receivedstring == 'PING':
+                self.NEWMESSAGE = False
                 continue
             else:
-                temp = temp + receivedstring
-            
-        if self.LASTMESSAGE != temp:
-            self.NEWMESSAGE = True
-        else:
-            self.NEWMESSAGE = False   
-            
-        self.LASTMESSAGE = self.RECEIVE
+                temp = temp + receivedstring  
+        self.NEWMESSAGE = True
         self.RECEIVE = temp
     def run(self):
         '''
