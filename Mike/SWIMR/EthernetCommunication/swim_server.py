@@ -133,6 +133,7 @@ class SwimServer(threading.Thread):
             try:
                 receivedstring = self.SOCK.recv(size)
             except:#timeout
+                print "server broke"
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
@@ -142,6 +143,7 @@ class SwimServer(threading.Thread):
                 self.NEWMESSAGE = False
                 continue
             elif receivedstring == 'Hello!':
+                print "client broke"
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return

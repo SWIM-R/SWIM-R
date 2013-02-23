@@ -88,6 +88,7 @@ while 1:
             ethernet.cleanup()  
             ethernetconnected = ethernet.ISCONNECTED
         if not serial.IS_CONNECTED:
+            print 'arduino broke'
             serialconnected = serial.IS_CONNECTED
         ########################
     except KeyboardInterrupt:
