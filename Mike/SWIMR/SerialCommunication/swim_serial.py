@@ -71,6 +71,7 @@ METHODS:
                 self.BAUDRATE = baudrate
             else:
                 self.BAUDRATE = 115200
+        threading.Thread.__init__(self)
         self.IS_CONNECTED = False
         self.SERIAL = None
         self.platform = platform.system()
