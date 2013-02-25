@@ -32,7 +32,7 @@ class ClientInterface(threading.Thread):
     '''
     
     
-    def __init__(self, host = str(), port = int()):
+    def __init__(self, host = str(), port = int(),testing = bool()):
         threading.Thread.__init__(self)
         self.daemon = True
         self.packet = SwimPacket()
@@ -45,17 +45,18 @@ class ClientInterface(threading.Thread):
             self.PORT = 9999
         else:
             self.PORT = port
-        self.ethernet = SwimClient()
+        self.TESTING = testing
+        self.ethernet = SwimClient(self.IP,self.PORT, self.TESTING)
         self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
     def run(self):
-        while 1:
+        while not testing:
             ########setup()#########
             
             #Setting up Ethernet Communication
             print 'finding server....'
-            self.ethernet = SwimClient(self.IP,self.PORT)
+            self.ethernet = SwimClient(self.IP,self.PORT,self.TESTING)
             self.ethernet.TIMEOUT = 10.0
             print 'server found......'
             print 'starting receive thread'
