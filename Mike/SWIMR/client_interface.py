@@ -51,7 +51,7 @@ class ClientInterface(threading.Thread):
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
     def run(self):
-        while not testing:
+        while not self.TESTING:
             ########setup()#########
             
             #Setting up Ethernet Communication

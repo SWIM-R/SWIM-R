@@ -6,7 +6,7 @@ import sys, os
 add_to_path = sys.path.append
 path_join = os.path.join
 mydirname = os.path.dirname(__file__)
-if sys.platform is 'linux2' or 'darwin':
+if sys.platform is 'linux2' or 'darwin': #if I'm runnning on the rpi or mikes macbook, then go ahead
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
@@ -42,7 +42,6 @@ while 1:
             #Setting up Ethernet Communication
             print 'finding client....'
             ethernet = SwimServer(9999)
-            ethernet.TIMEOUT = 10.0
             print 'client found......'
             print 'starting receive thread'
             ethernet.start()
