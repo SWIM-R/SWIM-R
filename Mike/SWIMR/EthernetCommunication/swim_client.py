@@ -16,7 +16,7 @@ class SwimClient(threading.Thread):
     '''
     classdocs
     '''
-    def __init__(self, host = str(), port = int() ):
+    def __init__(self, host = str(), port = int(),testing = bool() ):
         '''
         Initializes...everything.  
         '''
@@ -40,7 +40,8 @@ class SwimClient(threading.Thread):
         self.stopreceivethread = False
         self.daemon = True
         self.TIMEOUT = 3.0
-        self.initialize()
+        if not testing:
+            self.initialize()
         self.LASTMESSAGE = str()
         self.NEWMESSAGE = True
         
