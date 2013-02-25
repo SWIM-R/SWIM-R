@@ -19,7 +19,7 @@ import time
 
 FIXED_IP = '10.10.2.10'
 
-ipaddr_string = 'ip -4 addr > ~/git/SWIM-R/Mike/SWIMR/current_ip.txt'
+ipaddr_string = 'ip -4 addr > /home/pi/Desktop/SWIM-R/Mike/SWIMR/current_ip.txt'
 subprocess.call(ipaddr_string, shell=True)
 
 ip_file = file('current_ip.txt', 'r')
@@ -29,25 +29,25 @@ for line in ip_file:
         _time = time.asctime()
         inet_string = inet_line[9:(inet_line.index('/'))]
    
-    if inet_string != FIXED_IP:
-        print 'Found eth0: %s' % inet_string
+        if inet_string != FIXED_IP:
+            print 'Found eth0: %s' % inet_string
         
-        SUBJECT = 'IP Address from Raspberry Pi at: %s' % time.asctime()
-        TO = 'mike.capozzoli@gmail.com'
-        FROM = 'mike.capozzoli@gmail.com'
-        text = 'The IP address is: %s' % inet_string
-        BODY = string.join((
-                 'From: %s' % FROM,
-             'To: %s' % TO,
-             'Subject: %s' % SUBJECT,
-             '',
-             text
-             ), '\r\n')
+            SUBJECT = 'IP Address from Raspberry Pi at: %s' % time.asctime()
+            TO = 'mike.capozzoli@gmail.com'
+            FROM = 'mike.capozzoli@gmail.com'
+            text = 'The IP address is: %s' % inet_string
+            BODY = string.join((
+                     'From: %s' % FROM,
+                 'To: %s' % TO,
+                 'Subject: %s' % SUBJECT,
+                 '',
+                 text
+                 ), '\r\n')
         
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)     # NOTE:  This is the GMAIL SSL port.
-        server.login('mike.capozzoli@gmail.com', 'thedudeabides')
-        server.sendmail(FROM, [TO], BODY)
-        server.quit()
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)     # NOTE:  This is the GMAIL SSL port.
+            server.login('mike.capozzoli@gmail.com', 'thedudeabides')
+            server.sendmail(FROM, [TO], BODY)
+            server.quit()
 
 ip_file.close()
 
