@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 print "try: python clientmain.py <SERVERIP> <PORT>"
                 exit(1)
                 
-            clientinterface = ClientInterface(IP,PORT)
+            clientinterface = ClientInterface(IP,PORT,False)
             clientinterface.run()
             
         except KeyboardInterrupt:
