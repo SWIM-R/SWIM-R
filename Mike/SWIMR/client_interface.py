@@ -45,7 +45,7 @@ class ClientInterface(threading.Thread):
             self.PORT = 9999
         else:
             self.PORT = port
-        self.ethernet = SwimClient(self.IP,self.PORT)
+        self.ethernet = SwimClient()
         self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
