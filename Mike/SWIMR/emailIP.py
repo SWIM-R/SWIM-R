@@ -45,7 +45,7 @@ for line in ip_file:
                  ), '\r\n')
         
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)     # NOTE:  This is the GMAIL SSL port.
-            server.login('mike.capozzoli@gmail.com', 'thedudeabides')
+            server.login('mike.capozzoli@gmail.com', '')
             server.sendmail(FROM, [TO], BODY)
             server.quit()
 
