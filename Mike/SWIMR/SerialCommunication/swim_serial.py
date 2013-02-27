@@ -15,44 +15,6 @@ class SwimSerial(threading.Thread):
     class SwimSerial
 
     provides serial interface to the arduino.
-    CONSTANTS:
-        SERIAL_PORT_NAME: Name of serial port on computer, this nead to be changed for your particular computer
-            
-        BAUDRATE: communication data rate.  can be set, default if 115200 baud
-        
-        IS_CONNECTED: is True if serial connection has been successfully estblished
-        
-        INSTRUCTION_SIZE: number of bytes in one instruction
-        
-        PAYLOAD: string that holds received data
-        
-        SERIAL: internal interface to serial connection
-    
-METHODS:
-
-
-(void)   initialize:
-             invoked in several locations.  scans for serial devices, when it finds the arduino, connects to it.  
-             This function is also invoked in the case of a disconnect
-    
-(bool)   getstatus:
-            returns the connection status, if disconnected you must reinitialize the serial connection.  
-                    
-    
-(string) getpayload:
-            returns the 4byte payload that is written with the write() method
-            
-(void)  setpayload(string message):
-            sets the PAYLOAD variable with to message
-            
-(string)  getreceive:
-        returns the 4byte string that was received with the read() method 
-            
-    
-(void)   read: reads 4 bytes from the stream
-    
-(void)    write: writes 4 bytes to the stream
-    
     
     '''
     def __init__(self, baudrate=int()):
@@ -64,7 +26,7 @@ METHODS:
        
         
         if baudrate == 0:
-            self.BAUDRATE = 115200
+            self.BAUDRATE = 38400
         else:
             GOOD_BAUD_RATES = [38400,115200,57600,38400,28800,19200,14400,9600,4800,2400,1200,300]
             if baudrate in GOOD_BAUD_RATES:
@@ -75,13 +37,14 @@ METHODS:
         self.IS_CONNECTED = False
         self.SERIAL = None
         self.platform = platform.system()
-        self.INSTRUCTION_SIZE = int(4)
+        self.READINSTRUCTIONWIDTH = 6
         self.PAYLOAD = ''
         self.RECEIVE = ''
         self.initialize()
         self.daemon = True
         self.NEWMESSAGE = False
-        
+        self.WRITE_INSTRUCTIONFORMAT = 'ROLL', 'PITCH','YAW','X','Y','Z'
+        self.READ_INSTRUCTIONFORMAT
     def scan(self):
         if(self.platform == 'Darwin'):
             return  glob.iglob('/dev/tty.usb*') 
@@ -95,7 +58,8 @@ METHODS:
         return self.PAYLOAD
     
     def setpayload(self, message):
-        self.PAYLOAD = message
+        self.PAYLOAD = self.formatforArduino(message)
+
         
     def getreceive(self):
         self.NEWMESSAGE = False
@@ -129,12 +93,15 @@ METHODS:
                 
             del ports 
         
-    def read(self):
+    def read(self): #need to add timeout handling
         try:
-            self.RECEIVE = self.SERIAL.read(self.INSTRUCTION_SIZE)
+            self.RECEIVE = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
         except:
             self.IS_CONNECTED = False
+            return
         self.NEWMESSAGE = True
+        
+        
     def write(self):
             try:
                 self.SERIAL.write(self.PAYLOAD)
@@ -144,6 +111,16 @@ METHODS:
     def run(self):
         while self.IS_CONNECTED:
             self.read()
+    
+    def formatforArduino(self,unformattedmessage = str()):
+        formattedmessage = ''
+        dict_of_unformattedmessage = dict(unformattedmessage)
+        for field in self.WRITE_INSTRUCTIONFORMAT:
+            try:
+                formattedmessage + dict_of_unformattedmessage[field]
+            except KeyError:
+                continue
+        return formattedmessage
             
                  
     
