@@ -122,6 +122,8 @@ class SwimSerial(threading.Thread):
             try:
                 formatted_message.append(dict_of_unformatted_message[field]) 
             except KeyError:
+                #handle not enough bytes
+                print "not 6 bytes"
                 continue
         return formatted_message
             
