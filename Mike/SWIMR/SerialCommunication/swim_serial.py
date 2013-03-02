@@ -10,6 +10,7 @@ import serial
 import glob
 import platform
 import threading 
+import ast
 class SwimSerial(threading.Thread):
     '''
     class SwimSerial
@@ -57,7 +58,7 @@ class SwimSerial(threading.Thread):
     def getpayload(self):
         return self.PAYLOAD
     
-    def setpayload(self, message):
+    def setpayload(self, message = str()):
         #self.PAYLOAD = message
         
         self.PAYLOAD = self.formatforArduino(message)
@@ -117,13 +118,12 @@ class SwimSerial(threading.Thread):
     
     def formatforArduino(self,unformatted_message = str()):
         formatted_message = bytearray()
-        dict_of_unformatted_message = dict(unformatted_message)
+        print unformatted_message
+        dict_of_unformatted_message = ast.literal_eval(unformatted_message)
         for field in self.WRITE_INSTRUCTIONFORMAT:
             try:
                 formatted_message.append(dict_of_unformatted_message[field]) 
             except KeyError:
-                #handle not enough bytes
-                print "not 6 bytes"
                 continue
         return formatted_message
             
@@ -132,7 +132,7 @@ if __name__  == '__main__':
         s = SwimSerial(38400)
         s.start()
         while 1:
-            s.setpayload(str({'YAW': 0}))
+            s.setpayload("{'YAW':10, 'PITCH':10}")
             s.write()
             
             
