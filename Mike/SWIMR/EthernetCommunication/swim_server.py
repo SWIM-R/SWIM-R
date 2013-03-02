@@ -27,7 +27,7 @@ class SwimServer(threading.Thread):
         self.daemon = True
         self.TIMEOUT = 3.0
         self.stopreceivethread = False
-        if PORT is None:
+        if PORT == 0:
             PORT = 9999
         
         self.initialize(PORT)

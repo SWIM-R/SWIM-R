@@ -38,13 +38,13 @@ class SwimSerial(threading.Thread):
         self.SERIAL = None
         self.platform = platform.system()
         self.READINSTRUCTIONWIDTH = 6
-        self.PAYLOAD = ''
-        self.RECEIVE = ''
+        self.PAYLOAD = str()
+        self.RECEIVE = str()
         self.initialize()
         self.daemon = True
         self.NEWMESSAGE = False
         self.WRITE_INSTRUCTIONFORMAT = 'ROLL', 'PITCH','YAW','X','Y','Z'
-        self.READ_INSTRUCTIONFORMAT
+        self.READ_INSTRUCTIONFORMAT = str()
     def scan(self):
         if(self.platform == 'Darwin'):
             return  glob.iglob('/dev/tty.usb*') 
@@ -58,6 +58,8 @@ class SwimSerial(threading.Thread):
         return self.PAYLOAD
     
     def setpayload(self, message):
+        #self.PAYLOAD = message
+        
         self.PAYLOAD = self.formatforArduino(message)
 
         
@@ -104,7 +106,8 @@ class SwimSerial(threading.Thread):
         
     def write(self):
             try:
-                self.SERIAL.write(self.PAYLOAD)
+                for byte in self.PAYLOAD:
+                    self.SERIAL.write(unichr(int(byte)).encode('latin_1'))
             except:
                 self.IS_CONNECTED = False
     
@@ -112,19 +115,26 @@ class SwimSerial(threading.Thread):
         while self.IS_CONNECTED:
             self.read()
     
-    def formatforArduino(self,unformattedmessage = str()):
-        formattedmessage = ''
-        dict_of_unformattedmessage = dict(unformattedmessage)
+    def formatforArduino(self,unformatted_message = str()):
+        formatted_message = bytearray()
+        dict_of_unformatted_message = dict(unformatted_message)
         for field in self.WRITE_INSTRUCTIONFORMAT:
             try:
-                formattedmessage + dict_of_unformattedmessage[field]
+                formatted_message.append(dict_of_unformatted_message[field]) 
             except KeyError:
                 continue
-        return formattedmessage
+        return formatted_message
             
                  
-    
+if __name__  == '__main__':
+        s = SwimSerial(38400)
+        s.start()
+        while 1:
+            s.setpayload(str({'YAW': 0}))
+            s.write()
             
+            
+                
         
         
         
