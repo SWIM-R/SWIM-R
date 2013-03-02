@@ -104,24 +104,7 @@ class SwimClient(threading.Thread):
         else:
             self.SOCK.sendto(payload[:self.MAXPACKETSIZE], self.HOSTPORT)
             self.helpersend(payload[self.MAXPACKETSIZE:])
-            
-    def isconnected(self):
-        '''
-        This doesn't work yet.  Its tricky because everything is UDP...and is never really connected in the first place
-        '''
-        self.SOCK.sendto("you there?",self.HOSTPORT)
-        self.SOCK.setblocking(1)
-        self.SOCK.settimeout(5.0)
-       
-        try:
-            receivedstring = self.SOCK.recv(16)    
-            if receivedstring == "yeah bro":
-                return True
-            else:
-                return False
-        except timeout:
-            return False
-        
+
     def setpayload(self, payload = str()):
         '''
         setter for the payload that is going to be sent 

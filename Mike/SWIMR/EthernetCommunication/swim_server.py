@@ -166,17 +166,3 @@ class SwimServer(threading.Thread):
         self.stopreceivethread = True 
         time.sleep(0.001) 
         self.SOCK.close()
-    def isconnected(self):
-        '''
-        This doesn't work yet.  It probably wont, dont use it
-        
-        '''
-        self.SOCK.setblocking(1)
-        self.SOCK.settimeout(5.0)
-        receivedstring = self.SOCK.recv(16)
-        if receivedstring == "you there?":
-            self.SOCK.sendto("yeah bro", self.CLIENTIP)
-            return True
-    
-        return False
-    

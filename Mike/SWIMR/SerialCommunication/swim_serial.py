@@ -11,6 +11,7 @@ import glob
 import platform
 import threading 
 import ast
+import time
 class SwimSerial(threading.Thread):
     '''
     class SwimSerial
@@ -47,7 +48,7 @@ class SwimSerial(threading.Thread):
         self.WRITE_INSTRUCTIONFORMAT = 'ROLL', 'PITCH','YAW','X','Y','Z'
         self.READ_INSTRUCTIONFORMAT = str()
     def scan(self):
-        if(self.platform == 'Darwin'):
+        if self.platform == 'Darwin':
             return  glob.iglob('/dev/tty.usb*') 
         else:
             return glob.iglob('/dev/serial/by-id/*')
@@ -118,13 +119,13 @@ class SwimSerial(threading.Thread):
     
     def formatforArduino(self,unformatted_message = str()):
         formatted_message = bytearray()
-        print unformatted_message
         dict_of_unformatted_message = ast.literal_eval(unformatted_message)
+        formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__())
         for field in self.WRITE_INSTRUCTIONFORMAT:
             try:
                 formatted_message.append(dict_of_unformatted_message[field]) 
             except KeyError:
-                continue
+                return bytearray('error')
         return formatted_message
             
                  
@@ -132,7 +133,8 @@ if __name__  == '__main__':
         s = SwimSerial(38400)
         s.start()
         while 1:
-            s.setpayload("{'YAW':10, 'PITCH':10}")
+            time.sleep(0.5)
+            s.setpayload("{'YAW':255, 'PITCH':127}")
             s.write()
             
             
