@@ -41,7 +41,7 @@ class ClientInterface(threading.Thread):
         else:
             self.IP = host
         
-        if port is None:
+        if port == 0:
             self.PORT = 9999
         else:
             self.PORT = port

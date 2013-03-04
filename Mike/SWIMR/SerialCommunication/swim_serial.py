@@ -46,7 +46,7 @@ class SwimSerial(threading.Thread):
         self.daemon = True
         self.NEWMESSAGE = False
         self.WRITE_INSTRUCTIONFORMAT = 'ROLL', 'PITCH','YAW','X','Y','Z'
-        self.READ_INSTRUCTIONFORMAT = str()
+        self.READ_DATAFORMAT = str()
     def scan(self):
         if self.platform == 'Darwin':
             return  glob.iglob('/dev/tty.usb*') 
