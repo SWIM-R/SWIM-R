@@ -6,7 +6,7 @@ Created on Jan 10, 2013
 import socket
 import threading
 import time
-
+import ast
 
 
 
@@ -32,6 +32,10 @@ class SwimServer(threading.Thread):
         
         self.initialize(PORT)
         self.NEWMESSAGE = True
+        self.ARDUINOCONNECTION = bool()
+        self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
+        self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+
         
     def initialize(self,PORT):
         '''
@@ -79,22 +83,20 @@ class SwimServer(threading.Thread):
     
     def getreceive(self):
         '''
-        getter for whatever has been received
+        getter for whatever has been received from the Computer
         '''
         self.NEWMESSAGE = False
         return self.RECEIVE
        
     
-    def getpayload(self):
-        '''
-        This method is probably useless
-        '''
-        return self.PAYLOAD
+
     def setpayload(self,payload = str()):
         '''
-        setter for the payload that is going to be sent 
+        setter for the payload that is going to be sent to the Computer
         '''
-        self.PAYLOAD = payload
+        temp = ast.literal_eval(payload)
+        temp['ERROR'] = self.generateerrorcode()
+        self.PAYLOAD = str(temp)
     
     
     
@@ -111,6 +113,13 @@ class SwimServer(threading.Thread):
             self.SOCK.sendto(self.PAYLOAD[:self.MAXPACKETSIZE], self.CLIENTIP)
             self.helpersend(self.PAYLOAD[self.MAXPACKETSIZE:])
             
+    def generateerrorcode(self,):
+        if self.ARDUINOCONNECTION: #if the Arduino is connected
+            return False #there is no error
+        else:
+            return True # there is an error
+        
+        
     def helpersend(self,payload):
         '''
         don't call helpersend directly.  sends 'done' at the end of a packet
@@ -139,7 +148,7 @@ class SwimServer(threading.Thread):
                 return
             if receivedstring == 'done':
                 break
-            if receivedstring == 'PING':
+            elif receivedstring == 'PING':
                 self.NEWMESSAGE = False
                 continue
             elif receivedstring == 'Hello!':

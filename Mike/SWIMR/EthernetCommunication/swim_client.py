@@ -42,8 +42,8 @@ class SwimClient(threading.Thread):
         self.TIMEOUT = 3.0
         if not testing:
             self.initialize()
-        self.LASTMESSAGE = str()
         self.NEWMESSAGE = True
+        
         
     def initialize(self):
         '''
@@ -104,6 +104,7 @@ class SwimClient(threading.Thread):
         else:
             self.SOCK.sendto(payload[:self.MAXPACKETSIZE], self.HOSTPORT)
             self.helpersend(payload[self.MAXPACKETSIZE:])
+
 
     def setpayload(self, payload = str()):
         '''

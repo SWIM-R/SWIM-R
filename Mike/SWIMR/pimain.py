@@ -10,7 +10,7 @@ if sys.platform is 'linux2' or 'darwin': #if I'm runnning on the rpi or mikes ma
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
-else:
+else: #otherwise screw you!
     print 'unsupported os!'
     exit(1)
 
@@ -19,7 +19,6 @@ else:
 
 
 from swim_server import SwimServer
-from swim_packet import SwimPacket
 from swim_serial import SwimSerial
 import time
 
@@ -62,21 +61,25 @@ while 1:
         
         ############loop()#######
         #main loop of the program
-        #while ethernet.ISCONNECTED and serial.IS_CONNECTED:
-        while ethernet.ISCONNECTED and serial.IS_CONNECTED:
+        #while ethernet.ISCONNECTED and serial.ISCONNECTED:
+        while ethernet.ISCONNECTED and serial.ISCONNECTED:
             time.sleep(0.1)
+            
             ethernetconnected = ethernet.ISCONNECTED
+            serialconnected = serial.ISCONNECTED
+            serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
+            
             print "still connected"
             
-            if serial.NEWMESSAGE:
+            
+            if serial.NEWMESSAGE: # If there is a new message from the Arduino 
                 ethernet.setpayload(serial.getreceive())
                 ethernet.send()
-            else:
+            else: #otherwise just ping
                 ethernet.setpayload('PING')
                 ethernet.send()
             
-            if ethernet.NEWMESSAGE:
-                print ethernet.RECEIVE
+            if ethernet.NEWMESSAGE: #if there is a new message from the Computer
                 serial.setpayload(ethernet.getreceive())
                 serial.write()
             
@@ -85,13 +88,15 @@ while 1:
         
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
-        print 'not connected'
         if not ethernet.ISCONNECTED:
-            ethernet.cleanup()  
+            print 'ethernet broke'
             ethernetconnected = ethernet.ISCONNECTED
-        if not serial.IS_CONNECTED:
+            ethernet.cleanup()  
+        if not serial.ISCONNECTED:
             print 'arduino broke'
-            serialconnected = serial.IS_CONNECTED
+            ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
+            serialconnected = serial.ISCONNECTED
+            serial.cleanup()
         ########################
     except KeyboardInterrupt:
         print "bye bye"

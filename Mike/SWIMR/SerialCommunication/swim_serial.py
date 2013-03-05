@@ -6,7 +6,6 @@ Created on Oct 16, 2012
 #!/Library Python
 
 import serial
-#from serial import SerialException
 import glob
 import platform
 import threading 
@@ -28,61 +27,79 @@ class SwimSerial(threading.Thread):
        
         
         if baudrate == 0:
-            self.BAUDRATE = 38400
+            self.BAUDRATE = 38400 #the baurate for the serial connection
         else:
             GOOD_BAUD_RATES = [38400,115200,57600,38400,28800,19200,14400,9600,4800,2400,1200,300]
             if baudrate in GOOD_BAUD_RATES:
                 self.BAUDRATE = baudrate
             else:
-                self.BAUDRATE = 115200
-        threading.Thread.__init__(self)
-        self.IS_CONNECTED = False
-        self.SERIAL = None
-        self.platform = platform.system()
-        self.READINSTRUCTIONWIDTH = 6
-        self.PAYLOAD = str()
-        self.RECEIVE = str()
-        self.initialize()
-        self.daemon = True
-        self.NEWMESSAGE = False
-        self.WRITE_INSTRUCTIONFORMAT = 'ROLL', 'PITCH','YAW','X','Y','Z'
-        self.READ_DATAFORMAT = str()
+                self.BAUDRATE = 38400
+        threading.Thread.__init__(self) # instance of the thread class
+        
+        self.ISCONNECTED = False # Is the RPI connected to the Arduino?
+        
+        self.SERIAL = None #Place Holder for the instance of the serial 
+        
+        self.platform = platform.system() # what system this is running on 
+        
+        self.READINSTRUCTIONWIDTH = 3 # number of bytes that are read while polling
+        
+        self.PAYLOAD = str() #information to be Written to Arduino
+        
+        self.RECEIVE = dict() #information that has just been read from Arduino
+        
+        self.initialize() #This method is a few lines down
+        
+        self.daemon = True # So the receive thread is closed when the main thread is closed
+        
+        self.NEWMESSAGE = False # Is there a new message from the Arduino?
+        
+        self.READTIMEOUT = 15.0 # Seconds for the read method to read specified number of bytes, otherwise Serial Timout exception is thrown
+       
+        self.WRITETIMEOUT = 15.0 # Seconds for the write method to write specified number of bytes
+        
+        self.ETHERNETCONNECTION = bool() # Is there an active ethernet connection? 
+        
+        self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
+        #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive
+     
+        self.READ_DATAFORMAT ='ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
     def scan(self):
+        '''
+        Returns a glob of all of the USB file descriptors. 
+        '''
         if self.platform == 'Darwin':
             return  glob.iglob('/dev/tty.usb*') 
         else:
             return glob.iglob('/dev/serial/by-id/*')
             
-    def getstatus(self):
-        return self.IS_CONNECTED
-    
-    def getpayload(self):
-        return self.PAYLOAD
-    
+
     def setpayload(self, message = str()):
-        #self.PAYLOAD = message
-        
+        '''
+        The bytearray that is about to be written to the Arduino is in PAYLOAD
+        '''        
         self.PAYLOAD = self.formatforArduino(message)
 
         
     def getreceive(self):
+        '''
+        receive is a dictionary of the informatino received from the arduino
+        '''
         self.NEWMESSAGE = False
         return self.RECEIVE
         
     def initialize(self):
         '''
-            (void)   initialize:
-             invoked in several locations.  scans for serial devices, when it finds the arduino, connects to it.  
-             This function is also invoked in the case of a disconnect
+            scans for serial devices, when it finds the arduino, connects to it.  Invoked in the constructor
         '''
-        if self.IS_CONNECTED is False:
+        if self.ISCONNECTED is False:
             self.SERIAL = None
             ports = self.scan()
 
-            while self.IS_CONNECTED is False:
+            while self.ISCONNECTED is False:
               
                 try:
-                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE)    
+                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMOUT, writeTimeout = self.WRITETIMEOUT)    
                 except:
                     try:
                         ports = self.scan()
@@ -93,39 +110,83 @@ class SwimSerial(threading.Thread):
                 if self.SERIAL is not None:
                     self.SERIAL.flushInput()
                     self.SERIAL.flushOutput()
-                    self.IS_CONNECTED = True
+                    self.ISCONNECTED = True
                 
             del ports 
         
-    def read(self): #need to add timeout handling
+    def read(self): 
+        '''
+        read READINSTRUCTIONWIDTH bytes from the port.  A timeout my be triggered
+        
+        a new data packet is preceeded with $$$
+        '''
         try:
-            self.RECEIVE = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-        except:
-            self.IS_CONNECTED = False
+            temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+        
+        except self.SERIAL.SerialTimeoutException:
+            self.ISCONNECTED = False
             return
-        self.NEWMESSAGE = True
+        except:
+            self.ISCONNECTED = False
+            return
+        if temp == '$$$':
+            for key in self.READ_DATAFORMAT:
+                try:
+                    self.RECEIVE[key] = str(self.SERIAL.read(1))
+                except: #Timeout
+                    self.ISCONNECTED = False
+                    return
+            self.NEWMESSAGE = True
+        else:
+            self.ISCONNECTED = True
+            return
         
         
     def write(self):
             try:
                 for byte in self.PAYLOAD:
-                    self.SERIAL.write(unichr(int(byte)).encode('latin_1'))
-            except:
-                self.IS_CONNECTED = False
-    
+                    self.SERIAL.write(unichr(int(byte)).encode('latin_1')) #So that 0-255 can be encoded into a byte
+            except: #timeout
+                self.ISCONNECTED = False
+                return
     def run(self):
-        while self.IS_CONNECTED:
+        '''
+        called when .start() method is called.  multithreading!
+        '''
+        while self.ISCONNECTED:
             self.read()
     
+    def generateerrorcode(self):
+        '''
+        assess the current state of the communication system and generates an error code to be sent to the Arduino
+        '''
+        if self.ETHERNETCONNECTION:
+            return False #connected, so no error
+        else:
+            return True # ethernet not connection, yes error!
+    def cleanup(self):
+        '''
+        If everything gonna die, then cleanup your mess!!
+        '''
+        self.SERIAL.flushInput()
+        self.SERIAL.flushOutput()
+        self.SERIAL.close()
+    
     def formatforArduino(self,unformatted_message = str()):
-        formatted_message = bytearray()
-        dict_of_unformatted_message = ast.literal_eval(unformatted_message)
-        formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__())
+        '''
+        Takes the flattened dictionary unformatted_message, and properly convertes it into a byte array to be written to the Arduino
+        '''
+        formatted_message = bytearray() #allocate space for a new byte array
+        dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
+        
+        dict_of_unformatted_message['ERROR'] = self.generateerrorcode() #make an entry for the current error code in the dictionary
+        
+        formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__()) # prepend the length of the message to the byte array
         for field in self.WRITE_INSTRUCTIONFORMAT:
             try:
                 formatted_message.append(dict_of_unformatted_message[field]) 
-            except KeyError:
-                return bytearray('error')
+            except KeyError: #if something got messed up just send 'error' to the arduino
+                return bytearray('error').insert(0, 5)
         return formatted_message
             
                  

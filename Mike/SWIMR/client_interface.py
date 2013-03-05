@@ -21,10 +21,9 @@ else:
 
 from swim_client import SwimClient
 from swim_packet import SwimPacket
-from swim_serial import SwimSerial
 import threading
 import time
-
+import ast
 
 class ClientInterface(threading.Thread):
     '''
@@ -46,10 +45,12 @@ class ClientInterface(threading.Thread):
         else:
             self.PORT = port
         self.TESTING = testing
-        self.ethernet = SwimClient(self.IP,self.PORT, self.TESTING)
+        self.ethernet = None
         self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
+        self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+        self.RECEIVE = dict() 
     def run(self):
         while not self.TESTING:
             ########setup()#########
@@ -57,7 +58,6 @@ class ClientInterface(threading.Thread):
             #Setting up Ethernet Communication
             print 'finding server....'
             self.ethernet = SwimClient(self.IP,self.PORT,self.TESTING)
-            self.ethernet.TIMEOUT = 10.0
             print 'server found......'
             print 'starting receive thread'
             self.ethernet.start()
@@ -81,9 +81,7 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
-                    print "this is a new message from RPI: " + self.ethernet.getreceive()
-                else:
-                    print 'this is not a new message from RPI: ' + self.ethernet.getreceive()
+                    self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
                     
             ######################### 
              
@@ -126,9 +124,45 @@ class ClientInterface(threading.Thread):
     def setRoll(self,roll = int()):
         self.packet.ROLL = roll
         self.NEWMESSAGETOSEND = True
+        
+     #   self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
 
-    
-    
+    def getTemperature(self):
+        try:
+            return self.RECEIVE['TEMPERATURE']
+        except:
+            return 'something went wrong'
+    def getbatterylife(self):
+        try:
+            return self.RECEIVE['BATTERY']
+        except:
+            return 'something went wrong'        
+        
+    def geterror(self):
+        try:
+            return self.RECEIVE['ERROR']
+        except:
+            return 'something went wrong'
+    def getdepth(self):
+        try:
+            return self.RECEIVE['DEPTH']
+        except:
+            return 'something went wrong'        
+    def getRoll(self):
+        try:
+            return self.RECEIVE['ROLL']
+        except:
+            return 'something went wrong'
+    def getPitch(self):
+        try:
+            return self.RECEIVE['PITCH']
+        except:
+            return 'something went wrong'
+    def getYaw(self):
+        try:
+            return self.RECEIVE['YAW']
+        except:
+            return 'something went wrong'
 if __name__ == '__main__':
     if sys.platform != 'win32':
         try:
