@@ -63,7 +63,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         while ethernet.ISCONNECTED and serial.ISCONNECTED:
-            time.sleep(0.1)
+            time.sleep(0.1) # 10Hz
             
             ethernetconnected = ethernet.ISCONNECTED
             serialconnected = serial.ISCONNECTED
@@ -81,6 +81,8 @@ while 1:
             
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
                 serial.setpayload(ethernet.getreceive())
+                serial.write()
+            else: #just send the old packet again
                 serial.write()
             
                 
