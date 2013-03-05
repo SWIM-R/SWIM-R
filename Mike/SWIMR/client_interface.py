@@ -107,7 +107,7 @@ class ClientInterface(threading.Thread):
         elif x < 0:
             x = 0
         else:
-            pass     
+            pass
         self.packet.X = x
         self.NEWMESSAGETOSEND = True
     
@@ -167,38 +167,38 @@ class ClientInterface(threading.Thread):
         try:
             return self.RECEIVE['TEMPERATURE']
         except:
-            return 'something went wrong'
+            return 0
     def getbatterylife(self):
         try:
             return self.RECEIVE['BATTERY']
         except:
-            return 'something went wrong'        
+            return 0
         
     def geterror(self):
         try:
             return self.RECEIVE['ERROR']
         except:
-            return 'something went wrong'
+            return 0
     def getdepth(self):
         try:
             return self.RECEIVE['DEPTH']
         except:
-            return 'something went wrong'        
+            return 0
     def getRoll(self):
         try:
             return self.RECEIVE['ROLL']
         except:
-            return 'something went wrong'
+            return 0
     def getPitch(self):
         try:
             return self.RECEIVE['PITCH']
         except:
-            return 'something went wrong'
+            return 0
     def getYaw(self):
         try:
             return self.RECEIVE['YAW']
         except:
-            return 'something went wrong'
+            return 0
 if __name__ == '__main__':
     if sys.platform != 'win32':
         try:
