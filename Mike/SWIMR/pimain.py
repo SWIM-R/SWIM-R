@@ -76,7 +76,7 @@ while 1:
                 ethernet.setpayload(serial.getreceive())
                 ethernet.send()
             else: #otherwise just ping
-                ethernet.setpayload('PING')
+                ethernet.setpayload('{"PING": 0 }')
                 ethernet.send()
             
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
@@ -93,6 +93,7 @@ while 1:
         if not ethernet.ISCONNECTED:
             print 'ethernet broke'
             ethernetconnected = ethernet.ISCONNECTED
+            serial.ETHERNETCONNECTION = ethernet.ISCONNECTED
             ethernet.cleanup()  
         if not serial.ISCONNECTED:
             print 'arduino broke'

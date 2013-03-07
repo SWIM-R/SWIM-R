@@ -83,7 +83,7 @@ class SwimSerial(threading.Thread):
         
     def getreceive(self):
         '''
-        receive is a dictionary of the informatino received from the arduino
+        receive is a dictionary of the information received from the Arduino
         '''
         self.NEWMESSAGE = False
         return self.RECEIVE
@@ -129,11 +129,11 @@ class SwimSerial(threading.Thread):
         except:
             self.ISCONNECTED = False
             return
-        if temp == '$$$':
+        if temp == '$$$': #then read data packet
             for key in self.READ_DATAFORMAT:
                 try:
                     self.RECEIVE[key] = str(self.SERIAL.read(1))
-                except: #Timeout
+                except: #Timeout 
                     self.ISCONNECTED = False
                     return
             self.NEWMESSAGE = True
@@ -159,11 +159,12 @@ class SwimSerial(threading.Thread):
     def generateerrorcode(self):
         '''
         assess the current state of the communication system and generates an error code to be sent to the Arduino
+        
         '''
-        if self.ETHERNETCONNECTION:
+        if self.ETHERNETCONNECTION: #true for connected, diconnected otherwise
             return False #connected, so no error
         else:
-            return True # ethernet not connection, yes error!
+            return True # ethernet not connected, yes error!
     def cleanup(self):
         '''
         If everything gonna die, then cleanup your mess!!
@@ -180,13 +181,12 @@ class SwimSerial(threading.Thread):
         dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
         
         dict_of_unformatted_message['ERROR'] = self.generateerrorcode() #make an entry for the current error code in the dictionary
-        
         formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__()) # prepend the length of the message to the byte array
         for field in self.WRITE_INSTRUCTIONFORMAT:
             try:
                 formatted_message.append(dict_of_unformatted_message[field]) 
-            except KeyError: #if something got messed up just send 'error' to the arduino
-                return bytearray('error').insert(0, 5)
+            except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
+                return bytearray(0)
         return formatted_message
             
                  

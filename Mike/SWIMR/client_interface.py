@@ -34,7 +34,7 @@ class ClientInterface(threading.Thread):
     def __init__(self, host = str(), port = int(),testing = bool()):
         threading.Thread.__init__(self)
         self.daemon = True
-        self.packet = SwimPacket()
+        self.packet = SwimPacket() 
         if host == "":
             self.IP = "153.106.75.171"
         else:
@@ -168,18 +168,21 @@ class ClientInterface(threading.Thread):
             return self.RECEIVE['TEMPERATURE']
         except:
             return 0
-    def getbatterylife(self):
+    def getBatteryLife(self):
         try:
             return self.RECEIVE['BATTERY']
         except:
             return 0
         
-    def geterror(self):
+    def getError(self):
+        '''
+        returns true if the arduino connection has malfunctioned
+        '''
         try:
             return self.RECEIVE['ERROR']
         except:
             return 0
-    def getdepth(self):
+    def getDepth(self):
         try:
             return self.RECEIVE['DEPTH']
         except:
