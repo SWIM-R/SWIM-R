@@ -60,7 +60,7 @@ class SwimSerial(threading.Thread):
         
         self.ETHERNETCONNECTION = bool() # Is there an active ethernet connection? 
         
-        self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
+        self.WRITE_INSTRUCTIONFORMAT ='ERROR' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
         #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive
      
         self.READ_DATAFORMAT ='ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
@@ -175,7 +175,7 @@ class SwimSerial(threading.Thread):
     
     def formatforArduino(self,unformatted_message = str()):
         '''
-        Takes the flattened dictionary unformatted_message, and properly convertes it into a byte array to be written to the Arduino
+        Takes the flattened dictionary unformatted_message, and properly converts it into a byte array to be written to the Arduino
         '''
         formatted_message = bytearray() #allocate space for a new byte array
         dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary

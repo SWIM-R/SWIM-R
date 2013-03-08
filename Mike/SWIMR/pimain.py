@@ -68,7 +68,7 @@ while 1:
             ethernetconnected = ethernet.ISCONNECTED
             serialconnected = serial.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
-            
+            ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             print "still connected"
             
             
