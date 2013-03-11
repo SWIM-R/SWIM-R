@@ -25,7 +25,7 @@ class SwimServer(threading.Thread):
         self.PAYLOAD = str()
         self.MAXPACKETSIZE = 8196
         self.daemon = True
-        self.TIMEOUT = 3.0
+        self.TIMEOUT = 10.0
         self.stopreceivethread = False
         if PORT == 0:
             PORT = 9999
