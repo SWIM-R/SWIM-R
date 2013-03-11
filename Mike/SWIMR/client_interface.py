@@ -81,8 +81,10 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
-                    self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
-                    
+                    try:
+                        self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
+                    except:
+                        print self.ethernet.getreceive()
             ######################### 
              
              

@@ -100,7 +100,11 @@ while 1:
             print 'arduino broke'
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             serialconnected = serial.ISCONNECTED
-            serial.cleanup()
+            try:
+                serial.cleanup()
+            except AttributeError: #thrown if the serial was never initialized
+                continue
+                
         ########################
     except KeyboardInterrupt:
         print "bye bye"
