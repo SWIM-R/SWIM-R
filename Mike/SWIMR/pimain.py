@@ -81,6 +81,7 @@ while 1:
             
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
                 serial.setpayload(ethernet.getreceive())
+                print ethernet.getreceive()
                 serial.write()
             else: #just send the old packet again
                 serial.write()
