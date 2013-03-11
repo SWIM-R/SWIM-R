@@ -77,13 +77,14 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                     self.NEWMESSAGETOSEND = False
                 else:
-                    self.ethernet.setpayload(self.PING)
+                    print 'ping'
+                    self.ethernet.setpayload('PING')
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
                     try:
                         self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
-                    except:
+                    except:#see what happened
                         print self.ethernet.getreceive()
             ######################### 
              

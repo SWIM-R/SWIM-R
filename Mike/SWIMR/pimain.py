@@ -36,6 +36,16 @@ serialconnected = False
 
 while 1:
     try:
+        if not serialconnected:        
+            print 'connecting arduino'
+            serial = SwimSerial(38400)
+            print 'started receive thread...'
+            serial.start()
+            print 'connected!'
+            ############
+        #########################
+        
+        
         ########setup()#########
         if not ethernetconnected:
             #Setting up Ethernet Communication
@@ -46,13 +56,7 @@ while 1:
             ethernet.start()
             ###########
                     
-        if not serialconnected:        
-            print 'connecting arduino'
-            serial = SwimSerial(38400)
-            serial.start()
-            print 'connected!'
-            ############
-        #########################
+
         
         
         
@@ -76,10 +80,11 @@ while 1:
                 ethernet.setpayload(serial.getreceive())
                 ethernet.send()
             else: #otherwise just ping
-                ethernet.setpayload('{"PING": 0 }')
+                ethernet.setpayload("{'PING': 0 }")
                 ethernet.send()
             
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
+                print 'new message from jon!'
                 serial.setpayload(ethernet.getreceive())
                 print ethernet.getreceive()
                 serial.write()

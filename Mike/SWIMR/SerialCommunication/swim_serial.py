@@ -6,6 +6,7 @@ Created on Oct 16, 2012
 #!/Library Python
 
 import serial
+from serial import SerialException
 import glob
 import platform
 import threading 
@@ -48,8 +49,6 @@ class SwimSerial(threading.Thread):
         
         self.RECEIVE = dict() #information that has just been read from Arduino
         
-        self.initialize() #This method is a few lines down
-        
         self.daemon = True # So the receive thread is closed when the main thread is closed
         
         self.NEWMESSAGE = False # Is there a new message from the Arduino?
@@ -64,11 +63,15 @@ class SwimSerial(threading.Thread):
         #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive
      
         self.READ_DATAFORMAT ='ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+        
+        self.initialize() #This method is a few lines down
+
     def scan(self):
         '''
         Returns a glob of all of the USB file descriptors. 
         '''
         if self.platform == 'Darwin':
+            print 'on macbook'
             return  glob.iglob('/dev/tty.usb*') 
         else:
             return glob.iglob('/dev/serial/by-id/*')
@@ -99,8 +102,9 @@ class SwimSerial(threading.Thread):
             while self.ISCONNECTED is False:
               
                 try:
-                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMOUT, writeTimeout = self.WRITETIMEOUT)    
-                except:
+                    print 'trying to find arduino'
+                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMEOUT, writeTimeout = self.WRITETIMEOUT)    
+                except: #something didn't work
                     try:
                         ports = self.scan()
                         ports = ports.next()
@@ -177,23 +181,29 @@ class SwimSerial(threading.Thread):
         '''
         Takes the flattened dictionary unformatted_message, and properly converts it into a byte array to be written to the Arduino
         '''
-        formatted_message = bytearray() #allocate space for a new byte array
-        dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
-        
-        dict_of_unformatted_message['ERROR'] = self.generateerrorcode() #make an entry for the current error code in the dictionary
-        formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__()) # prepend the length of the message to the byte array
-        for field in self.WRITE_INSTRUCTIONFORMAT:
-            try:
-                formatted_message.append(dict_of_unformatted_message[field]) 
-            except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
-                return bytearray(0)
-        return formatted_message
+        try:
+            formatted_message = bytearray() #allocate space for a new byte array
+            
+            dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
+            
+            dict_of_unformatted_message['ERROR'] = self.generateerrorcode() #make an entry for the current error code in the dictionary
+            formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__()) # prepend the length of the message to the byte array
+            for field in self.WRITE_INSTRUCTIONFORMAT:
+                try:
+                    formatted_message.append(dict_of_unformatted_message[field]) 
+                except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
+                    return bytearray(0)
+            return formatted_message
+        except: #some crap happened
+            print 'got some crap from jon'
+            return bytearray(0)
             
                  
 if __name__  == '__main__':
         s = SwimSerial(38400)
         s.start()
         while 1:
+            print "{'YAW':255, 'PITCH':127}"
             time.sleep(0.5)
             s.setpayload("{'YAW':255, 'PITCH':127}")
             s.write()

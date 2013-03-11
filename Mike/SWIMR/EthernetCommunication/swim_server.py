@@ -31,7 +31,7 @@ class SwimServer(threading.Thread):
             PORT = 9999
         
         self.initialize(PORT)
-        self.NEWMESSAGE = True
+        self.NEWMESSAGE = False
         self.ARDUINOCONNECTION = bool()
         self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
@@ -142,7 +142,7 @@ class SwimServer(threading.Thread):
             try:
                 receivedstring = self.SOCK.recv(size)
             except:#timeout
-                print "server broke"
+                print "Swim server receive timeout"
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
@@ -152,7 +152,7 @@ class SwimServer(threading.Thread):
                 self.NEWMESSAGE = False
                 continue
             elif receivedstring == 'Hello!':
-                print "client broke"
+                print "Swim Server receive Hello!"
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
