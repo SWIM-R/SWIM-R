@@ -79,10 +79,9 @@ while 1:
                 print 'new message from jon!'
                 serial.setpayload(ethernet.getreceive())
                 print ethernet.getreceive()
-                #serial.write()
+                serial.write()
             else: #just send the old packet again
-                #serial.write()
-                pass
+                serial.write()
                 
         ########################
         

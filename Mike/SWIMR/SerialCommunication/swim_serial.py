@@ -123,31 +123,30 @@ class SwimSerial(threading.Thread):
         
         a new data packet is preceeded with $$$
         '''
+
         try:
-            try:
-                temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-            except:
-                self.ISCONNECTED = False
-                return
-            if temp == '$$$': #then read data packet
-                for key in self.READ_DATAFORMAT:
-                    try:
-                        self.RECEIVE[key] = str(self.SERIAL.read(1))
-                    except: #Timeout 
-                        self.ISCONNECTED = False
-                        return
-                self.NEWMESSAGE = True
-            else:
-                self.ISCONNECTED = True
-                return
-        except Exception as e:
-            print e
+            #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+            temp = str(self.SERIAL.read(1))
+        except:
+            self.ISCONNECTED = False
+            return
+        if temp == '$$$': #then read data packet
+            for key in self.READ_DATAFORMAT:
+                try:
+                    self.RECEIVE[key] = str(self.SERIAL.read(1))
+                except: #Timeout 
+                    self.ISCONNECTED = False
+                    return
+            self.NEWMESSAGE = True
+        else:
+            self.ISCONNECTED = True
+            return
+
         
         
     def write(self):
             try:
                 for number in self.PAYLOAD:
-                    time.sleep(0.001)
                     print int(unichr(number).encode('latin_1'))
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
             except: #timeout
