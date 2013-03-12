@@ -86,18 +86,18 @@ while 1:
         
         ###########cleanup()#####
         #Things in this section are called if something goes wrong in loop()
-        if not ethernet.ISCONNECTED:
-            print 'ethernet broke'
+        if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
+            if not serial.ISCONNECTED:
+                print 'arduino broke'
+            elif not ethernet.ISCONNECTED:
+                print 'ethernet broke'            
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED
-            ethernet.cleanup()  
-        if not serial.ISCONNECTED:
-            print 'arduino broke'
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
-            serialconnected = serial.ISCONNECTED                        
-            ethernet.cleanup()  
+            serialconnected = serial.ISCONNECTED  
             try:
                 serial.cleanup()
+                ethernet.cleanup()                      
             except: #thrown if the serial was never initialized
                 pass
         ########################

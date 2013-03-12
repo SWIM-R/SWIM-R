@@ -25,7 +25,7 @@ class SwimServer(threading.Thread):
         self.PAYLOAD = str()
         self.MAXPACKETSIZE = 8196
         self.daemon = True
-        self.TIMEOUT = 10.0
+        self.TIMEOUT = 3.0
         self.stopreceivethread = False
         if PORT == 0:
             PORT = 9999
@@ -52,7 +52,7 @@ class SwimServer(threading.Thread):
         # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
         #self.SOCK.setblocking(0)
         
-        #sets socket to be blocking along with a 5.0 second timeout, if can't be sent or received within 5 seconds then the timeout exception is raised
+        #sets socket to be blocking along with a timeout, if can't be sent or received within 5 seconds then the timeout exception is raised
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
         
@@ -66,7 +66,7 @@ class SwimServer(threading.Thread):
 
         
         #find the client computer
-        while self.ISCONNECTED == False:
+        while not self.ISCONNECTED:
             try:
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(64)
             except error:
@@ -177,6 +177,10 @@ class SwimServer(threading.Thread):
         '''
         stops closes the socket and stops the receive thread
         '''
-        self.stopreceivethread = True 
-        time.sleep(0.001) 
-        self.SOCK.close()
+        try:
+            self.stopreceivethread = True 
+            time.sleep(0.01) 
+            self.SOCK.shutdown(flag = 'SHUT_RDWR')
+            self.SOCK.close()
+        except Exception as e:
+            print e

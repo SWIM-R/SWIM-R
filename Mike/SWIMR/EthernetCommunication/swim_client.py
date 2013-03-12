@@ -40,9 +40,10 @@ class SwimClient(threading.Thread):
         self.stopreceivethread = False
         self.daemon = True
         self.TIMEOUT = 3.0
+        self.NEWMESSAGE = True
+
         if not testing:
             self.initialize()
-        self.NEWMESSAGE = True
         
         
     def initialize(self):
@@ -59,7 +60,7 @@ class SwimClient(threading.Thread):
         #self.SOCK.setblocking(0)
         
         
-        #sets socket to be blocking along with a 5.0 second timeout, if can't be sent to received within 5 seconds then the timeout exception is raised
+        #sets socket to be blocking along with a timeout, if can't be sent to received within 5 seconds then the timeout exception is raised
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
         
@@ -134,7 +135,10 @@ class SwimClient(threading.Thread):
                 self.stopreceivethread = True
                 return
             if receivedstring == 'done':
-                break
+                if temp == '':
+                    continue
+                else:
+                    break
             elif receivedstring == 'PING':
                 self.NEWMESSAGE = False
                 continue
@@ -154,9 +158,13 @@ class SwimClient(threading.Thread):
         '''
         stops closes the socket and stops the receive thread
         '''
-        self.stopreceivethread = True 
-        time.sleep(0.001)
-        self.SOCK.close()  
+        try:
+            self.stopreceivethread = True 
+            time.sleep(0.01)
+            self.SOCK.shutdown(flag = 'SHUT_RDWR')
+            self.SOCK.close()  
+        except Exception as e:
+            print e
     
 
 

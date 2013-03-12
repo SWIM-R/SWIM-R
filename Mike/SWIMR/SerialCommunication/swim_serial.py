@@ -125,25 +125,24 @@ class SwimSerial(threading.Thread):
         a new data packet is preceeded with $$$
         '''
         try:
-            temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-        
-        except self.SERIAL.SerialTimeoutException:
-            self.ISCONNECTED = False
-            return
-        except:
-            self.ISCONNECTED = False
-            return
-        if temp == '$$$': #then read data packet
-            for key in self.READ_DATAFORMAT:
-                try:
-                    self.RECEIVE[key] = str(self.SERIAL.read(1))
-                except: #Timeout 
-                    self.ISCONNECTED = False
-                    return
-            self.NEWMESSAGE = True
-        else:
-            self.ISCONNECTED = True
-            return
+            try:
+                temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+            except:
+                self.ISCONNECTED = False
+                return
+            if temp == '$$$': #then read data packet
+                for key in self.READ_DATAFORMAT:
+                    try:
+                        self.RECEIVE[key] = str(self.SERIAL.read(1))
+                    except: #Timeout 
+                        self.ISCONNECTED = False
+                        return
+                self.NEWMESSAGE = True
+            else:
+                self.ISCONNECTED = True
+                return
+        except Exception as e:
+            print e
         
         
     def write(self):
