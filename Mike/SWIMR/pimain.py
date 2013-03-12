@@ -104,3 +104,5 @@ while 1:
     except KeyboardInterrupt:
         print "bye bye"
         exit(0)
+    except Exception as e:
+        print e

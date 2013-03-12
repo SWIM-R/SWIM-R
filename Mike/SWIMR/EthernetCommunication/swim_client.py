@@ -76,7 +76,7 @@ class SwimClient(threading.Thread):
                 if data.strip() == 'hello client':
                     print"I've found the server"
                     self.ISCONNECTED = True 
-                time.sleep(3.0)
+                time.sleep(0.5)
             except timeout:
                 continue        
     def send(self):
@@ -161,7 +161,7 @@ class SwimClient(threading.Thread):
         try:
             self.stopreceivethread = True 
             time.sleep(0.01)
-            self.SOCK.shutdown(flag = 'SHUT_RDWR')
+            self.SOCK.shutdown(socket.SHUT_RDWR)
             self.SOCK.close()  
         except Exception as e:
             print e

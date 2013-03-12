@@ -72,7 +72,6 @@ class SwimSerial(threading.Thread):
         Returns a glob of all of the USB file descriptors. 
         '''
         if self.platform == 'Darwin':
-            print 'on macbook'
             return  glob.iglob('/dev/tty.usb*') 
         else:
             return glob.iglob('/dev/serial/by-id/*')
@@ -93,7 +92,7 @@ class SwimSerial(threading.Thread):
         
     def initialize(self):
         '''
-            scans for serial devices, when it finds the arduino, connects to it.  Invoked in the constructor
+        scans for serial devices, when it finds the arduino, connects to it.  Invoked in the constructor
         '''
         if self.ISCONNECTED is False:
             self.SERIAL = None
@@ -102,8 +101,8 @@ class SwimSerial(threading.Thread):
             while self.ISCONNECTED is False:
               
                 try:
-                    print 'trying to find arduino'
-                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMEOUT, writeTimeout = self.WRITETIMEOUT)    
+#                    An optional second argument configures the data, parity, and stop bits. The default is 8 data bits, no parity, one stop bit.
+                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMEOUT, writeTimeout = self.WRITETIMEOUT, bytesize = serial.EIGHTBITS,parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE,xonxoff = False, rtscts = False,dsrdtr=False )  
                 except: #something didn't work
                     try:
                         ports = self.scan()
