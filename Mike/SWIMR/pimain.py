@@ -40,7 +40,7 @@ while 1:
             print 'connecting arduino'
             serial = SwimSerial(115200)
             print 'started receive thread...'
-            #serial.start()
+            serial.start()
             print 'connected!'
             ############
         #########################
@@ -59,7 +59,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         while ethernet.ISCONNECTED and serial.ISCONNECTED:
-            time.sleep(0.1) 
+            time.sleep(1.0) 
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
             serialconnected = serial.ISCONNECTED
@@ -98,8 +98,8 @@ while 1:
             try:
                 serial.cleanup()
                 ethernet.cleanup()                      
-            except: #thrown if the serial was never initialized
-                pass
+            except Exception as e: #thrown if the serial was never initialized
+                print e
         ########################
     except KeyboardInterrupt:
         print "bye bye"

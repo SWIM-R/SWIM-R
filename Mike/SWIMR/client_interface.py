@@ -68,7 +68,7 @@ class ClientInterface(threading.Thread):
             ############loop()#######
             #main loop of the program
             while self.ethernet.ISCONNECTED:
-                time.sleep(0.1)
+                time.sleep(1.0)
                 print "still connected"
                 
                 if self.NEWMESSAGETOSEND:
