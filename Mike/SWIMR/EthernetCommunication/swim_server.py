@@ -142,7 +142,6 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
-                print receivedstring
             except:#timeout
                 print "Swim server receive timeout"
                 self.ISCONNECTED = False

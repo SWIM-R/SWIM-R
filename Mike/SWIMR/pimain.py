@@ -79,11 +79,10 @@ while 1:
                 print 'new message from jon!'
                 serial.setpayload(ethernet.getreceive())
                 print ethernet.getreceive()
-                serial.write()
+                #serial.write()
             else: #just send the old packet again
-                serial.write()
+                #serial.write()
                 pass
-            
                 
         ########################
         
@@ -98,11 +97,8 @@ while 1:
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             serialconnected = serial.ISCONNECTED  
-            try:
-                serial.cleanup()
-                ethernet.cleanup()                      
-            except Exception as e: #thrown if the serial was never initialized
-                print e
+            serial.cleanup()
+            ethernet.cleanup()                      
         ########################
     except KeyboardInterrupt:
         print "bye bye"
