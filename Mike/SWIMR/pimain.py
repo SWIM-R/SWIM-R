@@ -35,13 +35,15 @@ ethernetconnected = False
 serialconnected = False
 
 while 1:
+    time.sleep(1.0) 
+
     try:
         if not serialconnected:        
             print 'connecting arduino'
             serial = SwimSerial(115200)
             print 'started receive thread...'
             serial.start()
-            print 'connected!'
+            print 'arduino connected!'
             ############
         #########################
         
@@ -52,8 +54,8 @@ while 1:
             print 'finding client....'
             ethernet = SwimServer(9999)
             print 'client found......'
-            print 'starting receive thread'
             ethernet.start()
+            
             ###########
         ############loop()#######
         #main loop of the program
@@ -80,6 +82,7 @@ while 1:
                 serial.write()
             else: #just send the old packet again
                 serial.write()
+                pass
             
                 
         ########################
@@ -105,4 +108,5 @@ while 1:
         print "bye bye"
         exit(0)
     except Exception as e:
-        print e
+        with open('/Users/Mike/Desktop/errorlog.txt','a') as f:
+            f.write(str(e))

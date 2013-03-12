@@ -53,6 +53,8 @@ class ClientInterface(threading.Thread):
         self.RECEIVE = dict() 
     def run(self):
         while not self.TESTING:
+            time.sleep(1.0)
+
             ########setup()#########
             
             #Setting up Ethernet Communication

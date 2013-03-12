@@ -158,13 +158,10 @@ class SwimClient(threading.Thread):
         '''
         stops closes the socket and stops the receive thread
         '''
-        try:
-            self.stopreceivethread = True 
-            time.sleep(0.01)
-            self.SOCK.shutdown(socket.SHUT_RDWR)
-            self.SOCK.close()  
-        except Exception as e:
-            print e
+        self.stopreceivethread = True 
+        time.sleep(0.01)
+        self.SOCK.close()
+
     
 
 

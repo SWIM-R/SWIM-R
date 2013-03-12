@@ -31,6 +31,7 @@ class SwimServer(threading.Thread):
             PORT = 9999
         
         self.initialize(PORT)
+        self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.NEWMESSAGE = False
         self.ARDUINOCONNECTION = bool()
         self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
@@ -177,10 +178,6 @@ class SwimServer(threading.Thread):
         '''
         stops closes the socket and stops the receive thread
         '''
-        try:
-            self.stopreceivethread = True 
-            time.sleep(0.01) 
-            self.SOCK.shutdown(socket.SHUT_RDWR)
-            self.SOCK.close()
-        except Exception as e:
-            print e
+        self.stopreceivethread = True 
+        time.sleep(0.01) 
+        self.SOCK.close()
