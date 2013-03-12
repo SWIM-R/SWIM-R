@@ -53,7 +53,7 @@ class ClientInterface(threading.Thread):
         self.RECEIVE = dict() 
     def run(self):
         while not self.TESTING:
-            time.sleep(1.0)
+            time.sleep(0.1)
 
             ########setup()#########
             
@@ -70,7 +70,7 @@ class ClientInterface(threading.Thread):
             ############loop()#######
             #main loop of the program
             while self.ethernet.ISCONNECTED:
-                time.sleep(1.0)
+                time.sleep(0.1)
                 print "still connected"
                 
                 if self.NEWMESSAGETOSEND:

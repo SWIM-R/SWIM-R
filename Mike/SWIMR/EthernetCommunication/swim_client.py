@@ -54,7 +54,8 @@ class SwimClient(threading.Thread):
         # AF_INET sets it to use UDP protocol
         #socket for sending
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        
+        self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
        
         # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
         #self.SOCK.setblocking(0)

@@ -35,7 +35,7 @@ ethernetconnected = False
 serialconnected = False
 
 while 1:
-    time.sleep(1.0) 
+    time.sleep(0.1) 
 
     try:
         if not serialconnected:        
@@ -61,7 +61,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         while ethernet.ISCONNECTED and serial.ISCONNECTED:
-            time.sleep(1.0) 
+            time.sleep(0.1) 
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
             serialconnected = serial.ISCONNECTED
@@ -105,4 +105,4 @@ while 1:
         exit(0)
     except Exception as e:
         with open('/Users/Mike/Desktop/errorlog.txt','a') as f:
-            f.write(str(e))
+            f.write(str(e)+'\n')

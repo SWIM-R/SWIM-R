@@ -31,7 +31,6 @@ class SwimServer(threading.Thread):
             PORT = 9999
         
         self.initialize(PORT)
-        self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.NEWMESSAGE = False
         self.ARDUINOCONNECTION = bool()
         self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
@@ -47,7 +46,8 @@ class SwimServer(threading.Thread):
         # AF_INET sets it to use UDP protocol
         #socket for sending
         self.SOCK = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        
+        self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
         
         
         # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
@@ -70,7 +70,7 @@ class SwimServer(threading.Thread):
         while not self.ISCONNECTED:
             try:
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(64)
-            except error:
+            except: #timeout
                 continue
             print "This This is client IP and message: ",self.RECEIVE, self.CLIENTIP
             if self.CLIENTIP is not None:
