@@ -38,9 +38,9 @@ while 1:
     try:
         if not serialconnected:        
             print 'connecting arduino'
-            serial = SwimSerial(38400)
+            serial = SwimSerial(115200)
             print 'started receive thread...'
-            serial.start()
+            #serial.start()
             print 'connected!'
             ############
         #########################
@@ -55,26 +55,16 @@ while 1:
             print 'starting receive thread'
             ethernet.start()
             ###########
-                    
-
-        
-        
-        
-        
-        
-        
         ############loop()#######
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         while ethernet.ISCONNECTED and serial.ISCONNECTED:
-            time.sleep(0.1) # 10Hz
-            
+            time.sleep(0.1) 
             ethernetconnected = ethernet.ISCONNECTED
-            serialconnected = serial.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
+            serialconnected = serial.ISCONNECTED
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             print "still connected"
-            
             
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
                 ethernet.setpayload(serial.getreceive())
@@ -104,12 +94,12 @@ while 1:
         if not serial.ISCONNECTED:
             print 'arduino broke'
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
-            serialconnected = serial.ISCONNECTED
+            serialconnected = serial.ISCONNECTED                        
+            ethernet.cleanup()  
             try:
                 serial.cleanup()
-            except AttributeError: #thrown if the serial was never initialized
-                continue
-                
+            except: #thrown if the serial was never initialized
+                pass
         ########################
     except KeyboardInterrupt:
         print "bye bye"

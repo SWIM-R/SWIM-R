@@ -141,26 +141,31 @@ class SwimServer(threading.Thread):
         while 1:
             try:
                 receivedstring = self.SOCK.recv(size)
+                print receivedstring
             except:#timeout
                 print "Swim server receive timeout"
                 self.ISCONNECTED = False
                 self.stopreceivethread = True
                 return
             if receivedstring == 'done':
-                break
+                if temp is not '':
+                    break
+                else:
+                    continue
             elif receivedstring == 'PING':
                 self.NEWMESSAGE = False
                 continue
             elif receivedstring == 'Hello!':
                 print "Swim Server receive Hello!"
                 self.ISCONNECTED = False
+                self.NEWMESSAGE = False
                 self.stopreceivethread = True
                 return
             else:
                 temp = temp + receivedstring
+                continue
         self.RECEIVE = temp
         self.NEWMESSAGE = True
-    
     def run(self):
         '''
         implementation of the inherited run() method from the Thread class.  

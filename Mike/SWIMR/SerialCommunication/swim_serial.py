@@ -7,6 +7,7 @@ Created on Oct 16, 2012
 
 import serial
 from serial import SerialException
+from serial import SerialTimeoutException
 import glob
 import platform
 import threading 
@@ -82,7 +83,6 @@ class SwimSerial(threading.Thread):
         The bytearray that is about to be written to the Arduino is in PAYLOAD
         '''        
         self.PAYLOAD = self.formatforArduino(message)
-
         
     def getreceive(self):
         '''
@@ -148,8 +148,10 @@ class SwimSerial(threading.Thread):
         
     def write(self):
             try:
-                for byte in self.PAYLOAD:
-                    self.SERIAL.write(unichr(int(byte)).encode('latin_1')) #So that 0-255 can be encoded into a byte
+                for number in self.PAYLOAD:
+                    time.sleep(0.001)
+                    print int(unichr(number).encode('latin_1'))
+                    self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
             except: #timeout
                 self.ISCONNECTED = False
                 return
@@ -182,31 +184,35 @@ class SwimSerial(threading.Thread):
         Takes the flattened dictionary unformatted_message, and properly converts it into a byte array to be written to the Arduino
         '''
         try:
-            formatted_message = bytearray() #allocate space for a new byte array
+            formatted_message = list() #allocate space for a new byte array
             
             dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
             
             dict_of_unformatted_message['ERROR'] = self.generateerrorcode() #make an entry for the current error code in the dictionary
-            formatted_message.append(self.WRITE_INSTRUCTIONFORMAT.__len__()) # prepend the length of the message to the byte array
+            
+            formatted_message.append(int(self.WRITE_INSTRUCTIONFORMAT.__len__())) # prepend the length of the message to the byte array
+            
             for field in self.WRITE_INSTRUCTIONFORMAT:
                 try:
                     formatted_message.append(dict_of_unformatted_message[field]) 
                 except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
-                    return bytearray(0)
+                    return int(0)
             return formatted_message
-        except: #some crap happened
-            print 'got some crap from jon'
-            return bytearray(0)
+        except Exception as e:
+            print e
+            return int(0)
             
                  
 if __name__  == '__main__':
         s = SwimSerial(38400)
         s.start()
+        dictionary = {'YAW':100, 'PITCH':200}
         while 1:
-            print "{'YAW':255, 'PITCH':127}"
+            print "{'YAW':100, 'PITCH':200}"
             time.sleep(0.5)
-            s.setpayload("{'YAW':255, 'PITCH':127}")
-            s.write()
+            for key in dictionary.keys():
+                s.SERIAL.write(unichr(int(dictionary[key])).encode('latin_1')) #So that 0-255 can be encoded into a byte
+
             
             
                 
