@@ -139,7 +139,7 @@ class SwimServer(threading.Thread):
         '''
         receivedstring = str()
         temp = str()
-        while 1:
+        while not self.stopreceivethread:
             try:
                 receivedstring = self.SOCK.recv(size)
             except:#timeout
@@ -171,7 +171,7 @@ class SwimServer(threading.Thread):
         implementation of the inherited run() method from the Thread class.  
         This is a separate thread from the main thread that is always receiving information
         '''
-        while self.stopreceivethread == False:
+        while not self.stopreceivethread:
             self.receive(self.MAXPACKETSIZE)            
     def cleanup(self):
         '''

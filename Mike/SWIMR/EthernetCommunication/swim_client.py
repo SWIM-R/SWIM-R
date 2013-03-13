@@ -128,7 +128,7 @@ class SwimClient(threading.Thread):
         '''
         receivedstring = str()
         temp = str()
-        while 1:
+        while not self.stopreceivethread:
             try:
                 receivedstring = self.SOCK.recv(size)
             except:#timeout
@@ -140,7 +140,7 @@ class SwimClient(threading.Thread):
                     continue
                 else:
                     break
-            elif receivedstring == 'PING':
+            elif receivedstring == "{'PING': 0 }":
                 self.NEWMESSAGE = False
                 continue
             else:
@@ -160,7 +160,6 @@ class SwimClient(threading.Thread):
         stops closes the socket and stops the receive thread
         '''
         self.stopreceivethread = True 
-        time.sleep(0.01)
         self.SOCK.close()
 
     

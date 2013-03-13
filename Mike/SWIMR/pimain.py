@@ -42,7 +42,7 @@ while 1:
             print 'connecting arduino'
             serial = SwimSerial(115200)
             print 'started receive thread...'
-            serial.start()
+            #serial.start()
             print 'arduino connected!'
             ############
         #########################

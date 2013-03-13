@@ -50,7 +50,7 @@ class ClientInterface(threading.Thread):
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
-        self.RECEIVE = dict() 
+        self.RECEIVE = {'ERROR': 0 , 'ROLL' : 128 , 'PITCH': 128,'YAW': 128,'TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0}
     def run(self):
         while not self.TESTING:
             time.sleep(0.1)
