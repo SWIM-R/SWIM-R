@@ -11,12 +11,12 @@ class SwimPacket():
 
     def __init__(self):
       
-        self.YAW = 128
-        self.PITCH = 128
-        self.ROLL = 128
-        self.X = 128
-        self.Y = 128
-        self.Z = 128
+        self.YAW = 127
+        self.PITCH = 127
+        self.ROLL = 127
+        self.X = 127
+        self.Y = 127
+        self.Z = 127
         
 
 

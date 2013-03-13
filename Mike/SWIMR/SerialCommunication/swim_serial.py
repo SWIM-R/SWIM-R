@@ -29,13 +29,13 @@ class SwimSerial(threading.Thread):
        
         
         if baudrate == 0:
-            self.BAUDRATE = 38400 #the baurate for the serial connection
+            self.BAUDRATE = 115200 #the baurate for the serial connection
         else:
             GOOD_BAUD_RATES = [38400,115200,57600,38400,28800,19200,14400,9600,4800,2400,1200,300]
             if baudrate in GOOD_BAUD_RATES:
                 self.BAUDRATE = baudrate
             else:
-                self.BAUDRATE = 38400
+                self.BAUDRATE = 115200
         threading.Thread.__init__(self) # instance of the thread class
         
         self.ISCONNECTED = False # Is the RPI connected to the Arduino?
@@ -102,7 +102,10 @@ class SwimSerial(threading.Thread):
               
                 try:
 #                    An optional second argument configures the data, parity, and stop bits. The default is 8 data bits, no parity, one stop bit.
-                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMEOUT, writeTimeout = self.WRITETIMEOUT, bytesize = serial.EIGHTBITS,parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE,xonxoff = False, rtscts = False,dsrdtr=False )  
+                    self.SERIAL = serial.Serial(port=ports , baudrate=self.BAUDRATE, timeout = self.READTIMEOUT, 
+                                                writeTimeout = self.WRITETIMEOUT, bytesize = serial.EIGHTBITS,
+                                                parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE,
+                                                xonxoff = False, rtscts = False,dsrdtr=False )  
                 except: #something didn't work
                     try:
                         ports = self.scan()
@@ -201,13 +204,25 @@ class SwimSerial(threading.Thread):
             
                  
 if __name__  == '__main__':
-        s = SwimSerial(38400)
-        s.start()
-        dictionary = {'YAW':100, 'PITCH':200}
+        s = SwimSerial(115200)
+        dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
+        dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
+        counter = 0
+        forward = False
         while 1:
-            print "{'YAW':100, 'PITCH':200}"
+            counter += 1
+            if counter > 20:
+                forward = not forward
+                counter = 0
+            if forward:
+                dictionary = dictionary1
+            else:
+                dictionary = dictionary2
+#            print dictionary1
             time.sleep(0.5)
-            for key in dictionary.keys():
+            s.SERIAL.write(unichr(int(len(dictionary.keys()))).encode('latin_1'))
+            for key in s.WRITE_INSTRUCTIONFORMAT:
+                print key
                 s.SERIAL.write(unichr(int(dictionary[key])).encode('latin_1')) #So that 0-255 can be encoded into a byte
 
             
