@@ -178,5 +178,6 @@ class SwimServer(threading.Thread):
         stops closes the socket and stops the receive thread
         '''
         self.stopreceivethread = True 
+        self.ISCONNECTED = False
         time.sleep(0.01) 
         self.SOCK.close()

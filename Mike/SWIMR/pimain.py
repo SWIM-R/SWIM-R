@@ -41,8 +41,8 @@ while 1:
         if not serialconnected:        
             print 'connecting arduino'
             serial = SwimSerial(115200)
-            print 'started receive thread...'
-            #serial.start()
+            print 'started arduino receive thread...'
+            #serial.start() #starting the receive thread
             print 'arduino connected!'
             ############
         #########################
@@ -61,7 +61,7 @@ while 1:
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         while ethernet.ISCONNECTED and serial.ISCONNECTED:
-            time.sleep(0.1) 
+            time.sleep(0.5) 
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
             serialconnected = serial.ISCONNECTED
@@ -77,8 +77,8 @@ while 1:
             
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
                 print 'new message from jon!'
-                serial.setpayload(ethernet.getreceive())
                 print ethernet.getreceive()
+                serial.setpayload(ethernet.getreceive())
                 serial.write()
             else: #just send the old packet again
                 serial.write()
@@ -89,15 +89,15 @@ while 1:
         #Things in this section are called if something goes wrong in loop()
         if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
             if not serial.ISCONNECTED:
+                serial.cleanup()
                 print 'arduino broke'
             elif not ethernet.ISCONNECTED:
-                print 'ethernet broke'            
+                print 'ethernet broke'  
+                ethernet.cleanup()                      
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             serialconnected = serial.ISCONNECTED  
-            serial.cleanup()
-            ethernet.cleanup()                      
         ########################
     except KeyboardInterrupt:
         print "bye bye"

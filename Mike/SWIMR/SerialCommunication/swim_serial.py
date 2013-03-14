@@ -150,9 +150,10 @@ class SwimSerial(threading.Thread):
     def write(self):
             try:
                 for number in self.PAYLOAD:
-                    print int(unichr(number).encode('latin_1'))
-                    self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
-            except: #timeout
+                    print number, unichr(number).encode('latin_1')
+                    s.SERIAL.write(unichr(int(number)).encode('latin_1')) #So that 0-255 can be encoded into a byte
+            except Exception as e:
+                print e
                 self.ISCONNECTED = False
                 return
     def run(self):
@@ -184,7 +185,7 @@ class SwimSerial(threading.Thread):
         Takes the flattened dictionary unformatted_message, and properly converts it into a byte array to be written to the Arduino
         '''
         try:
-            formatted_message = list() #allocate space for a new byte array
+            formatted_message = list() #allocate space for a new list
             
             dict_of_unformatted_message = ast.literal_eval(unformatted_message) #convert the received message into a dictionary
             

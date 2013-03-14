@@ -53,7 +53,7 @@ class ClientInterface(threading.Thread):
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 128 , 'PITCH': 128,'YAW': 128,'TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0}
     def run(self):
         while not self.TESTING:
-            time.sleep(0.1)
+            time.sleep(0.5)
 
             ########setup()#########
             

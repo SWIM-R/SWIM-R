@@ -161,6 +161,7 @@ class SwimClient(threading.Thread):
         '''
         self.stopreceivethread = True 
         self.SOCK.close()
+        self.ISCONNECTED = False
 
     
 
