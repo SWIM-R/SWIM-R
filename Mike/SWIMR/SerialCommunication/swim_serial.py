@@ -126,24 +126,24 @@ class SwimSerial(threading.Thread):
         
         a new data packet is preceeded with $$$
         '''
-
-        try:
-            #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-            temp = str(self.SERIAL.read(1))
-        except:
-            self.ISCONNECTED = False
-            return
-        if temp == '$$$': #then read data packet
-            for key in self.READ_DATAFORMAT:
-                try:
-                    self.RECEIVE[key] = str(self.SERIAL.read(1))
-                except: #Timeout 
-                    self.ISCONNECTED = False
-                    return
-            self.NEWMESSAGE = True
-        else:
-            self.ISCONNECTED = True
-            return
+        while(self.SERIAL.inWaiting() > 0):
+            try:
+                #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+                temp = str(self.SERIAL.read(1))
+            except:
+                self.ISCONNECTED = False
+                return
+            if temp == '$$$': #then read data packet
+                for key in self.READ_DATAFORMAT:
+                    try:
+                        self.RECEIVE[key] = str(self.SERIAL.read(1))
+                    except: #Timeout 
+                        self.ISCONNECTED = False
+                        return
+                self.NEWMESSAGE = True
+            else:
+                self.ISCONNECTED = True
+                return
 
         
         
@@ -162,7 +162,7 @@ class SwimSerial(threading.Thread):
         called when .start() method is called.  multithreading!
         '''
         while self.ISCONNECTED:
-	    time.sleep(0.2)
+	    time.sleep(0.1)
             self.read()
     
     def generateerrorcode(self):
