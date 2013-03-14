@@ -129,8 +129,8 @@ class SwimSerial(threading.Thread):
         '''
         while(self.SERIAL.inWaiting() > 0):
             try:
-                #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-                temp = str(self.SERIAL.read(1))
+                temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+                #temp = str(self.SERIAL.read(1))
             except:
                 self.ISCONNECTED = False
                 return
@@ -154,7 +154,6 @@ class SwimSerial(threading.Thread):
                 for number in self.PAYLOAD:
                     print type(number), number
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
-                  #  s.SERIAL.write(number) #So that 0-255 can be encoded into a byte
             except Exception as e:
                 print e
                 self.ISCONNECTED = False
@@ -164,7 +163,7 @@ class SwimSerial(threading.Thread):
         called when .start() method is called.  multithreading!
         '''
         while self.ISCONNECTED:
-	    time.sleep(0.1)
+            time.sleep(0.1)
             self.read()
     
     def generateerrorcode(self):
@@ -210,7 +209,7 @@ class SwimSerial(threading.Thread):
                  
 if __name__  == '__main__':
         s = SwimSerial(115200)
-	s.start()
+        s.start()
         dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
         dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
         counter = 0
