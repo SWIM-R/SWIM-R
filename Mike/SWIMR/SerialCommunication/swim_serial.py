@@ -143,7 +143,6 @@ class SwimSerial(threading.Thread):
                 self.NEWMESSAGE = True
             else:
                 self.ISCONNECTED = True
-                return
 
         
         
