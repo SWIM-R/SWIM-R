@@ -35,7 +35,7 @@ ethernetconnected = False
 serialconnected = False
 
 while 1:
-    time.sleep(0.1) 
+    time.sleep(0.5) 
 
     try:
         if not serialconnected:        
@@ -60,7 +60,7 @@ while 1:
         ############loop()#######
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
-        while ethernet.ISCONNECTED and serial.ISCONNECTED:
+        while ethernet.ISCONNECTED or serial.ISCONNECTED:
             time.sleep(0.5) 
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
@@ -68,37 +68,47 @@ while 1:
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
             print "still connected"
             
-            if serial.NEWMESSAGE: # If there is a new message from the Arduino 
-                ethernet.setpayload(serial.getreceive())
-                ethernet.send()
-            else: #otherwise just ping
+            if serial.ISCONNECTED:
+                if serial.NEWMESSAGE: # If there is a new message from the Arduino 
+                    ethernet.setpayload(serial.getreceive())
+                    ethernet.send()
+                else: #otherwise just ping
+                    ethernet.setpayload("{'PING': 0 }")
+                    ethernet.send()
+            else: #ping the error message
                 ethernet.setpayload("{'PING': 0 }")
                 ethernet.send()
-            
-            if ethernet.NEWMESSAGE: #if there is a new message from the Computer
-                print 'new message from jon!'
-                print ethernet.getreceive()
-                serial.setpayload(ethernet.getreceive())
-                serial.write()
-            else: #just send the old packet again
+                
+            if ethernet.ISCONNECTED:
+                if ethernet.NEWMESSAGE: #if there is a new message from the Computer
+                    print 'new message from jon!'
+                    print ethernet.getreceive()
+                    serial.setpayload(ethernet.getreceive())
+                    serial.write()
+                else: #just send the old packet again
+                    serial.write()
+            else:
                 serial.write()
                 
         ########################
         
-        ###########cleanup()#####
-        #Things in this section are called if something goes wrong in loop()
-        if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
-            if not serial.ISCONNECTED:
-                serial.cleanup()
-                print 'arduino broke'
-            elif not ethernet.ISCONNECTED:
-                print 'ethernet broke'  
-                ethernet.cleanup()                      
-            ethernetconnected = ethernet.ISCONNECTED
-            serial.ETHERNETCONNECTION = ethernet.ISCONNECTED
-            ethernet.ARDUINOCONNECTION = serial.ISCONNECTED
-            serialconnected = serial.ISCONNECTED  
-        ########################
+            ###########cleanup()#####
+            #Things in this section are called if something goes wrong in loop()
+            if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
+                ethernetconnected = ethernet.ISCONNECTED
+                serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
+                serialconnected = serial.ISCONNECTED
+                ethernet.ARDUINOCONNECTION = serial.ISCONNECTED  
+                if not serial.ISCONNECTED:
+                    serial.cleanup()
+                    print 'arduino broke'
+                    break
+                if not ethernet.ISCONNECTED:
+                    print 'ethernet broke'  
+                    ethernet.cleanup()
+                    break
+                  
+            ########################
     except KeyboardInterrupt:
         print "bye bye"
         exit(0)

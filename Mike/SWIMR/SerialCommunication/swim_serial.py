@@ -111,7 +111,7 @@ class SwimSerial(threading.Thread):
                         ports = self.scan()
                         ports = ports.next()
                     except StopIteration:
-                        break
+                        continue
                     #__TODO__ 
                 if self.SERIAL is not None:
                     self.SERIAL.flushInput()
@@ -150,8 +150,9 @@ class SwimSerial(threading.Thread):
     def write(self):
             try:
                 for number in self.PAYLOAD:
-                    print number, unichr(number).encode('latin_1')
-                    s.SERIAL.write(unichr(int(number)).encode('latin_1')) #So that 0-255 can be encoded into a byte
+                    print type(number), number
+                    self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
+                  #  s.SERIAL.write(number) #So that 0-255 can be encoded into a byte
             except Exception as e:
                 print e
                 self.ISCONNECTED = False
