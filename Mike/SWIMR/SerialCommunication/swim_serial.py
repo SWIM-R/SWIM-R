@@ -133,6 +133,7 @@ class SwimSerial(threading.Thread):
             except:
                 self.ISCONNECTED = False
                 return
+            print temp
             if temp == '$$$': #then read data packet
                 for key in self.READ_DATAFORMAT:
                     try:
@@ -140,6 +141,7 @@ class SwimSerial(threading.Thread):
                     except: #Timeout 
                         self.ISCONNECTED = False
                         return
+                self.NEWMESSAGE = True
                 self.NEWMESSAGE = True
             else:
                 self.ISCONNECTED = True
