@@ -162,6 +162,7 @@ class SwimSerial(threading.Thread):
         called when .start() method is called.  multithreading!
         '''
         while self.ISCONNECTED:
+	    time.sleep(0.2)
             self.read()
     
     def generateerrorcode(self):
@@ -207,6 +208,7 @@ class SwimSerial(threading.Thread):
                  
 if __name__  == '__main__':
         s = SwimSerial(115200)
+	s.start()
         dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
         dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
         counter = 0
@@ -220,7 +222,7 @@ if __name__  == '__main__':
                 dictionary = dictionary1
             else:
                 dictionary = dictionary2
-#            print dictionary1
+            print dictionary1
             time.sleep(0.5)
             s.SERIAL.write(unichr(int(len(dictionary.keys()))).encode('latin_1'))
             for key in s.WRITE_INSTRUCTIONFORMAT:
