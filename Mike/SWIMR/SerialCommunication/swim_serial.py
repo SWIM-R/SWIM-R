@@ -114,6 +114,7 @@ class SwimSerial(threading.Thread):
                         continue
                     #__TODO__ 
                 if self.SERIAL is not None:
+                    time.sleep(3.0) # wait for the arduino to be ready
                     self.SERIAL.flushInput()
                     self.SERIAL.flushOutput()
                     self.ISCONNECTED = True
