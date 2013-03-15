@@ -40,7 +40,7 @@ while 1:
     try:
         if not serialconnected:        
             print 'connecting arduino'
-            serial = SwimSerial(115200)
+            serial = SwimSerial(115200)# Blocking
             print 'started arduino receive thread...'
             #serial.start() #starting the receive thread
             print 'arduino connected!'
@@ -52,7 +52,7 @@ while 1:
         if not ethernetconnected:
             #Setting up Ethernet Communication
             print 'finding client....'
-            ethernet = SwimServer(9999)
+            ethernet = SwimServer(9999) # blocking
             print 'client found......'
             ethernet.start()
             
