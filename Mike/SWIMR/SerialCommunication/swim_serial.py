@@ -129,8 +129,8 @@ class SwimSerial(threading.Thread):
         '''
         while(self.SERIAL.inWaiting() > 0):
             try:
-                temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-                #temp = str(self.SERIAL.read(1))
+                #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+                temp = str(self.SERIAL.read(1))
             except:
                 self.ISCONNECTED = False
                 return
