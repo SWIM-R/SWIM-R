@@ -21,7 +21,7 @@ else: #otherwise screw you!
 from swim_server import SwimServer
 from swim_serial import SwimSerial
 import time
-
+import platform
 
 
 ###############Welcome################
@@ -113,5 +113,11 @@ while 1:
         print "bye bye"
         exit(0)
     except Exception as e:
-        with open('/Users/Mike/Desktop/errorlog.txt','a') as f:
-            f.write(str(e)+'\n')
+        if platform.system() == 'Darwin':
+            with open('/Users/Mike/Desktop/errorlog.txt','a') as f:
+                f.write(str(e)+'\n')        
+        elif platform.system() == 'Linux':
+            with open('/home/pi/Desktop/errorlog.txt','a') as f:
+                f.write(str(e)+'\n')   
+        else:
+            print e     

@@ -154,10 +154,8 @@ class SwimSerial(threading.Thread):
                 for number in self.PAYLOAD:
                     print type(number), number
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
-            except Exception as e:
-                print e
+            except:
                 self.ISCONNECTED = False
-                return
     def run(self):
         '''
         called when .start() method is called.  multithreading!
