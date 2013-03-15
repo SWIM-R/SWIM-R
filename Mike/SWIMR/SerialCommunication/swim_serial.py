@@ -227,7 +227,7 @@ if __name__  == '__main__':
             time.sleep(0.5)
             s.SERIAL.write(unichr(int(len(dictionary.keys()))).encode('latin_1'))
             for key in s.WRITE_INSTRUCTIONFORMAT:
-                print key
+                print key, dictionary[key]
                 s.SERIAL.write(unichr(int(dictionary[key])).encode('latin_1')) #So that 0-255 can be encoded into a byte
 
             
