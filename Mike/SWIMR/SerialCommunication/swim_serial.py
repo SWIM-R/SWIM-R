@@ -54,9 +54,9 @@ class SwimSerial(threading.Thread):
         
         self.NEWMESSAGE = False # Is there a new message from the Arduino?
         
-        self.READTIMEOUT = 15.0 # Seconds for the read method to read specified number of bytes, otherwise Serial Timout exception is thrown
+        self.READTIMEOUT = 15.0 # Seconds for the read method to read specified number of bytes
        
-        self.WRITETIMEOUT = 15.0 # Seconds for the write method to write specified number of bytes
+        self.WRITETIMEOUT = 15.0 # Seconds for the write method to write specified number of bytes, otherwise a timeout exception is thrown
         
         self.ETHERNETCONNECTION = bool() # Is there an active ethernet connection? 
         
@@ -127,10 +127,11 @@ class SwimSerial(threading.Thread):
         
         a new data packet is preceeded with $$$
         '''
-        while(self.SERIAL.inWaiting() > 0):
+        if(self.SERIAL.inWaiting() >= 3):
             try:
                 #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-                temp = str(self.SERIAL.read(1))
+                temp = str(self.SERIAL.read(3))
+                print temp
             except:
                 self.ISCONNECTED = False
                 return
@@ -138,11 +139,10 @@ class SwimSerial(threading.Thread):
             if temp == '$$$': #then read data packet
                 for key in self.READ_DATAFORMAT:
                     try:
-                        self.RECEIVE[key] = str(self.SERIAL.read(1))
+                        self.RECEIVE[key] = str(self.SERIAL.read(3))
                     except: #Timeout 
                         self.ISCONNECTED = False
                         return
-                self.NEWMESSAGE = True
                 self.NEWMESSAGE = True
             else:
                 self.ISCONNECTED = True
@@ -154,7 +154,7 @@ class SwimSerial(threading.Thread):
                 for number in self.PAYLOAD:
                     print type(number), number
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
-            except:
+            except: # timeout
                 self.ISCONNECTED = False
     def run(self):
         '''
@@ -166,7 +166,7 @@ class SwimSerial(threading.Thread):
     
     def generateerrorcode(self):
         '''
-        assess the current state of the communication system and generates an error code to be sent to the Arduino
+        assess the current state of the ethernet connection and generates an error code to be sent to the Arduino
         
         '''
         if self.ETHERNETCONNECTION: #true for connected, diconnected otherwise
