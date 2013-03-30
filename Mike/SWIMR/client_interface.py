@@ -51,6 +51,9 @@ class ClientInterface(threading.Thread):
         self.PING = 'PING'
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 128 , 'PITCH': 128,'YAW': 128,'TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0}
+        if not self.TESTING:
+            self.ethernet = SwimClient(self.IP,self.PORT,True) # true so it wont block
+            self.start()
     def run(self):
         while not self.TESTING:
             time.sleep(0.5)
@@ -58,19 +61,20 @@ class ClientInterface(threading.Thread):
             ########setup()#########
             
             #Setting up Ethernet Communication
-            print 'finding server....'
-            self.ethernet = SwimClient(self.IP,self.PORT,self.TESTING)
-            print 'server found......'
-            print 'starting receive thread'
-            self.ethernet.start()
+            if not self.ethernet.ISCONNECTED:
+                print 'finding server....'
+                self.ethernet = SwimClient(self.IP,self.PORT,self.TESTING)
+                print 'server found......'
+                print 'starting receive thread'
+                self.ethernet.start()
             ############
             #########################
             
             
             ############loop()#######
             #main loop of the program
-            while self.ethernet.ISCONNECTED:
-                time.sleep(0.5)
+            if self.ethernet.ISCONNECTED:
+                #time.sleep(0.5)
                 print "still connected"
                 
                 if self.NEWMESSAGETOSEND:
@@ -94,10 +98,11 @@ class ClientInterface(threading.Thread):
              
             ###########cleanup()#####
             #Things in this section are called if something goes wrong in loop()
-            print 'disconnected!!'
-            print "cleaning up"
-            self.ethernet.cleanup()
-            print 'cleaned up!'
+            else:   
+                print 'disconnected!!'
+                print "cleaning up"
+                self.ethernet.cleanup()
+                print 'cleaned up!'
             ########################
     
     
