@@ -42,7 +42,7 @@ while 1:
             print 'connecting arduino'
             serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
             print 'started arduino receive thread...'
-            #serial.start() #starting the receive thread
+            serial.start() #starting the receive thread
             print 'arduino connected!'
             ############
         #########################
@@ -60,8 +60,8 @@ while 1:
         ############loop()#######
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
-        while ethernet.ISCONNECTED or serial.ISCONNECTED:
-            time.sleep(0.5) 
+        if ethernet.ISCONNECTED or serial.ISCONNECTED:
+            #time.sleep(0.5) 
             ethernetconnected = ethernet.ISCONNECTED
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
             serialconnected = serial.ISCONNECTED
@@ -92,21 +92,21 @@ while 1:
                 
         ########################
         
-            ###########cleanup()#####
-            #Things in this section are called if something goes wrong in loop()
-            if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
-                ethernetconnected = ethernet.ISCONNECTED
-                serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
-                serialconnected = serial.ISCONNECTED
-                ethernet.ARDUINOCONNECTION = serial.ISCONNECTED  
-                if not serial.ISCONNECTED:
-                    serial.cleanup()
-                    print 'arduino broke'
-                    break
-                if not ethernet.ISCONNECTED:
-                    print 'ethernet broke'  
-                    ethernet.cleanup()
-                    break
+        ###########cleanup()#####
+        #Things in this section are called if something goes wrong in loop()
+        if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
+            ethernetconnected = ethernet.ISCONNECTED
+            serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
+            serialconnected = serial.ISCONNECTED
+            ethernet.ARDUINOCONNECTION = serial.ISCONNECTED  
+            if not serial.ISCONNECTED:
+                serial.cleanup()
+                print 'arduino broke'
+                #break
+            if not ethernet.ISCONNECTED:
+                print 'ethernet broke'  
+                ethernet.cleanup()
+                #break
                   
             ########################
     except KeyboardInterrupt:

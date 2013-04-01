@@ -135,18 +135,20 @@ class SwimSerial(threading.Thread):
             except:
                 self.ISCONNECTED = False
                 return
-            print temp
             if temp == '$$$': #then read data packet
-                for key in self.READ_DATAFORMAT:
-                    try:
-                        self.RECEIVE[key] = str(self.SERIAL.read(3))
-                    except: #Timeout 
-                        self.ISCONNECTED = False
-                        return
-                self.NEWMESSAGE = True
+                print "got " + str(len(temp)) + "bytes"
+#                for key in self.READ_DATAFORMAT:
+#                    try:
+#                        self.RECEIVE[key] = str(self.SERIAL.read(3))
+#                    except: #Timeout 
+#                        self.ISCONNECTED = False
+#                        return
+#                self.NEWMESSAGE = True
             else:
+                print "got " + str(len(temp)) + "bytes"
                 self.ISCONNECTED = True
-
+        else:
+            print "sanity print"
         
         
     def write(self):
@@ -161,7 +163,7 @@ class SwimSerial(threading.Thread):
         called when .start() method is called.  multithreading!
         '''
         while self.ISCONNECTED:
-            time.sleep(0.1)
+            time.sleep(0.45)
             self.read()
     
     def generateerrorcode(self):
@@ -208,25 +210,26 @@ class SwimSerial(threading.Thread):
 if __name__  == '__main__':
         s = SwimSerial(115200)
         s.start()
-        dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
-        dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
-        counter = 0
-        forward = False
-        while 1:
-            counter += 1
-            if counter > 20:
-                forward = not forward
-                counter = 0
-            if forward:
-                dictionary = dictionary1
-            else:
-                dictionary = dictionary2
-            print dictionary1
-            time.sleep(0.5)
-            s.SERIAL.write(unichr(int(len(dictionary.keys()))).encode('latin_1'))
-            for key in s.WRITE_INSTRUCTIONFORMAT:
-                print key, dictionary[key]
-                s.SERIAL.write(unichr(int(dictionary[key])).encode('latin_1')) #So that 0-255 can be encoded into a byte
+        print "Start"
+#        dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
+#        dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
+#        counter = 0
+#        forward = False
+#        while 1:
+#            counter += 1
+#            if counter > 20:
+#                forward = not forward
+#                counter = 0
+#            if forward:
+#                dictionary = dictionary1
+#            else:
+#                dictionary = dictionary2
+#            print dictionary1
+#            time.sleep(0.5)
+#            s.SERIAL.write(unichr(int(len(dictionary.keys()))).encode('latin_1'))
+#            for key in s.WRITE_INSTRUCTIONFORMAT:
+#                print key, dictionary[key]
+#                s.SERIAL.write(unichr(int(dictionary[key])).encode('latin_1')) #So that 0-255 can be encoded into a byte
 
             
             
