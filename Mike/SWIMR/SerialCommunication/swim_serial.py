@@ -54,16 +54,16 @@ class SwimSerial(threading.Thread):
         
         self.NEWMESSAGE = False # Is there a new message from the Arduino?
         
-        self.READTIMEOUT = 15.0 # Seconds for the read method to read specified number of bytes
+        self.READTIMEOUT = 1.0 # Seconds for the read method to read specified number of bytes
        
         self.WRITETIMEOUT = 15.0 # Seconds for the write method to write specified number of bytes, otherwise a timeout exception is thrown
         
         self.ETHERNETCONNECTION = bool() # Is there an active ethernet connection? 
         
         self.WRITE_INSTRUCTIONFORMAT ='ERROR' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
-        #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive
+        ''' #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive'''
      
-        self.READ_DATAFORMAT ='ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+        self.READ_DATAFORMAT ='ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE','HUMIDITY' , 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         
         self.initialize() #This method is a few lines down
 
@@ -127,28 +127,29 @@ class SwimSerial(threading.Thread):
         
         a new data packet is preceeded with $$$
         '''
-        if(self.SERIAL.inWaiting() >= 3):
-            try:
-                #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
-                temp = str(self.SERIAL.read(3))
-                print temp
-            except:
-                self.ISCONNECTED = False
-                return
-            if temp == '$$$': #then read data packet
-                print "got " + str(len(temp)) + "bytes"
-#                for key in self.READ_DATAFORMAT:
-#                    try:
-#                        self.RECEIVE[key] = str(self.SERIAL.read(3))
-#                    except: #Timeout 
-#                        self.ISCONNECTED = False
-#                        return
-#                self.NEWMESSAGE = True
+        try:
+            if(self.SERIAL.inWaiting() >= 3):
+                try:
+                    #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
+                    temp = str(self.SERIAL.read(3))
+                except:
+                    self.ISCONNECTED = False
+                    return
+                if temp == '$$$': #then read data packet
+                    print "got " + str(len(temp)) + "bytes"
+                    for key in self.READ_DATAFORMAT:
+                        try:
+                            self.RECEIVE[key] = str(self.SERIAL.read(6))
+                            #print self.RECEIVE[key] +" is " +  len(self.RECEIVE[key]) + " bytes"
+                        except: #Timeout 
+                            self.ISCONNECTED = False
+                            return
+                    self.NEWMESSAGE = True
+                else:
+                    self.ISCONNECTED = True
             else:
-                print "got " + str(len(temp)) + "bytes"
-                self.ISCONNECTED = True
-        else:
-            print "sanity print"
+                print 'waiting for data'
+        except: self.ISCONNECTED = False
         
         
     def write(self):
@@ -179,9 +180,12 @@ class SwimSerial(threading.Thread):
         '''
         If everything gonna die, then cleanup your mess!!
         '''
-        self.SERIAL.flushInput()
-        self.SERIAL.flushOutput()
-        self.SERIAL.close()
+        try:
+            self.SERIAL.flushInput()
+            self.SERIAL.flushOutput()
+            self.SERIAL.close()
+        except:
+            pass
     
     def formatforArduino(self,unformatted_message = str()):
         '''
@@ -208,9 +212,23 @@ class SwimSerial(threading.Thread):
             
                  
 if __name__  == '__main__':
+        print "setting up connection"
         s = SwimSerial(115200)
         s.start()
-        print "Start"
+        print "setup!"
+        
+        while 1:
+            if s.ISCONNECTED: 
+                if s.NEWMESSAGE:
+                    print s.getreceive()
+            else:
+                print "broken!"
+                s.cleanup()
+                s =  SwimSerial(115200)   
+                s.start()
+        
+        
+        
 #        dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")
 #        dictionary2 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 0 , 'Y' : 127 , 'Z': 127}")
 #        counter = 0
