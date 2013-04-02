@@ -139,7 +139,7 @@ class SwimSerial(threading.Thread):
                     print "got " + str(len(temp)) + "bytes"
                     for key in self.READ_DATAFORMAT:
                         try:
-                            self.RECEIVE[key] = str(self.SERIAL.read(6))
+                            self.RECEIVE[key] = str(self.SERIAL.read(4))
                             #print self.RECEIVE[key] +" is " +  len(self.RECEIVE[key]) + " bytes"
                         except: #Timeout 
                             self.ISCONNECTED = False
@@ -220,7 +220,9 @@ if __name__  == '__main__':
         while 1:
             if s.ISCONNECTED: 
                 if s.NEWMESSAGE:
-                    print s.getreceive()
+                    dictionary = s.getreceive()
+                    for key in s.READ_DATAFORMAT:
+                        print str(key) + ': ' +dictionary[key]
             else:
                 print "broken!"
                 s.cleanup()
