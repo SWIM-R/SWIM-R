@@ -15,8 +15,10 @@ class SwimVideoClient(threading.Thread):
         self.image = None
         
         #threading things
+        threading.Thread.__init__(self)
         self.stopreceivethread = False
         self.daemon = True
+        self.start()
 
     def get_frame(self):
         '''

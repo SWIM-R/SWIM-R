@@ -6,7 +6,7 @@ import cv, cv2
 import sys
 import threading
 
-from swim_frame import SwimFrame()
+from swim_frame import SwimFrame
 ####
 
 class SwimVideo(threading.Thread):
@@ -15,15 +15,16 @@ class SwimVideo(threading.Thread):
         self.cam_id = 0 # opencv internally indexes the attached cameras
         self.frame = SwimFrame(frame_height,frame_width)
         
-        #threading things
+        #threading things        
+        threading.Thread.__init__(self)
         self.stopreceivethread = False
         self.daemon = True
         
         
         self.open_cam()
         #TODO check that the camera is opened using self.cam.isOpened()
-        
-    def open_cam(self)
+        self.start()
+    def open_cam(self):
         '''
         initialize the camera. must be called to change the camera id
         '''
@@ -57,7 +58,7 @@ class SwimVideo(threading.Thread):
                      'str' : f_string
                      }
                      
-            this.set_frame(data)
+            self.set_frame(data)
         
     def get_frame(self):
         '''

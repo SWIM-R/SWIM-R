@@ -1,10 +1,10 @@
 
 
 class SwimFrame():
-'''
-class to hold frame data
-'''
-    def __init__(height,width):
+    '''
+    class to hold frame data
+    '''
+    def __init__(self,height,width):
         self.HEIGHT = height
         self.FRAME = width
         self.string = str()
