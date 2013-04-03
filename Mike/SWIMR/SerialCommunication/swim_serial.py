@@ -44,7 +44,7 @@ class SwimSerial(threading.Thread):
         
         self.platform = platform.system() # what system this is running on 
         
-        self.READINSTRUCTIONWIDTH = 3 # number of bytes that are read while polling
+        self.READINSTRUCTIONWIDTHS = {'ROLL': 4 }
         
         self.PAYLOAD = str() #information to be Written to Arduino
         
