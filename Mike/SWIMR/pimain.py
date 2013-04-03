@@ -20,6 +20,7 @@ else: #otherwise screw you!
 
 from swim_server import SwimServer
 from swim_serial import SwimSerial
+from swim_video import SwimVideo
 import time
 import platform
 
@@ -29,85 +30,77 @@ name  = str(sys.argv[0])
 print "starting {0}......".format(name)
 ##################################################
 
+video = SwimVideo(120,160,5) # height, width, framerate
 
 
-ethernetconnected = False
-serialconnected = False
+print 'connecting arduino'
+serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
+print 'started arduino receive thread...'
+serial.start() #starting the receive thread
+print 'arduino connected!'
+
+
+
+
+########setup()#########
+#Setting up Ethernet Communication
+print 'finding client....'
+ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
+print 'client found......'
+ethernet.start()
+
 
 while 1:
     time.sleep(0.5) 
 
     try:
-        if not serialconnected:        
-            print 'connecting arduino'
-            serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
-            print 'started arduino receive thread...'
-            #serial.start() #starting the receive thread
-            print 'arduino connected!'
-            ############
-        #########################
-        
-        
-        ########setup()#########
-        if not ethernetconnected:
-            #Setting up Ethernet Communication
-            print 'finding client....'
-            ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
-            print 'client found......'
-            ethernet.start()
-            
-            ###########
         ############loop()#######
         #main loop of the program
         #while ethernet.ISCONNECTED and serial.ISCONNECTED:
-        while ethernet.ISCONNECTED or serial.ISCONNECTED:
-            time.sleep(0.5) 
-            ethernetconnected = ethernet.ISCONNECTED
-            serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
-            serialconnected = serial.ISCONNECTED
-            ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
-            print "still connected"
-            
-            if serial.ISCONNECTED:
-                if serial.NEWMESSAGE: # If there is a new message from the Arduino 
-                    ethernet.setpayload(serial.getreceive())
-                    ethernet.send()
-                else: #otherwise just ping
-                    ethernet.setpayload("{'PING': 0 }")
-                    ethernet.send()
-            else: #ping the error message
+        ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
+        print "still connected"
+        
+        if serial.ISCONNECTED:
+            if serial.NEWMESSAGE: # If there is a new message from the Arduino 
+                ethernet.setpayload(serial.getreceive())
+                ethernet.send()
+            else: #otherwise just ping
                 ethernet.setpayload("{'PING': 0 }")
                 ethernet.send()
-                
-            if ethernet.ISCONNECTED:
-                if ethernet.NEWMESSAGE: #if there is a new message from the Computer
-                    print 'new message from jon!'
-                    print ethernet.getreceive()
-                    serial.setpayload(ethernet.getreceive())
-                    serial.write()
-                else: #just send the old packet again
-                    serial.write()
-            else:
+        else: #ping the error message
+            ethernet.setpayload("{'PING': 0 }")
+            ethernet.send()    
+       
+        serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
+        if ethernet.ISCONNECTED:
+            if ethernet.NEWMESSAGE: #if there is a new message from the Computer
+                print 'new message from jon!'
+                serial.setpayload(ethernet.getreceive())
                 serial.write()
+            else: #just send the old packet again
+                serial.write()
+            if video.frame.new:
+                ethernet.setpayload(str(video.get_frame()))
+                ethernet.send()
+        else:
+            serial.PAYLOAD['ERROR'] = True # yes there is an error
+            serial.write()
                 
         ########################
         
             ###########cleanup()#####
             #Things in this section are called if something goes wrong in loop()
-            if not ethernet.ISCONNECTED or not serial.ISCONNECTED:
-                ethernetconnected = ethernet.ISCONNECTED
-                serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
-                serialconnected = serial.ISCONNECTED
-                ethernet.ARDUINOCONNECTION = serial.ISCONNECTED  
-                if not serial.ISCONNECTED:
-                    serial.cleanup()
-                    print 'arduino broke'
-                    break
-                if not ethernet.ISCONNECTED:
-                    print 'ethernet broke'  
-                    ethernet.cleanup()
-                    break
-                  
+                
+        if not serial.ISCONNECTED:
+            serial.cleanup()
+            print 'arduino broke'
+            serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
+            serial.start()
+        if not ethernet.ISCONNECTED:
+            print 'ethernet broke'  
+            ethernet.cleanup()
+            ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
+            ethernet.start()
             ########################
     except KeyboardInterrupt:
         print "bye bye"
