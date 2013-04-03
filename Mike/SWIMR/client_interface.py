@@ -21,6 +21,7 @@ else:
 
 from swim_client import SwimClient
 from swim_packet import SwimPacket
+from swim_video_client import SwimVideoClient
 import threading
 import time
 import ast
@@ -54,6 +55,7 @@ class ClientInterface(threading.Thread):
         if not self.TESTING:
             self.ethernet = SwimClient(self.IP,self.PORT,True) # true so it wont block
             self.start()
+            self.video = SwimVideoClient(120,160,5) # length, width, framerate
     def run(self):
         while not self.TESTING:
             time.sleep(0.5)
@@ -89,7 +91,11 @@ class ClientInterface(threading.Thread):
                 
                 if self.ethernet.NEWMESSAGE:
                     try:
-                        self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
+                        tempdict = ast.literal_eval(self.ethernet.getreceive())
+                        if tempdict.has_key('str'):
+                            self.video.set_data(tempdict)
+                        else:
+                            self.RECEIVE = tempdict
                     except:#see what happened
                         print self.ethernet.getreceive()
             ######################### 
