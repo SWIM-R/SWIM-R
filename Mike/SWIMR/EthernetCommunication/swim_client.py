@@ -37,30 +37,26 @@ class SwimClient(threading.Thread):
         self.ISCONNECTED = False
         self.MAXPACKETSIZE = 8196
         self.HOSTPORT = (self.HOST, self.PORT)
-        self.stopreceivethread = False
+        self.stopreceivethread = True
         self.daemon = True
         self.TIMEOUT = 3.0
-        self.NEWMESSAGE = True
-
+        self.NEWMESSAGE = False
         if not testing:
+            print "finding the Raspberry PI..."
             self.initialize()
-        
-        
+            print "Raspberry PI found"
+        self.start()
     def initialize(self):
         '''
         initializes connection to server, if successfully initialized sets ISCONNECTED to be true
         '''
         # SOCK_DGRAM is the socket type to use for UDP sockets
         # AF_INET sets it to use UDP protocol
-        #socket for sending
         self.SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        
+        #so the os doesn't complain
         self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-       
-        # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
-        #self.SOCK.setblocking(0)
-        
-        
         #sets socket to be blocking along with a timeout, if can't be sent to received within 5 seconds then the timeout exception is raised
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
@@ -69,15 +65,15 @@ class SwimClient(threading.Thread):
         #Find the server
         self.setpayload("Hello!")
         self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
-
+        
         while not self.ISCONNECTED:
             try:
                 self.SOCK.sendto(self.PAYLOAD,self.HOSTPORT)
                 data, addr = self.SOCK.recvfrom(32)
                 if data.strip() == 'hello client':
-                    print"I've found the server"
-                    self.ISCONNECTED = True 
-                time.sleep(0.5)
+                    self.ISCONNECTED = True
+                    break 
+                time.sleep(0.3)
             except timeout:
                 continue        
     def send(self):
@@ -152,16 +148,16 @@ class SwimClient(threading.Thread):
         implementation of the inherited run() method from the Thread class.  
         This is a separate thread from the main thread that is always receiving information
         '''
-        while self.stopreceivethread == False:
+        while not self.stopreceivethread:
             self.receive(self.MAXPACKETSIZE)
    
     def cleanup(self):
         '''
         stops closes the socket and stops the receive thread
         '''
+        self.ISCONNECTED = False
         self.stopreceivethread = True 
         self.SOCK.close()
-        self.ISCONNECTED = False
 
     
 

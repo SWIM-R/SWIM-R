@@ -32,10 +32,7 @@ print "starting {0}......".format(name)
 ##################################################
 
 video = SwimVideo(120,160,5) # height, width, framerate
-
-
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
-
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
 
 
@@ -52,8 +49,12 @@ while 1:
                 ethernet.setpayload("{'PING': 0 }")
                 ethernet.send()
         else: #ping the error message
+            print "Arduino Broke"
+            ethernet.ARDUINOCONNECTION = False
             ethernet.setpayload("{'PING': 0 }")
-            ethernet.send()    
+            ethernet.send()
+            serial.cleanup()
+            serial = SwimSerial(115200)# Blocking approx 5 seconds when successful  
        
         serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
         if ethernet.ISCONNECTED:
@@ -65,26 +66,14 @@ while 1:
             if video.frame.new:
                 ethernet.setpayload(str(video.get_frame()))
                 ethernet.send()
-        else:
+        else:                
+            print 'ethernet broke'  
+            serial.ETHERNETCONNECTION = False
             serial.PAYLOAD = [1,1] # yes there is an error
             serial.write()
-                
-        ########################
-        
-            ###########cleanup()#####
-            #Things in this section are called if something goes wrong in loop()
-                
-        if not serial.ISCONNECTED:
-            serial.cleanup()
-            print 'arduino broke'
-            serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
-            serial.start()
-        if not ethernet.ISCONNECTED:
-            print 'ethernet broke'  
             ethernet.cleanup()
             ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
-            ethernet.start()
-            ########################
+
     except KeyboardInterrupt:
         print "bye bye"
         exit(0)

@@ -218,11 +218,7 @@ class SwimSerial(threading.Thread):
             
                  
 if __name__  == '__main__':
-        print "setting up connection"
-        s = SwimSerial(115200)
-        s.start()
-        print "setup!"
-        
+        s = SwimSerial(115200)        
         while 1:
             if s.ISCONNECTED: 
                 if s.NEWMESSAGE:
@@ -232,9 +228,7 @@ if __name__  == '__main__':
             else:
                 print "broken!"
                 s.cleanup()
-                s =  SwimSerial(115200)   
-                s.start()
-        
+                s =  SwimSerial(115200)           
         
         
 #        dictionary1 = ast.literal_eval("{'ERROR': 0,'YAW':127, 'PITCH':127, 'ROLL': 127 , 'X' : 255 , 'Y' : 127 , 'Z': 127}")

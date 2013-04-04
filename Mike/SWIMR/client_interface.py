@@ -14,7 +14,7 @@ if sys.platform is 'darwin' or 'win32':
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
-
+    add_to_path(path_join(mydirname, 'VideoStreaming'))
 else:
     print 'unsupported os!'
     exit(1)
@@ -53,26 +53,13 @@ class ClientInterface(threading.Thread):
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 128 , 'PITCH': 128,'YAW': 128,'WATER_TEMPERATURE':0,'CASE_TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0 ,'HUMIDITY': 0}
         if not self.TESTING:
-            self.ethernet = SwimClient(self.IP,self.PORT,True) # true so it wont block
             self.start()
-            self.video = SwimVideoClient(120,160,5) # length, width, framerate
     def run(self):
+        self.ethernet = SwimClient(self.IP,self.PORT,False) 
+        self.video = SwimVideoClient(120,160,5) # length, width, framerate
         while not self.TESTING:
-            time.sleep(0.5)
-
-            ########setup()#########
             
-            #Setting up Ethernet Communication
-            if not self.ethernet.ISCONNECTED:
-                print 'finding server....'
-                self.ethernet = SwimClient(self.IP,self.PORT,self.TESTING)
-                print 'server found......'
-                print 'starting receive thread'
-                self.ethernet.start()
-            ############
-            #########################
-            
-            
+            time.sleep(0.5)            
             ############loop()#######
             #main loop of the program
             if self.ethernet.ISCONNECTED:
@@ -80,12 +67,11 @@ class ClientInterface(threading.Thread):
                 print "still connected"
                 
                 if self.NEWMESSAGETOSEND:
+                    self.NEWMESSAGETOSEND = False
                     self.updatepayload()
                     self.ethernet.setpayload(self.PAYLOAD)
                     self.ethernet.send()
-                    self.NEWMESSAGETOSEND = False
                 else:
-                    print 'ping'
                     self.ethernet.setpayload('PING')
                     self.ethernet.send()
                 
@@ -96,19 +82,14 @@ class ClientInterface(threading.Thread):
                             self.video.set_data(tempdict)
                         else:
                             self.RECEIVE = tempdict
-                    except:#see what happened
-                        print self.ethernet.getreceive()
-            ######################### 
-             
-             
-             
-            ###########cleanup()#####
-            #Things in this section are called if something goes wrong in loop()
+                    except Exception as e:#see what happened
+                        print e
             else:   
                 print 'disconnected!!'
                 print "cleaning up"
                 self.ethernet.cleanup()
                 print 'cleaned up!'
+                self.ethernet = SwimClient(self.IP,self.PORT,False) 
             ########################
     
     
@@ -177,11 +158,21 @@ class ClientInterface(threading.Thread):
         self.packet.ROLL = roll
         self.NEWMESSAGETOSEND = True
         
-#   self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+#self.READ_DATAFORMAT ='ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE','HUMIDITY' , 'DEPTH', 'BATTERY' # the format that should come from the Arduino
 
-    def getTemperature(self):
+    def getWaterTemperature(self):
         try:
             return self.RECEIVE['TEMPERATURE']
+        except:
+            return 0
+    def getCaseTemperature(self):
+        try:
+            return self.RECEIVE['CASE_TEMPERATURE']
+        except:
+            return 0
+    def getHumidity(self):
+        try:
+            return self.RECEIVE['HUMIDITY']
         except:
             return 0
     def getBatteryLife(self):
@@ -227,9 +218,9 @@ if __name__ == '__main__':
                 print "try: python clientmain.py <SERVERIP> <PORT>"
                 exit(1)
                 
-            clientinterface = ClientInterface(IP,PORT,False)
-            clientinterface.run()
-            
+            clientinterface = ClientInterface(IP,PORT,False)  
+            while 1:
+                pass          
         except KeyboardInterrupt:
             print "bye bye"
             exit(0)
