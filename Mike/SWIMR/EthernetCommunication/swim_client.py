@@ -31,7 +31,6 @@ class SwimClient(threading.Thread):
             self.PORT = 9999
         else:
             self.PORT = port
-            
         self.PAYLOAD = str()
         self.RECEIVE = str()
         self.ISCONNECTED = False
@@ -46,7 +45,6 @@ class SwimClient(threading.Thread):
             self.initialize()
             print "Raspberry PI found"
             self.start()
-
     def initialize(self):
         '''
         initializes connection to server, if successfully initialized sets ISCONNECTED to be true
