@@ -59,7 +59,7 @@ class ClientInterface(threading.Thread):
         self.video = SwimVideoClient(120,160,5) # length, width, framerate
         while not self.TESTING:
             
-            time.sleep(0.5)            
+            time.sleep(0.055)            
             ############loop()#######
             #main loop of the program
             if self.ethernet.ISCONNECTED:
