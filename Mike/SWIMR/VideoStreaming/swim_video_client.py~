@@ -15,8 +15,10 @@ class SwimVideoClient(threading.Thread):
         self.image = None
         
         #threading things
+        threading.Thread.__init__(self)
         self.stopreceivethread = False
         self.daemon = True
+        self.start()
 
     def get_frame(self):
         '''
@@ -53,4 +55,4 @@ class SwimVideoClient(threading.Thread):
         This is a separate thread from the main thread that is always receiving information
         '''
         while not self.stopreceivethread:
-            self.new_frame()  
+            self.create_image()  

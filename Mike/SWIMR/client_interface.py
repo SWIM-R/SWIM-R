@@ -14,7 +14,7 @@ if sys.platform is 'darwin' or 'win32':
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
-
+    add_to_path(path_join(mydirname,'VideoStreaming'))
 else:
     print 'unsupported os!'
     exit(1)
@@ -90,10 +90,12 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
+                    print 'new message'
                     try:
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
                         if tempdict.has_key('str'):
-                            self.video.set_data(tempdict)
+                            self.video.set_frame(tempdict)
+                            print "new frame"
                         else:
                             self.RECEIVE = tempdict
                     except:#see what happened
@@ -228,7 +230,8 @@ if __name__ == '__main__':
                 exit(1)
                 
             clientinterface = ClientInterface(IP,PORT,False)
-            clientinterface.run()
+            while True:
+                pass
             
         except KeyboardInterrupt:
             print "bye bye"

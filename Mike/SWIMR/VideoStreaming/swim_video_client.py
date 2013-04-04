@@ -35,6 +35,7 @@ class SwimVideoClient(threading.Thread):
         
     def create_image(self):
         if self.frame.new:
+            print 'new frame'
             #create a new matrix with the same dimensions as jpeg_mat
             new_mat = cv.CreateMat(self.frame.rows, self.frame.cols, cv.CV_8UC1)
             
@@ -55,4 +56,4 @@ class SwimVideoClient(threading.Thread):
         This is a separate thread from the main thread that is always receiving information
         '''
         while not self.stopreceivethread:
-            self.new_frame()  
+            self.create_image()  
