@@ -131,7 +131,7 @@ class SwimSerial(threading.Thread):
         '''
         print "starting receive thread"
         while self.ISCONNECTED:
-            time.sleep(0.45)
+            time.sleep(0.045)
             self.read() 
         
     def read(self): 
@@ -148,11 +148,19 @@ class SwimSerial(threading.Thread):
                     self.ISCONNECTED = False
                     return
                 if temp == '$$$': #then read data packet
-                    print "got " + str(len(temp)) + "bytes"
                     for key in self.READ_DATAFORMAT:
                         try:
-                            self.RECEIVE[key] = str(self.SERIAL.read(4))
-                            #print self.RECEIVE[key] +" is " +  len(self.RECEIVE[key]) + " bytes"
+                            data = str()
+                            while 1:
+                                byte = str(self.SERIAL.read(1)) 
+                                if byte == ',' or byte == '#':
+                                    if data is not '':
+                                        self.RECEIVE[key] = data
+                                        break
+                                    else: #it is empty and somthing got messed up
+                                        return
+                                else:
+                                    data = data + byte
                         except: #Timeout 
                             self.ISCONNECTED = False
                             return

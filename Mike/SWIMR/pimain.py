@@ -37,7 +37,7 @@ ethernet = SwimServer(9999) # blocking, will wait here until it finds the client
 
 
 while 1:
-    time.sleep(0.5) 
+    time.sleep(0.055) 
 
     try:
         ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
