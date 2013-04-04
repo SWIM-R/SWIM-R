@@ -10,6 +10,7 @@ if sys.platform is 'linux2' or 'darwin': #if I'm runnning on the rpi or mikes ma
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
+    add_to_path(path_join(mydirname, 'VideoStreaming'))
 else: #otherwise screw you!
     print 'unsupported os!'
     exit(1)

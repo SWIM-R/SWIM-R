@@ -54,18 +54,20 @@ class SwimSerial(threading.Thread):
         
         self.NEWMESSAGE = False # Is there a new message from the Arduino?
         
-        self.READTIMEOUT = 1.0 # Seconds for the read method to read specified number of bytes
+        self.READTIMEOUT = 15.0 # Seconds for the read method to read specified number of bytes
        
         self.WRITETIMEOUT = 15.0 # Seconds for the write method to write specified number of bytes, otherwise a timeout exception is thrown
         
-        self.ETHERNETCONNECTION = bool() # Is there an active ethernet connection? 
+        self.ETHERNETCONNECTION = False # Is there an active ethernet connection? 
         
-        self.WRITE_INSTRUCTIONFORMAT ='ERROR' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
+        self.WRITE_INSTRUCTIONFORMAT ='ERROR' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that is written to the Arduino
         ''' #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive'''
      
         self.READ_DATAFORMAT ='ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE','HUMIDITY' , 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         
-        self.initialize() #This method is a few lines down
+        self.initialize() 
+        '''this blocks'''
+        self.start()
 
     def scan(self):
         '''
@@ -94,6 +96,7 @@ class SwimSerial(threading.Thread):
         '''
         scans for serial devices, when it finds the arduino, connects to it.  Invoked in the constructor
         '''
+        print "setting up Arduino..."
         if self.ISCONNECTED is False:
             self.SERIAL = None
             ports = self.scan()
@@ -114,12 +117,22 @@ class SwimSerial(threading.Thread):
                         continue
                     #__TODO__ 
                 if self.SERIAL is not None:
-                    time.sleep(5.0) # wait for the arduino to be ready
+                    time.sleep(6.0) # wait for the arduino to be ready
                     self.SERIAL.flushInput()
                     self.SERIAL.flushOutput()
                     self.ISCONNECTED = True
+                    print "Arduino Connected"
                 
-            del ports 
+            del ports
+    
+    def run(self):
+        '''
+        called when .start() method is called.  multithreading!
+        '''
+        print "starting receive thread"
+        while self.ISCONNECTED:
+            time.sleep(0.45)
+            self.read() 
         
     def read(self): 
         '''
@@ -130,7 +143,6 @@ class SwimSerial(threading.Thread):
         try:
             if(self.SERIAL.inWaiting() >= 3):
                 try:
-                    #temp = str(self.SERIAL.read(self.READINSTRUCTIONWIDTH))
                     temp = str(self.SERIAL.read(3))
                 except:
                     self.ISCONNECTED = False
@@ -149,7 +161,8 @@ class SwimSerial(threading.Thread):
                     self.ISCONNECTED = True
             else:
                 print 'waiting for data'
-        except: self.ISCONNECTED = False
+        except: 
+            self.ISCONNECTED = False
         
         
     def write(self):
@@ -159,13 +172,7 @@ class SwimSerial(threading.Thread):
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
             except: # timeout
                 self.ISCONNECTED = False
-    def run(self):
-        '''
-        called when .start() method is called.  multithreading!
-        '''
-        while self.ISCONNECTED:
-            time.sleep(0.45)
-            self.read()
+
     
     def generateerrorcode(self):
         '''
@@ -206,7 +213,7 @@ class SwimSerial(threading.Thread):
                 except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
                     return int(0)
             return formatted_message
-        except Exception as e:
+        except Exception as e:#if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
             print e
             return int(0)
             
