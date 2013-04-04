@@ -34,17 +34,8 @@ print "starting {0}......".format(name)
 video = SwimVideo(120,160,5) # height, width, framerate
 
 
-print 'connecting arduino'
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
-print 'started arduino receive thread...'
-serial.start() #starting the receive thread
-print 'arduino connected!'
 
-
-
-
-########setup()#########
-#Setting up Ethernet Communication
 print 'finding client....'
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
 print 'client found......'

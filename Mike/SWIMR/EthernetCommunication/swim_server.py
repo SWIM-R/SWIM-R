@@ -26,7 +26,7 @@ class SwimServer(threading.Thread):
         self.MAXPACKETSIZE = 8196
         self.daemon = True
         self.TIMEOUT = 3.0
-        self.stopreceivethread = False
+        self.stopreceivethread = True
         if PORT == 0:
             PORT = 9999
         
@@ -35,7 +35,8 @@ class SwimServer(threading.Thread):
         self.ARDUINOCONNECTION = bool()
         self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
-
+        
+        self.start()
         
     def initialize(self,PORT):
         '''
@@ -44,15 +45,11 @@ class SwimServer(threading.Thread):
         
         # SOCK_DGRAM is the socket type to use for UDP sockets
         # AF_INET sets it to use UDP protocol
-        #socket for sending
         self.SOCK = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+        
+        # So that the OS doesn't complain
         self.SOCK.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-        
-        
-        # sets socket to be nonblocking, if data can't immediately be sent or received then an exception is raised
-        #self.SOCK.setblocking(0)
-        
         #sets socket to be blocking along with a timeout, if can't be sent or received within 5 seconds then the timeout exception is raised
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
@@ -64,17 +61,18 @@ class SwimServer(threading.Thread):
         #Bind socket to address
         self.SOCK.bind(listen_addr)
         
+        print 'Connecting to Client Computer...'
 
-        
         #find the client computer
         while not self.ISCONNECTED:
             try:
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(64)
             except: #timeout
                 continue
-            print "This This is client IP and message: ",self.RECEIVE, self.CLIENTIP
+            print "Found Client Computer " + self.RECEIVE + " " + self.CLIENTIP
             if self.CLIENTIP is not None:
                 self.ISCONNECTED = True
+                self.stopreceivethread = False
                 self.SOCK.sendto("hello client",self.CLIENTIP)
                 #self.SOCK.sendall("hello client",)
                 
@@ -139,7 +137,7 @@ class SwimServer(threading.Thread):
         '''
         receivedstring = str()
         temp = str()
-        while not self.stopreceivethread:
+        while receivedstring is not 'done':
             try:
                 receivedstring = self.SOCK.recv(size)
             except:#timeout
