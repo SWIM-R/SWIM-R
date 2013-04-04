@@ -45,7 +45,8 @@ class SwimClient(threading.Thread):
             print "finding the Raspberry PI..."
             self.initialize()
             print "Raspberry PI found"
-        self.start()
+            self.start()
+
     def initialize(self):
         '''
         initializes connection to server, if successfully initialized sets ISCONNECTED to be true
