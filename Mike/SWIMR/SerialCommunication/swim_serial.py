@@ -46,7 +46,7 @@ class SwimSerial(threading.Thread):
         
         self.READINSTRUCTIONWIDTHS = {'ROLL': 4 }
         
-        self.PAYLOAD = str() #information to be Written to Arduino
+        self.PAYLOAD = [0] #information to be Written to Arduino
         
         self.RECEIVE = dict() #information that has just been read from Arduino
         
@@ -168,7 +168,6 @@ class SwimSerial(threading.Thread):
     def write(self):
             try:
                 for number in self.PAYLOAD:
-                    print type(number), number
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
             except: # timeout
                 self.ISCONNECTED = False
@@ -211,11 +210,11 @@ class SwimSerial(threading.Thread):
                 try:
                     formatted_message.append(dict_of_unformatted_message[field]) 
                 except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
-                    return int(0)
+                    return list(0)
             return formatted_message
         except Exception as e:#if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
             print e
-            return int(0)
+            return list(0)
             
                  
 if __name__  == '__main__':

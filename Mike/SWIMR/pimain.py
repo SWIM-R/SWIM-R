@@ -58,7 +58,6 @@ while 1:
         serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
         if ethernet.ISCONNECTED:
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
-                print 'new message from jon!'
                 serial.setpayload(ethernet.getreceive())
                 serial.write()
             else: #just send the old packet again
@@ -67,7 +66,7 @@ while 1:
                 ethernet.setpayload(str(video.get_frame()))
                 ethernet.send()
         else:
-            serial.PAYLOAD['ERROR'] = True # yes there is an error
+            serial.PAYLOAD = [1,1] # yes there is an error
             serial.write()
                 
         ########################
