@@ -36,6 +36,7 @@ class SwimServer(threading.Thread):
         self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         
+        print "starting receive thread"
         self.start()
         
     def initialize(self,PORT):
@@ -69,7 +70,6 @@ class SwimServer(threading.Thread):
                 self.RECEIVE, self.CLIENTIP = self.SOCK.recvfrom(64)
             except: #timeout
                 continue
-            print "Found Client Computer " + self.RECEIVE + " " + self.CLIENTIP
             if self.CLIENTIP is not None:
                 self.ISCONNECTED = True
                 self.stopreceivethread = False

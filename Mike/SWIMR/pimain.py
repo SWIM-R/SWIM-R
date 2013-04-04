@@ -36,22 +36,14 @@ video = SwimVideo(120,160,5) # height, width, framerate
 
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
 
-print 'finding client....'
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
-print 'client found......'
-ethernet.start()
 
 
 while 1:
     time.sleep(0.5) 
 
     try:
-        ############loop()#######
-        #main loop of the program
-        #while ethernet.ISCONNECTED and serial.ISCONNECTED:
         ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
-        print "still connected"
-        
         if serial.ISCONNECTED:
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
                 ethernet.setpayload(serial.getreceive())
