@@ -34,7 +34,7 @@ class SwimClient(threading.Thread):
         self.PAYLOAD = str()
         self.RECEIVE = str()
         self.ISCONNECTED = False
-        self.MAXPACKETSIZE = 8196
+        self.MAXPACKETSIZE = 4096
         self.HOSTPORT = (self.HOST, self.PORT)
         self.stopreceivethread = True
         self.daemon = True
