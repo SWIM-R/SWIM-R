@@ -2,17 +2,13 @@
 
 # video stream server
 import cv, cv2
-import threading
+from threading import Thread, Timer
 import time
 from swim_frame import SwimFrame
 ####
 
-timeout_handler()
-while True:
-    print "loop"
-    time.sleep(1)
 
-class SwimVideo(threading.Thread):
+class SwimVideo(Thread):
     def __init__(self, frame_height, frame_width, frame_rate):
         self.FRAME_RATE = frame_rate
         self.cam_id = 0 # opencv internally indexes the attached cameras
@@ -20,7 +16,7 @@ class SwimVideo(threading.Thread):
         self.open_cam()
         #TODO check that the camera is opened using self.cam.isOpened()
         #threading things        
-        threading.Thread.__init__(self)
+        Thread.__init__(self)
         self.stopreceivethread = False
         self.daemon = True
         self.start()
