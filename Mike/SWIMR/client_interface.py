@@ -60,7 +60,7 @@ class ClientInterface(threading.Thread):
             self.start()
     def run(self):
         self.ethernet = SwimClient(self.IP,self.PORT,False) 
-        self.video = SwimVideoClient(120,160,5) # length, width, framerate
+        self.video = SwimVideoClient(360,480,5) # length, width, framerate
         while not self.TESTING:
             
             time.sleep(0.055)            
@@ -83,7 +83,6 @@ class ClientInterface(threading.Thread):
                     print "new ethernet message"
                     try:
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
-                        print tempdict
                         if tempdict.has_key('str'):
                             self.video.set_frame(tempdict)
                             print "received frame!!"

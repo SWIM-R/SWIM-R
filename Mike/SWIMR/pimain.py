@@ -33,7 +33,7 @@ print "starting {0}......".format(name)
 
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
-video = SwimVideo(120,160,0.5) # height, width, framerate
+video = SwimVideo(360,480,10) # height, width, framerate
 
 
 while 1:
@@ -65,7 +65,6 @@ while 1:
                 serial.write()
             if video.frame.new:
                 print "SOMETHING"
-                print video.get_frame()
                 ethernet.setpayload(str(video.get_frame()))
                 ethernet.send()
         else:                
