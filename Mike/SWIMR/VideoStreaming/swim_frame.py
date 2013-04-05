@@ -17,9 +17,9 @@ class SwimFrame():
         self.new = False
         return self.data
         
-    def set_frame_data(self, data=dict()):
+    def set_frame_data(self, data):
         try:
-            self.frame_data = data
+            self.data = data
             self.string = data['str']
             self.rows = data['rows']
             self.step = data['step']
