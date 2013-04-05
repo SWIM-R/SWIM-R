@@ -82,6 +82,7 @@ class ClientInterface(threading.Thread):
                 if self.ethernet.NEWMESSAGE:
                     try:
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
+                        print tempdict
                         if tempdict.has_key('str'):
                             self.video.set_data(tempdict)
                             print "received frame!!"
