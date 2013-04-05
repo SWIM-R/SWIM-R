@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
 # video stream server
-import SocketServer
 import cv, cv2
-import sys
 import threading
 from swim_frame import SwimFrame
 ####
@@ -26,7 +24,7 @@ class SwimVideoClient(threading.Thread):
         '''
         return self.frame.get_frame_data()
         
-    def set_frame(self, data = dict()):
+    def set_frame(self, data=dict()):
         '''
         setter for the frame data
         '''

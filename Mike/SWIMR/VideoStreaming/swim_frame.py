@@ -1,21 +1,15 @@
-
-
 class SwimFrame():
     '''
     class to hold frame data
     '''
     def __init__(self,height,width):
         self.HEIGHT = height
-        self.FRAME = width
+        self.WIDTH = width
         self.string = str()
-        self.raw = None
-        self.matrix = None
-        self.compressed = None
         self.rows = 0
         self.cols = 0
         self.step = 0
         self.len = 0
-        self.valid = False
         self.data = {}
         self.new = False
         
