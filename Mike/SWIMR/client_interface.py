@@ -10,13 +10,17 @@ add_to_path = sys.path.append
 path_join = os.path.join
 mydirname = os.path.dirname(__file__)
 
-if sys.platform is 'darwin' or 'win32':
+if sys.platform is 'win32':
     add_to_path(path_join(mydirname,'PacketStructure'))
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
     add_to_path(path_join(mydirname, 'VideoStreaming'))
+elif sys.platform is 'darwin':
     from swim_video_client import SwimVideoClient
-
+    add_to_path(path_join(mydirname,'PacketStructure'))
+    add_to_path(path_join(mydirname,'EthernetCommunication'))
+    add_to_path(path_join(mydirname,'SerialCommunication'))
+    add_to_path(path_join(mydirname, 'VideoStreaming'))
 else:
     print 'unsupported os!'
     exit(1)
