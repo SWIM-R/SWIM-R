@@ -31,9 +31,9 @@ name  = str(sys.argv[0])
 print "starting {0}......".format(name)
 ##################################################
 
-video = SwimVideo(120,160,0.5) # height, width, framerate
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
+video = SwimVideo(120,160,0.5) # height, width, framerate
 
 
 while 1:

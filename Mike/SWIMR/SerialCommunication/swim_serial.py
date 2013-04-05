@@ -170,7 +170,8 @@ class SwimSerial(threading.Thread):
                 else:
                     self.ISCONNECTED = True
             else:
-                print 'waiting for data'
+                #print 'waiting for data'
+                pass
         except: 
             self.ISCONNECTED = False
         
