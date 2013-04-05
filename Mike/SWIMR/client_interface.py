@@ -61,41 +61,43 @@ class ClientInterface(threading.Thread):
     def run(self):
         self.ethernet = SwimClient(self.IP,self.PORT,False) 
         self.video = SwimVideoClient(360,480,5) # length, width, framerate
-        while not self.TESTING:
-            
-            time.sleep(0.055)            
-            ############loop()#######
-            #main loop of the program
-            if self.ethernet.ISCONNECTED:
-                #time.sleep(0.5)
-                print "still connected"
-                
-                if self.NEWMESSAGETOSEND:
-                    self.NEWMESSAGETOSEND = False
-                    self.updatepayload()
-                    self.ethernet.setpayload(self.PAYLOAD)
-                    self.ethernet.send()
-                else:
-                    self.ethernet.setpayload('PING')
-                    self.ethernet.send()
-                
-                if self.ethernet.NEWMESSAGE:
-                    print "new ethernet message"
-                    try:
-                        tempdict = ast.literal_eval(self.ethernet.getreceive())
-                        if tempdict.has_key('str'):
-                            self.video.set_frame(tempdict)
-                            print "received frame!!"
-                        else:
-                            self.RECEIVE = tempdict
-                    except Exception as e:#see what happened
-                        print e
-            else:   
-                print 'disconnected!!'
-                print "cleaning up"
-                self.ethernet.cleanup()
-                print 'cleaned up!'
-                self.ethernet = SwimClient(self.IP,self.PORT,False) 
+        try:    
+            while not self.TESTING:     
+                time.sleep(0.055)            
+                ############loop()#######
+                #main loop of the program
+                if self.ethernet.ISCONNECTED:
+                    #time.sleep(0.5)
+                    print "still connected"
+                    
+                    if self.NEWMESSAGETOSEND:
+                        self.NEWMESSAGETOSEND = False
+                        self.updatepayload()
+                        self.ethernet.setpayload(self.PAYLOAD)
+                        self.ethernet.send()
+                    else:
+                        self.ethernet.setpayload('PING')
+                        self.ethernet.send()
+                    
+                    if self.ethernet.NEWMESSAGE:
+                        print "new ethernet message"
+                        try:
+                            tempdict = ast.literal_eval(self.ethernet.getreceive())
+                            if tempdict.has_key('str'):
+                                self.video.set_frame(tempdict)
+                                print "received frame!!"
+                            else:
+                                self.RECEIVE = tempdict
+                        except Exception as e:#see what happened
+                            print e
+                else:   
+                    print 'disconnected!!'
+                    print "cleaning up"
+                    self.ethernet.cleanup()
+                    print 'cleaned up!'
+                    self.ethernet = SwimClient(self.IP,self.PORT,False) 
+        except:
+            self.ethernet.ISCONNECTED = False
             ########################
     
     

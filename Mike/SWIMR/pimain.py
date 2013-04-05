@@ -33,7 +33,7 @@ print "starting {0}......".format(name)
 
 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful
 ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
-video = SwimVideo(360,480,30) # height, width, framerate
+video = SwimVideo(360,480,5) # height, width, framerate
 
 
 while 1:
@@ -43,8 +43,9 @@ while 1:
         ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
         if serial.ISCONNECTED:
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
-                ethernet.setpayload(serial.getreceive())
-                ethernet.send()
+                if ethernet.ISCONNECTED:
+                    ethernet.setpayload(serial.getreceive())
+                    ethernet.send()
             else: #otherwise just ping
                 ethernet.setpayload("{'PING': 0 }")
                 ethernet.send()
@@ -59,8 +60,9 @@ while 1:
         serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
         if ethernet.ISCONNECTED:
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
-                serial.setpayload(ethernet.getreceive())
-                serial.write()
+                if serial.ISCONNECTED:
+                    serial.setpayload(ethernet.getreceive())
+                    serial.write()
             else: #just send the old packet again
                 serial.write()
             if video.frame.new:
