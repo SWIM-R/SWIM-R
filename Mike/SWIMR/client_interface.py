@@ -20,10 +20,10 @@ elif sys.platform == 'darwin' or sys.platform == 'linux2':
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
     add_to_path(path_join(mydirname, 'VideoStreaming'))
-    from swim_video_client import SwimVideoClient
 else:
     print 'unsupported os!'
 
+from swim_video_client import SwimVideoClient
 from swim_client import SwimClient
 from swim_packet import SwimPacket
 import threading
