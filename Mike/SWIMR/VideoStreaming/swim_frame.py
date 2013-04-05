@@ -26,6 +26,7 @@ class SwimFrame():
             self.cols = data['cols']
             self.len = data['len']
             self.new = True
+            print "new frame"
         except KeyError:
             print "bad dict"
 

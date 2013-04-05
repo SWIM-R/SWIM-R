@@ -84,7 +84,6 @@ class ClientInterface(threading.Thread):
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
                         if tempdict.has_key('str'):
                             self.video.set_data(tempdict)
-                            print "received frame!!"
                         else:
                             self.RECEIVE = tempdict
                     except Exception as e:#see what happened
