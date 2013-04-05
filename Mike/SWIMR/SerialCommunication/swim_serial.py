@@ -67,6 +67,8 @@ class SwimSerial(threading.Thread):
         
         self.initialize() 
         '''this blocks'''
+        
+        
         self.start()
 
     def scan(self):
