@@ -15,13 +15,14 @@ if sys.platform is 'darwin' or 'win32':
     add_to_path(path_join(mydirname,'EthernetCommunication'))
     add_to_path(path_join(mydirname,'SerialCommunication'))
     add_to_path(path_join(mydirname, 'VideoStreaming'))
+    from swim_video_client import SwimVideoClient
+
 else:
     print 'unsupported os!'
     exit(1)
 
 from swim_client import SwimClient
 from swim_packet import SwimPacket
-from swim_video_client import SwimVideoClient
 import threading
 import time
 import ast
