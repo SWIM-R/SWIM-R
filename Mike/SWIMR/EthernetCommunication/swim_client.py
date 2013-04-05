@@ -71,6 +71,7 @@ class SwimClient(threading.Thread):
                 data, addr = self.SOCK.recvfrom(32)
                 if data.strip() == 'hello client':
                     self.ISCONNECTED = True
+                    self.stopreceivethread = False
                     break 
                 time.sleep(0.3)
             except timeout:

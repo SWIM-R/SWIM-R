@@ -80,5 +80,6 @@ class SwimVideo(Thread):
         This is a separate thread from the main thread that is always receiving information
         '''
         while not self.stopreceivethread:
+            time.sleep(1.0)
             self.new_frame()
 
