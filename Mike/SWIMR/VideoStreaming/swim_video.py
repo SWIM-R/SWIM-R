@@ -79,7 +79,6 @@ class SwimVideo(Thread):
         implementation of the inherited run() method from the Thread class.  
         This is a separate thread from the main thread that is always receiving information
         '''
-        self.timeout_handler()
         while not self.stopreceivethread:
-            pass
+            self.new_frame()
 
