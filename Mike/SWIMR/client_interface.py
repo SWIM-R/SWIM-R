@@ -80,6 +80,7 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
+                    print "new ethernet message"
                     try:
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
                         print tempdict

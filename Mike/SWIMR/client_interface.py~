@@ -80,10 +80,13 @@ class ClientInterface(threading.Thread):
                     self.ethernet.send()
                 
                 if self.ethernet.NEWMESSAGE:
+                    print "new ethernet message"
                     try:
                         tempdict = ast.literal_eval(self.ethernet.getreceive())
+                        print tempdict
                         if tempdict.has_key('str'):
-                            self.video.set_data(tempdict)
+                            self.video.set_frame(tempdict)
+                            print "received frame!!"
                         else:
                             self.RECEIVE = tempdict
                     except Exception as e:#see what happened
