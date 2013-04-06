@@ -60,7 +60,7 @@ class SwimSerial(threading.Thread):
         
         self.ETHERNETCONNECTION = False # Is there an active ethernet connection? 
         
-        self.WRITE_INSTRUCTIONFORMAT ='ERROR' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that is written to the Arduino
+        self.WRITE_INSTRUCTIONFORMAT ='ERROR','ARM' ,'ROLL', 'PITCH','YAW','X','Y','Z' #The format that is written to the Arduino
         ''' #the length of Write instruction format is prepended to the beginning of a formatted message so the Arduino knows how many bytes it will receive'''
      
         self.READ_DATAFORMAT ='ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE','HUMIDITY' , 'DEPTH', 'BATTERY' # the format that should come from the Arduino

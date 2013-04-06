@@ -106,6 +106,11 @@ class ClientInterface(threading.Thread):
         
     def getconnectionstatus(self):
         return self.ethernet.ISCONNECTED
+    
+    def setARM(self,arm = bool()):
+        self.packet.ARM = arm
+        self.NEWMESSAGETOSEND = True
+        
     def setX(self,x = int()):
         if x > 255:
             x = 255

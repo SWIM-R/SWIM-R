@@ -17,6 +17,7 @@ class SwimPacket():
         self.X = 127
         self.Y = 127
         self.Z = 127
+        self.ARM = False
         
 
 
