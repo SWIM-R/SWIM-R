@@ -51,12 +51,12 @@ while 1:
                     print 6
                     ethernet.send()
             else: #otherwise just ping
-                ethernet.setpayload("{'PING': 0 }")
+                ethernet.setpayload({'PING': 0 })
                 ethernet.send()
         else: #ping the error message
             print "Arduino Broke"
             ethernet.ARDUINOCONNECTION = False
-            ethernet.setpayload("{'PING': 0 }")
+            ethernet.setpayload({'PING': 0 })
             ethernet.send()
             serial.cleanup()
             serial = SwimSerial(115200)# Blocking approx 5 seconds when successful  

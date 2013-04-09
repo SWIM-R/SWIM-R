@@ -89,11 +89,10 @@ class SwimServer(threading.Thread):
        
     
 
-    def setpayload(self,payload = str()):
+    def setpayload(self,payload = dict()):
         '''
         setter for the payload that is going to be sent to the Computer
         '''
-        #temp = ast.literal_eval(payload)
         #temp['ERROR'] = self.generateerrorcode()
         #temp['ERROR'] = 0
         self.PAYLOAD = str(payload)
