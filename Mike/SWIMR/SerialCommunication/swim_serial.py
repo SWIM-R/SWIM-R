@@ -154,10 +154,11 @@ class SwimSerial(threading.Thread):
                         try:
                             data = str()
                             while 1:
-                                byte = str(self.SERIAL.read(1)) 
+                                byte = str(self.SERIAL.read(1))
                                 if byte == ',' or byte == '#':
                                     if data is not '':
                                         self.RECEIVE[key] = data
+                                        print self.RECEIVE[key]
                                         break
                                     else: #it is empty and somthing got messed up
                                         return
