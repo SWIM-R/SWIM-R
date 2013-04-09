@@ -45,6 +45,7 @@ while 1:
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
                 if ethernet.ISCONNECTED:
                     ethernet.setpayload(serial.getreceive())
+                    print "up " + serial.getreceive()
                     ethernet.send()
             else: #otherwise just ping
                 ethernet.setpayload("{'PING': 0 }")
@@ -62,6 +63,7 @@ while 1:
             if ethernet.NEWMESSAGE: #if there is a new message from the Computer
                 if serial.ISCONNECTED:
                     serial.setpayload(ethernet.getreceive())
+                    print "down " + ethernet.getreceive()
                     serial.write()
             else: #just send the old packet again
                 serial.write()
