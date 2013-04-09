@@ -49,7 +49,6 @@ while 1:
                     print 3
                     ethernet.setpayload(serial.getreceive())
                     print 6
-                    print serial.getreceive()
                     ethernet.send()
             else: #otherwise just ping
                 ethernet.setpayload("{'PING': 0 }")
