@@ -90,7 +90,6 @@ class SwimServer(threading.Thread):
     
 
     def setpayload(self,payload = str()):
-        print 5
         '''
         setter for the payload that is going to be sent to the Computer
         '''
@@ -98,6 +97,8 @@ class SwimServer(threading.Thread):
         #temp['ERROR'] = self.generateerrorcode()
         temp['ERROR'] = 0
         self.PAYLOAD = str(temp)
+        print 5
+
     
     
     
