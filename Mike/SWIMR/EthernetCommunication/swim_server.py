@@ -96,7 +96,7 @@ class SwimServer(threading.Thread):
         temp = ast.literal_eval(payload)
         #temp['ERROR'] = self.generateerrorcode()
         temp['ERROR'] = 0
-        self.PAYLOAD = str(temp)
+        self.PAYLOAD = str(payload)
         print 5
 
     
