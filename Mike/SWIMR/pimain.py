@@ -86,12 +86,14 @@ while 1:
         print "bye bye"
         exit(0)
     except Exception as e:
+        print "something broked"
         if platform.system() == 'Darwin':
             with open('/Users/Mike/Desktop/errorlog.txt','a') as f:
                 print e
                 f.write(str(e)+'\n')        
         elif platform.system() == 'Linux':
             with open('/home/pi/Desktop/errorlog.txt','a') as f:
+                print e
                 f.write(str(e)+'\n')   
         else:
             print e     

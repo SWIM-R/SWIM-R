@@ -93,6 +93,7 @@ class SwimSerial(threading.Thread):
         receive is a dictionary of the information received from the Arduino
         '''
         self.NEWMESSAGE = False
+        print self.RECEIVE
         return self.RECEIVE
         
     def initialize(self):
