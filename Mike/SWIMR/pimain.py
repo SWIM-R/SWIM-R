@@ -42,10 +42,13 @@ while 1:
     try:
         ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
         if serial.ISCONNECTED:
+            print 1
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
+                print 2
                 if ethernet.ISCONNECTED:
+                    print 3
                     ethernet.setpayload(serial.getreceive())
-                    print "up " + serial.getreceive()
+                    print " 6 up " + serial.getreceive()
                     ethernet.send()
             else: #otherwise just ping
                 ethernet.setpayload("{'PING': 0 }")
