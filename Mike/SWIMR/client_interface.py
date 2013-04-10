@@ -54,7 +54,7 @@ class ClientInterface(threading.Thread):
         self.NEWMESSAGETOSEND = False
         self.PAYLOAD = 'DEFAULT'
         self.PING = 'PING'
-        self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
+        self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE', 'DEPTH', 'BATTERY', 'HUMIDITY' # the format that should come from the Arduino
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 127 , 'PITCH': 127,'YAW': 127,'WATER_TEMPERATURE':0,'CASE_TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0 ,'HUMIDITY': 0}
         self.SENSORDATA = self.RECEIVE
         if not self.TESTING:
@@ -188,7 +188,7 @@ class ClientInterface(threading.Thread):
 
     def getWaterTemperature(self):
         try:
-            return self.SENSORDATA['TEMPERATURE']
+            return self.SENSORDATA['WATER_TEMPERATURE']
         except Exception as e:
             raise e
     def getCaseTemperature(self):
