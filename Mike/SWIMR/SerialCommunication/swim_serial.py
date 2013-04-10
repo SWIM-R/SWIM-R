@@ -88,7 +88,6 @@ class SwimSerial(threading.Thread):
         self.PAYLOAD = self.formatforArduino(message)
         
     def getreceive(self):
-        print 4
         '''
         receive is a dictionary of the information received from the Arduino
         '''
