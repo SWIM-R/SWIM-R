@@ -43,9 +43,7 @@ class SwimSerial(threading.Thread):
         self.SERIAL = None #Place Holder for the instance of the serial 
         
         self.platform = platform.system() # what system this is running on 
-        
-        self.READINSTRUCTIONWIDTHS = {'ROLL': 4 }
-        
+                
         self.PAYLOAD = [0] #information to be Written to Arduino
         
         self.RECEIVE = dict() #information that has just been read from Arduino
