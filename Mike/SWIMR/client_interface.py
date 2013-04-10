@@ -56,6 +56,7 @@ class ClientInterface(threading.Thread):
         self.PING = 'PING'
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 127 , 'PITCH': 127,'YAW': 127,'WATER_TEMPERATURE':0,'CASE_TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0 ,'HUMIDITY': 0}
+        self.SENSORDATA = self.RECEIVE
         if not self.TESTING:
             self.start()
     def run(self):
@@ -85,6 +86,7 @@ class ClientInterface(threading.Thread):
 #                            tempdict = ast.literal_eval(self.ethernet.getreceive())
                             self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
                             print self.RECEIVE
+                            self.updatesensordata()
 #                            if tempdict.has_key('str'):
 #                                self.video.set_frame(tempdict)
 #                                print "received frame!!"
@@ -105,7 +107,14 @@ class ClientInterface(threading.Thread):
     
     def updatepayload(self):
         self.PAYLOAD = str(self.packet.__dict__)
+    
+    def updatesensordata(self):
         
+        for key in self.READ_DATAFORMAT:
+            try:
+                self.SENSORDATA[key] = self.RECEIVE[key]
+            except:
+                continue
     def getconnectionstatus(self):
         if self.ethernet is not None:
             return self.ethernet.ISCONNECTED
@@ -179,53 +188,53 @@ class ClientInterface(threading.Thread):
 
     def getWaterTemperature(self):
         try:
-            return self.RECEIVE['TEMPERATURE']
-        except:
-            return 0
+            return self.SENSORDATA['TEMPERATURE']
+        except Exception as e:
+            raise e
     def getCaseTemperature(self):
         try:
-            return self.RECEIVE['CASE_TEMPERATURE']
-        except:
-            return 0
+            return self.SENSORDATA['CASE_TEMPERATURE']
+        except Exception as e:
+            raise e
     def getHumidity(self):
         try:
-            return self.RECEIVE['HUMIDITY']
-        except:
-            return 0
+            return self.SENSORDATA['HUMIDITY']
+        except Exception as e:
+            raise e
     def getBatteryLife(self):
         try:
-            return self.RECEIVE['BATTERY']
-        except:
-            return 0
+            return self.SENSORDATA['BATTERY']
+        except Exception as e:
+            raise e
         
     def getError(self):
         '''
         returns true if the arduino connection has malfunctioned
         '''
         try:
-            return self.RECEIVE['ERROR']
-        except:
-            return 0
+            return self.SENSORDATA['ERROR']
+        except Exception as e:
+            raise e
     def getDepth(self):
         try:
-            return self.RECEIVE['DEPTH']
-        except:
-            return 0
+            return self.SENSORDATA['DEPTH']
+        except Exception as e:
+            raise e
     def getRoll(self):
         try:
-            return self.RECEIVE['ROLL']
-        except:
-            return -11
+            return self.SENSORDATA['ROLL']
+        except Exception as e:
+            raise e
     def getPitch(self):
         try:
-            return self.RECEIVE['PITCH']
-        except:
-            return -10
+            return self.SENSORDATA['PITCH']
+        except Exception as e:
+            raise e
     def getYaw(self):
         try:
-            return self.RECEIVE['YAW']
-        except:
-            return 0
+            return self.SENSORDATA['YAW']
+        except Exception as e:
+            raise e
 if __name__ == '__main__':
     if sys.platform != 'win32':
         try:
