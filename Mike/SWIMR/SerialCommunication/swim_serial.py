@@ -159,7 +159,6 @@ class SwimSerial(threading.Thread):
                                 if byte == ',' or byte == '#':
                                     if data is not '':
                                         self.RECEIVE[key] = data
-                                        print self.RECEIVE[key]
                                         break
                                     else: #it is empty and somthing got messed up
                                         return

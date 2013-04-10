@@ -106,8 +106,10 @@ class ClientInterface(threading.Thread):
         self.PAYLOAD = str(self.packet.__dict__)
         
     def getconnectionstatus(self):
-        return self.ethernet.ISCONNECTED
-    
+        if self.ethernet is not None:
+            return self.ethernet.ISCONNECTED
+        else:
+            return False
     def setARM(self,arm = bool()):
         self.packet.ARM = arm
         self.NEWMESSAGETOSEND = True
