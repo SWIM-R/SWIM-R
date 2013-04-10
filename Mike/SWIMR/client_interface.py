@@ -23,7 +23,7 @@ elif sys.platform == 'darwin' or sys.platform == 'linux2':
 else:
     print 'unsupported os!'
 
-from swim_video_client import SwimVideoClient
+#from swim_video_client import SwimVideoClient
 from swim_client import SwimClient
 from swim_packet import SwimPacket
 import threading
@@ -60,7 +60,7 @@ class ClientInterface(threading.Thread):
             self.start()
     def run(self):
         self.ethernet = SwimClient(self.IP,self.PORT,False) 
-        self.video = SwimVideoClient(360,480,5) # length, width, framerate
+        #self.video = SwimVideoClient(360,480,5) # length, width, framerate
         try:    
             while not self.TESTING:     
                 time.sleep(0.055)            
@@ -82,15 +82,16 @@ class ClientInterface(threading.Thread):
                     if self.ethernet.NEWMESSAGE:
                         print "new ethernet message"
                         try:
-                            tempdict = ast.literal_eval(self.ethernet.getreceive())
-                            if tempdict.has_key('str'):
-                                self.video.set_frame(tempdict)
-                                print "received frame!!"
-                            else:
-                                self.RECEIVE = tempdict
+#                            tempdict = ast.literal_eval(self.ethernet.getreceive())
+                            self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
+#                            if tempdict.has_key('str'):
+#                                self.video.set_frame(tempdict)
+#                                print "received frame!!"
+#                            else:
+#                                self.RECEIVE = tempdict
                         except Exception as e:#see what happened
                             print e
-                else:   
+                if self.ethernet.ISCONNECTED is False:   
                     print 'disconnected!!'
                     print "cleaning up"
                     self.ethernet.cleanup()
