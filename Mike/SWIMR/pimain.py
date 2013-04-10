@@ -65,7 +65,7 @@ while 1:
                     serial.setpayload(ethernet.getreceive())
                     print "down " + ethernet.getreceive()
                     serial.write()
-            else: #just send the old packet again
+            else: #just send the old packet
                 serial.write()
 #            if video.frame.new:
 #                ethernet.setpayload(str(video.get_frame()))
