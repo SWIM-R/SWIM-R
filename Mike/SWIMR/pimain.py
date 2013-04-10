@@ -44,6 +44,7 @@ while 1:
         if serial.ISCONNECTED:
             if serial.NEWMESSAGE: # If there is a new message from the Arduino 
                 if ethernet.ISCONNECTED:
+                    print serial.getreceive()
                     ethernet.setpayload(serial.getreceive())
                     ethernet.send()
             else: #otherwise just ping
