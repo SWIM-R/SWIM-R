@@ -214,12 +214,12 @@ class ClientInterface(threading.Thread):
         try:
             return self.RECEIVE['ROLL']
         except:
-            return 0
+            return -11
     def getPitch(self):
         try:
             return self.RECEIVE['PITCH']
         except:
-            return 0
+            return -10
     def getYaw(self):
         try:
             return self.RECEIVE['YAW']
