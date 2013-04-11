@@ -33,7 +33,7 @@ class SwimServer(threading.Thread):
         self.initialize(PORT)
         self.NEWMESSAGE = False
         self.ARDUINOCONNECTION = bool()
-        self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
+        self.WRITE_INSTRUCTIONFORMAT = 'ERROR','ARM','ROLL', 'PITCH','YAW','X','Y','Z' #The format that should be written to the Arduino
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','TEMPERATURE', 'DEPTH', 'BATTERY' # the format that should come from the Arduino
         
         print "starting receive thread"

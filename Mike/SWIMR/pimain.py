@@ -73,7 +73,7 @@ while 1:
         if ethernet.ISCONNECTED is False:                
             print 'ethernet broke'  
             serial.ETHERNETCONNECTION = False
-            serial.PAYLOAD = [1,1] # yes there is an error
+            serial.PAYLOAD = [8,1,0,127,127,127,127,127,127]
             serial.write()
             ethernet.cleanup()
             ethernet = SwimServer(9999) # blocking, will wait here until it finds the client computer
