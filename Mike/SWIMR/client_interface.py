@@ -122,68 +122,81 @@ class ClientInterface(threading.Thread):
         else:
             return False
     def setARM(self,arm = bool()):
-        self.packet.ARM = arm
+        if self.packet.ARM is not arm:
+            self.packet.PITCH = 127
+            self.packet.ROLL = 127
+            self.packet.YAW = 127
+            self.packet.X = 127
+            self.packet.Y = 127
+            self.packet.Z = 127    
+        self.packet.ARM = arm        
         self.NEWMESSAGETOSEND = True
         
     def setX(self,x = int()):
-        if x > 255:
-            x = 255
-        elif x < 0:
-            x = 0
-        else:
-            pass
-        self.packet.X = x
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:    
+            if x > 255:
+                x = 255
+            elif x < 0:
+                x = 0
+            else:
+                pass
+            self.packet.X = x
+            self.NEWMESSAGETOSEND = True
     
     def setY(self,y = int()):
-        if y > 255:
-            y = 255
-        elif y < 0:
-            y = 0
-        else:
-            pass
-        self.packet.Y = y
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:
+            if y > 255:
+                y = 255
+            elif y < 0:
+                y = 0
+            else:
+                pass
+            self.packet.Y = y
+            self.NEWMESSAGETOSEND = True
 
     def setZ(self,z = int()):
-        if z > 255:
-            z = 255
-        elif z < 0:
-            z = 0
-        else:
-            pass        
-        self.packet.Z = z
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:
+            if z > 255:
+                z = 255
+            elif z < 0:
+                z = 0
+            else:
+                pass        
+            self.packet.Z = z
+            self.NEWMESSAGETOSEND = True
 
     def setYaw(self,yaw = int()):
-        if yaw > 255:
-            yaw = 255
-        elif yaw < 0:
-            yaw = 0
-        else:
-            pass
-        self.packet.YAW = yaw
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:    
+            if yaw > 255:
+                yaw = 255
+            elif yaw < 0:
+                yaw = 0
+            else:
+                pass
+            self.packet.YAW = yaw
+            self.NEWMESSAGETOSEND = True
 
     def setPitch(self, pitch = int()):
-        if pitch > 255:
-            pitch = 255
-        elif pitch < 0:
-            pitch = 0
-        else:
-            pass
-        self.packet.PITCH = pitch
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:    
+            if pitch > 255:
+                pitch = 255
+            elif pitch < 0:
+                pitch = 0
+            else:
+                pass
+            self.packet.PITCH = pitch
+            self.NEWMESSAGETOSEND = True
 
     def setRoll(self,roll = int()):
-        if roll > 255:
-            roll = 255
-        elif roll < 0:
-            roll = 0
-        else:
-            pass        
-        self.packet.ROLL = roll
-        self.NEWMESSAGETOSEND = True
+        if self.packet.ARM:   
+            if roll > 255:
+                roll = 255
+            elif roll < 0:
+                roll = 0
+            else:
+                pass        
+            self.packet.ROLL = roll
+            self.NEWMESSAGETOSEND = True
         
 #self.READ_DATAFORMAT ='ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE','HUMIDITY' , 'DEPTH', 'BATTERY' # the format that should come from the Arduino
 
