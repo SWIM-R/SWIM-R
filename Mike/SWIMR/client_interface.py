@@ -52,11 +52,11 @@ class ClientInterface(threading.Thread):
         self.TESTING = testing
         self.ethernet = None
         self.NEWMESSAGETOSEND = False
-        self.PAYLOAD = 'DEFAULT'
+        self.PAYLOAD = self.packet.__dict__
         self.PING = 'PING'
         self.READ_DATAFORMAT = 'ERROR', 'ROLL','PITCH','YAW','WATER_TEMPERATURE','CASE_TEMPERATURE', 'DEPTH', 'BATTERY', 'HUMIDITY' # the format that should come from the Arduino
         self.RECEIVE = {'ERROR': 0 , 'ROLL' : 0 , 'PITCH': 0,'YAW': 0,'WATER_TEMPERATURE':0,'CASE_TEMPERATURE': 0,'DEPTH': 0, 'BATTERY':0 ,'HUMIDITY': 0}
-
+        self.BEFOREFIRSTARMED = True
         self.SENSORDATA = self.RECEIVE
         if not self.TESTING:
             self.start()
@@ -69,20 +69,22 @@ class ClientInterface(threading.Thread):
                 ############loop()#######
                 #main loop of the program
                 if self.ethernet.ISCONNECTED:
-                    #time.sleep(0.5)
-                    print "still connected"
-                    
-                    if self.NEWMESSAGETOSEND:
-                        self.NEWMESSAGETOSEND = False
-                        self.updatepayload()
-                        self.ethernet.setpayload(self.PAYLOAD)
-                        self.ethernet.send()
+                    #time.sleep(0.5)                    
+                    if not self.BEFOREFIRSTARMED:
+                        if self.NEWMESSAGETOSEND:
+                            self.NEWMESSAGETOSEND = False
+                            self.updatepayload()
+                            self.ethernet.setpayload(self.PAYLOAD)
+                            self.ethernet.send()
+                        else:
+                            self.ethernet.setpayload('PING')
+                            self.ethernet.send()
                     else:
-                        self.ethernet.setpayload('PING')
+                        neutral_packet = SwimPacket()
+                        self.ethernet.setpayload(str(neutral_packet.__dict__))
                         self.ethernet.send()
                     
                     if self.ethernet.NEWMESSAGE:
-                        print "new ethernet message"
                         try:
 #                            tempdict = ast.literal_eval(self.ethernet.getreceive())
                             self.RECEIVE = ast.literal_eval(self.ethernet.getreceive())
@@ -128,7 +130,8 @@ class ClientInterface(threading.Thread):
             self.packet.YAW = 127
             self.packet.X = 127
             self.packet.Y = 127
-            self.packet.Z = 127    
+            self.packet.Z = 127 
+        self.BEFOREFIRSTARMED = False   
         self.packet.ARM = arm        
         self.NEWMESSAGETOSEND = True
         
