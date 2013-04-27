@@ -1,4 +1,4 @@
-'''
+'''x
 Created on Feb 13, 2013
 
 @author: Mike
@@ -65,7 +65,7 @@ class ClientInterface(threading.Thread):
         #self.video = SwimVideoClient(360,480,5) # length, width, framerate
         try:    
             while not self.TESTING:     
-                time.sleep(0.055)            
+                time.sleep(0.0055)            
                 ############loop()#######
                 #main loop of the program
                 if self.ethernet.ISCONNECTED:
