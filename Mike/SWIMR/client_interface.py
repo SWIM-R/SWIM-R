@@ -100,6 +100,7 @@ class ClientInterface(threading.Thread):
                 if self.ethernet.ISCONNECTED is False:   
                     print 'disconnected!!'
                     print "cleaning up"
+                    self.BEFOREFIRSTARMED = True
                     self.ethernet.cleanup()
                     print 'cleaned up!'
                     self.ethernet = SwimClient(self.IP,self.PORT,False) 
