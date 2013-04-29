@@ -131,7 +131,7 @@ class SwimSerial(threading.Thread):
         '''
         print "starting receive thread"
         while self.ISCONNECTED:
-            time.sleep(0.0225)
+            time.sleep(0.045)
             self.read() 
         
     def read(self): 
