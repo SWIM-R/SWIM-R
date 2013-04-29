@@ -61,7 +61,7 @@ class SwimServer(threading.Thread):
         while MyIP == '127.0.1.1':
             MyIP = self.getmyIP()
         #Listen to all IPs on system, there should just be one..
-        listen_addr = (MyIP,PORT)
+        listen_addr = ('',PORT)
         print listen_addr
         #Bind socket to address
         self.SOCK.bind(listen_addr)
