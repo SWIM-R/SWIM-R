@@ -26,6 +26,8 @@ import time
 import platform
 
 
+
+
 ###############Welcome################
 name  = str(sys.argv[0])
 print "starting {0}......".format(name)
