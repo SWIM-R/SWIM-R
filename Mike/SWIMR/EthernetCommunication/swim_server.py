@@ -86,7 +86,7 @@ class SwimServer(threading.Thread):
         
     def getmyIP(self):
 
-        ipaddr_string = 'sudo ip -4 addr > /home/pi/Desktop/SWIM-R/Mike/SWIMR/current_ip2.txt'
+        ipaddr_string = 'ip -4 addr > /home/pi/Desktop/SWIM-R/Mike/SWIMR/current_ip2.txt'
         subprocess.call(ipaddr_string, shell=True)
         
         ip_file = file('current_ip.txt', 'r')
