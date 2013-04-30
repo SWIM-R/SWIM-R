@@ -178,6 +178,7 @@ class SwimSerial(threading.Thread):
             try:
                 for number in self.PAYLOAD:
                     self.SERIAL.write(unichr(number).encode('latin_1')) #So that 0-255 can be encoded into a byte
+		    print unichr(number).encode('latin_1')
             except: # timeout
                 self.ISCONNECTED = False
 
