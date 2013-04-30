@@ -69,8 +69,7 @@ class ClientInterface(threading.Thread):
                 ############loop()#######
                 #main loop of the program
                 if self.ethernet.ISCONNECTED:
-                    #time.sleep(0.5)                    
-                    if not self.BEFOREFIRSTARMED:
+                    if not self.BEFOREFIRSTARMED and self.packet.ARM:
                         if self.NEWMESSAGETOSEND:
                             self.NEWMESSAGETOSEND = False
                             self.updatepayload()
@@ -79,7 +78,7 @@ class ClientInterface(threading.Thread):
                         else:
                             self.ethernet.setpayload('PING')
                             self.ethernet.send()
-                    else:
+                    elif self.BEFOREFIRSTARMED or not self.packet.ARM:
                         neutral_packet = SwimPacket()
                         self.ethernet.setpayload(str(neutral_packet.__dict__))
                         self.ethernet.send()
