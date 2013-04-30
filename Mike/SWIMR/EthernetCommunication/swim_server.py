@@ -57,9 +57,9 @@ class SwimServer(threading.Thread):
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
         
-        MyIP = self.getmyIP()
-        while MyIP == '127.0.1.1':
-            MyIP = self.getmyIP()
+#        MyIP = self.getmyIP()
+#        while MyIP == '127.0.1.1':
+#            MyIP = self.getmyIP()
 
         #Listen to all IPs on system, there should just be one..
         
@@ -88,7 +88,7 @@ class SwimServer(threading.Thread):
         
     def getmyIP(self):
 
-        ipaddr_string = 'ip -4 addr > /home/pi/Desktop/SWIM-R/Mike/SWIMR/current_ip2.txt'
+        ipaddr_string = 'ip -4 addr > ../current_ip2.txt'
         subprocess.call(ipaddr_string, shell=True)
         
         ip_file = file('current_ip2.txt', 'r')
