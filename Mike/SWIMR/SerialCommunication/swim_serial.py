@@ -217,7 +217,7 @@ class SwimSerial(threading.Thread):
             
             for field in self.WRITE_INSTRUCTIONFORMAT:
                 try:
-                    formatted_message.append(dict_of_unformatted_message[field]) 
+                    formatted_message.append(int(dict_of_unformatted_message[field])) 
                 except KeyError: #if something got messed up just send 0 to the arduino, so it doens't iterate through the steps.
                     return list(0)
             return formatted_message
