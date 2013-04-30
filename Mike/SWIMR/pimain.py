@@ -21,7 +21,7 @@ else: #otherwise screw you!
 
 from swim_server import SwimServer
 from swim_serial import SwimSerial
-from swim_video import SwimVideo
+#from swim_video import SwimVideo
 import time
 import platform
 

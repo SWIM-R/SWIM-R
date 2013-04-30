@@ -60,11 +60,13 @@ class SwimServer(threading.Thread):
         MyIP = self.getmyIP()
         while MyIP == '127.0.1.1':
             MyIP = self.getmyIP()
+
         #Listen to all IPs on system, there should just be one..
+        
         listen_addr = ('',PORT)
-        print listen_addr
         #Bind socket to address
         self.SOCK.bind(listen_addr)
+        
         
         print 'Connecting to Client Computer...'
 
@@ -89,11 +91,10 @@ class SwimServer(threading.Thread):
         ipaddr_string = 'ip -4 addr > /home/pi/Desktop/SWIM-R/Mike/SWIMR/current_ip2.txt'
         subprocess.call(ipaddr_string, shell=True)
         
-        ip_file = file('current_ip.txt', 'r')
+        ip_file = file('current_ip2.txt', 'r')
         for line in ip_file:
             if 'eth0:' in line:
                 inet_line = ip_file.next()
-                _time = time.asctime()
                 inet_string = inet_line[9:(inet_line.index('/'))]
                 return inet_string
     
