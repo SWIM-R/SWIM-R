@@ -92,6 +92,7 @@ TheThread.start()
 while True:
     if not TheThread.isAlive():
         TheThread  = Thread(target = IO, args = ())
+        TheThread.setDaemon(True)
         TheThread.start()
 
 
