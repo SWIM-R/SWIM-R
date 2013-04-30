@@ -135,7 +135,8 @@ class ClientInterface(threading.Thread):
         self.BEFOREFIRSTARMED = False   
         self.packet.ARM = arm        
         self.NEWMESSAGETOSEND = True
-        
+    def getpacket(self):
+        return self.packet.__dict__
     def setX(self,x = int()):
         if self.packet.ARM:    
             if x > 255:
