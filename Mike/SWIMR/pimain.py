@@ -42,8 +42,6 @@ def IO():
         time.sleep(0.055) 
 
         try:
-            if not ethernet.isAlive():
-                ethernet.start()
             ethernet.ARDUINOCONNECTION = serial.ISCONNECTED #So the ethernet has some idea about the state of the serial connection
             if serial.ISCONNECTED:
                 if serial.NEWMESSAGE: # If there is a new message from the Arduino 
@@ -62,8 +60,6 @@ def IO():
                 serial.cleanup()
                 serial = SwimSerial(115200)# Blocking approx 5 seconds when successful  
            
-            if not serial.isAlive():
-                serial.start()
             serial.ETHERNETCONNECTION = ethernet.ISCONNECTED #So the serial has some idea about the state of the ethernet connection
             if ethernet.ISCONNECTED:
                 if ethernet.NEWMESSAGE: #if there is a new message from the Computer
@@ -95,6 +91,7 @@ TheThread.setDaemon(True)
 TheThread.start()
 while True:
     if not TheThread.isAlive():
+        TheThread  = Thread(target = IO, args = ())
         TheThread.start()
 
 
