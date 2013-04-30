@@ -143,27 +143,32 @@ class SwimSerial(threading.Thread):
         try:
             if(self.SERIAL.inWaiting() >= 3):
                 try:
-                    temp = str(self.SERIAL.read(3))
+                    temp = [' ',' ',' ']
+                    while True:
+                        temp.remove(0)
+                        temp.append(self.SERIAL.read(1))
+                        header = ''.join(temp)
+                        if header == '$$$':
+                            break
                 except:
                     self.ISCONNECTED = False
                     return
-                if temp == '$$$': #then read data packet
-                    for key in self.READ_DATAFORMAT:
-                        try:
-                            data = str()
-                            while 1:
-                                byte = str(self.SERIAL.read(1))
-                                if byte == ',' or byte == '#':
-                                    if data is not '':
-                                        self.RECEIVE[key] = data
-                                        break
-                                    else: #it is empty and somthing got messed up
-                                        return
-                                else:
-                                    data = data + byte
-                        except: #Timeout 
-                            self.ISCONNECTED = False
-                            return
+                for key in self.READ_DATAFORMAT:
+                    try:
+                        data = str()
+                        while 1:
+                            byte = str(self.SERIAL.read(1))
+                            if byte == ',' or byte == '#':
+                                if data is not '':
+                                    self.RECEIVE[key] = data
+                                    break
+                                else: #it is empty and somthing got messed up
+                                    return
+                            else:
+                                data = data + byte
+                    except: #Timeout 
+                        self.ISCONNECTED = False
+                        return
                     self.NEWMESSAGE = True
                 else:
                     self.ISCONNECTED = True
