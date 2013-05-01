@@ -145,12 +145,15 @@ class SwimSerial(threading.Thread):
                 try:
                     temp = list(['A','B','C'])
                     header = ''.join(temp)
-                    while not header.strip() == '???':
+                    while True:
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
                         header = ''.join(temp) 
                         print header
+                        if temp[0] == '$' and temp[1] == '$' and temp[2] == '$':
+                            break
+                        
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
@@ -160,7 +163,7 @@ class SwimSerial(threading.Thread):
                     for key in self.READ_DATAFORMAT:
                         try:
                             data = str()
-                            while 1:
+                            while True:
                                 byte = str(self.SERIAL.read(1))
                                 if byte == ',' or byte == '#':
                                     if data is not '':
