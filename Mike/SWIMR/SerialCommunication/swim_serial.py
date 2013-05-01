@@ -146,13 +146,13 @@ class SwimSerial(threading.Thread):
                     temp = list(['A','B','C'])
                     header = ''.join(temp)
                     while True:
+                        if str(temp[0]) == '$' and str(temp[1]) == '$' and str(temp[2]) == '$':
+                            break
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
                         header = ''.join(temp) 
                         print temp
-                        if str(temp[0]) == '$' and str(temp[1]) == '$' and str(temp[2]) == '$':
-                            break
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
