@@ -57,12 +57,12 @@ class SwimServer(threading.Thread):
         self.SOCK.setblocking(1)
         self.SOCK.settimeout(self.TIMEOUT)
         
-        MyIP = self.getmyIP()
-        while MyIP == '127.0.1.1':
-            MyIP = self.getmyIP()
+#        MyIP = self.getmyIP()
+#        while MyIP == '127.0.1.1':
+#            MyIP = self.getmyIP()
         #Listen to all IPs on system, there should just be one..
         listen_addr = ('',PORT)
-        print listen_addr
+#        print listen_addr
         #Bind socket to address
         self.SOCK.bind(listen_addr)
         
