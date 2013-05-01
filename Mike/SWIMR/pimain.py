@@ -52,7 +52,7 @@ while 1:
             else: #otherwise just ping
                 ethernet.setpayload({'PING': 0 })
                 ethernet.send()
-        if serial.ISCONNECTED is False: #ping the error message
+        if serial.ISCONNECTED == False: #ping the error message
             print "Arduino Broke"
             ethernet.ARDUINOCONNECTION = False
             ethernet.setpayload({'PING': 0 })
@@ -72,7 +72,7 @@ while 1:
 #            if video.frame.new:
 #                ethernet.setpayload(str(video.get_frame()))
 #                ethernet.send()
-        if ethernet.ISCONNECTED is False:                
+        if ethernet.ISCONNECTED == False:                
             print 'ethernet broke'  
             serial.ETHERNETCONNECTION = False
             serial.PAYLOAD = [8,1,0,127,127,127,127,127,127]

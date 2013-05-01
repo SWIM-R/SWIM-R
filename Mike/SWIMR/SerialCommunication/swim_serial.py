@@ -145,7 +145,7 @@ class SwimSerial(threading.Thread):
                 try:
                     temp = list(['A','B','C'])
                     header = ''.join(temp)
-                    while not header == '???':
+                    while not header.strip() == '???':
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
@@ -155,7 +155,8 @@ class SwimSerial(threading.Thread):
                     print e
                     self.ISCONNECTED = False
                     return
-                if header == '$$$': #then read data packet
+                if header.strip() == '$$$': #then read data packet
+                    print 'DID THINGS'
                     for key in self.READ_DATAFORMAT:
                         try:
                             data = str()
