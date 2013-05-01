@@ -153,7 +153,8 @@ class SwimSerial(threading.Thread):
                         print header
                         if temp[0] == '$' and temp[1] == '$' and temp[2] == '$':
                             break
-                        
+                        break
+
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
