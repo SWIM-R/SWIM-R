@@ -141,23 +141,31 @@ class SwimSerial(threading.Thread):
         a new data packet is preceeded with $$$
         '''
         try:
-            if(self.SERIAL.inWaiting() >= 3):
+            if(self.SERIAL.inWaiting() >= 1):
+                temp = list(['A','B','C'])
+                header = ''.join(temp)
                 try:
-                    temp = list(['A','B','C'])
-                    header = ''.join(temp)
                     while True:
-                        if str(temp[0]) == '$' and str(temp[1]) == '$' and str(temp[2]) == '$':
-                            break
+                        #temp = str(self.SERIAL.read(1))
+                        #if temp == '$':
+                        #    break
+                        #    
+                        #if str(temp[0]) == '$' and str(temp[1]) == '$' and str(temp[2]) == '$':
+                        #    break
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
                         header = ''.join(temp) 
-                        print temp
+                        print header
+                        if header == "$$$":
+                            print "good header!"
+                            break
+                            
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
                     return
-                if header.strip() == '$$$': #then read data packet
+                if header == '$$$': #then read data packet
                     print 'DID THINGS'
                     for key in self.READ_DATAFORMAT:
                         try:
