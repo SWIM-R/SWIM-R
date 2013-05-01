@@ -145,7 +145,7 @@ class SwimSerial(threading.Thread):
                 try:
                     temp = list(['A','B','C'])
                     header = ''.join(temp)
-                    while header is not '???':
+                    while not header == '???':
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
