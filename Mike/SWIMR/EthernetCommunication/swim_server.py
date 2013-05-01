@@ -82,7 +82,6 @@ class SwimServer(threading.Thread):
                 self.SOCK.sendto("hello client",self.CLIENTIP)
                 #self.SOCK.sendall("hello client",)
                 
-            
         print "I've found the client"
         self.RECEIVE = ''
         
