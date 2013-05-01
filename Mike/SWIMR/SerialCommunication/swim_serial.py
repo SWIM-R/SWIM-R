@@ -148,8 +148,9 @@ class SwimSerial(threading.Thread):
                     while header != '???':
                         temp.pop(0)
                         temp.append(str(self.SERIAL.read(1)))
-                        print len(temp)
-                        header = ''.join(temp)
+#                        print len(temp)
+                        header = ''.join(temp) 
+                        print header
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
