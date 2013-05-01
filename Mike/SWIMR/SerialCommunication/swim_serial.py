@@ -143,11 +143,17 @@ class SwimSerial(threading.Thread):
         try:
             if(self.SERIAL.inWaiting() >= 3):
                 try:
-                    temp = str(self.SERIAL.read(3))
+                    temp = [' ',' ',' ']
+                    header = ''.join(temp)
+                    while header != '???':
+                        temp.remove(0)
+                        temp.append(str(self.SERIAL.read(1)))
+                        print len(temp)
+                        header = ''.join(temp)
                 except:
                     self.ISCONNECTED = False
                     return
-                if temp == '$$$': #then read data packet
+                if header == '$$$': #then read data packet
                     for key in self.READ_DATAFORMAT:
                         try:
                             data = str()
