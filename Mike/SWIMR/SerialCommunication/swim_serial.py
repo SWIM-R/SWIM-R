@@ -151,7 +151,7 @@ class SwimSerial(threading.Thread):
 #                        print len(temp)
                         header = ''.join(temp) 
                         print temp
-                        if temp[0] == '$' and temp[1] == '$' and temp[2] == '$':
+                        if str(temp[0]) == '$' and str(temp[1]) == '$' and str(temp[2]) == '$':
                             break
                 except Exception as e:
                     print e
