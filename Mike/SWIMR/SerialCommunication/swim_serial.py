@@ -150,11 +150,9 @@ class SwimSerial(threading.Thread):
                         temp.append(str(self.SERIAL.read(1)))
 #                        print len(temp)
                         header = ''.join(temp) 
-                        print header
+                        print temp
                         if temp[0] == '$' and temp[1] == '$' and temp[2] == '$':
                             break
-                        break
-
                 except Exception as e:
                     print e
                     self.ISCONNECTED = False
